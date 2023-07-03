@@ -557,7 +557,8 @@ equipment.
 6. Start application:
  am start com.mss.pms.csmobile
 
- pm install -r -d /sdcard/C4Mobile-release-2023.06a2-truck.apk
+ pm install -r /sdcard/C4Mobile-release-2023.06a2-truck.apk
+ pm install -r /sdcard/C4M_Mobile_2023.07a1_03.07.2023-UG.apk
  am start com.mss.pms.csmobile
 ----------------------------------------------------------------
 am force-stop com.mss.pms.csmobile
