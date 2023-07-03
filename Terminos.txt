@@ -124,3 +124,14 @@ PRECISIÓN GPS EQUIPO BAJA PRECISIÓN
 PRECISIÓN GPS EQUIPO ALTA PRECISIÓN
 ######################################################
 10cm
+
+######################################################
+BROCALL UG - EQUIPOS SIN TELEMETRIA
+######################################################
+Camiones sin telemetria - BROCALUG
+WITHOUT_TELEMETRY en true (1105 - variable en 1)
+Logs para Grep: normalModeUgGpsWithoutTelemetry
+Esto cuando el equipo no cuenta con telemetria, deberia de entrar a este log y realizar toda la logica!
+IS_INTERCEPTION_ON_DUMP_LOCATION en true (1114 - variable en 1)
+para que no detecte un salto de actividades cuando una locacion sea tanto descarga como carga
+
