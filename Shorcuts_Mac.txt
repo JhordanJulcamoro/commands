@@ -1,0 +1,16 @@
+##################################################################
+SHORCUTS MAC
+
+Minimizar una ventana: Comando + M. 
+Cambia a la app anterior: Comando + Tabulador.
+Cerrar sólo una ventana: Comando + W.
+Cerrar todas las ventanas abiertas para una app: Opción + Comando + W.
+Para salir de la app: Comando + Q.s
+Puedes ocultar la app activa: Comando + H.
+Option + Command + Esc: Force quit an app.
+Shift-Command-5: Take a screenshot or make a screen recording. Or use Shift-Command-3 or Shift-Command-4 for screenshots.
+Control-Command-Q: Immediately lock your screen. Loock
+
+CONTROL + FLECHAS DER - IZQ: Para cambiar de escritorios/ventanas
+CONTROL + FLECHAS ARRI - ABA: Para ver todos los escritorios y agregar uno mas (+)
+COMMAND + Q: Cerrar una aplicacion total

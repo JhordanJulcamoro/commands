@@ -1,0 +1,5088 @@
+Para PostgreSQL en Windows (v.10 la instalada)
+pg_ctl -D "C:\Program Files\PostgreSQL\10\data" stop
+pg_ctl -D "C:\Program Files\PostgreSQL\10\data" start
+
+Para instalar apk en abd
+#link del drive
+https://drive.google.com/open?id=1gMsTKtmwQw-EM6Khp8tw0iDRZ59eIcOq
+#ubicarse en downloads(aqui estan los apks) o moverse a documents
+adb install immersive.apk
+adb install zerotier_one_v1.6.2.apk
+#dar permisos a immersive:
+adb shell pm grant com.huseyinatasoy.fullscreen_immersive_mode android.permission.WRITE_SECURE_SETTINGS
+
+#red zerotier
+    a84ac5c10a57468d
+
+
+--Ingreso con checkpoint vpn
+vpn.buenaventura.com.pe 
+
+BROCAL/COIMOLACHE
+ip-> 10.10.88.143 (brocal)
+#usuarios: ct-usrpa07 
+#password: Febrero2021
+
+--Base datos Marcobre
+usuario: controlsys
+password: 4rll1vmssHBminerals
+
+usuario:mgil
+password:Peru2019
+
+QUERY
+-- consultas para las tablas de log:
+SELECT tal.id_equipo,
+       incrusta_valores(taml.mensaje_log, tal.array_inc),
+       to_char(tal.tiem_suceso, 'YYYY-MM-DD HH24:MI:SS')
+FROM ta_log tal
+    LEFT JOIN ts_equipos te1 ON tal.id_equipo = te1.id_equipo
+    LEFT JOIN tp_usuarios tpt ON tpt.id = (SELECT ID FROM tp_usuarios WHERE ID_Usuarios = tal.id_usuario ORDER BY ID DESC LIMIT 1)
+    LEFT JOIN TA_MensajeLog taml ON taml.id = (SELECT ID FROM TA_MensajeLog WHERE Id_Mensaje_Log = tal.Id_Mensaje_Log AND id_idioma = 1
+    ORDER BY ID DESC limit 1)
+WHERE te1.nombre like 'CA13'
+and  tal.tiem_suceso > '2021-06-17 12:00:00'
+and  tal.tiem_suceso < '2021-06-17 13:00:00'
+order by tal.tiem_suceso asc ;
+
+select *
+from tp_systemlogs tps
+ where id_equipo = (select id_equipo from ts_equipos where nombre like 'CA13')
+and  tps.tiem_suceso > '2021-06-15 00:00:00'
+and  tps.tiem_suceso < '2021-06-15 01:00:00'
+order by tps.tiem_suceso asc ;
+
+select *
+from ta_mensajelog where id_mensaje_log = 267;
+select  id_equipo, id_trabajador, tiem_llegada, tiem_cuadra, tiem_cuadrado, tiem_carga, tiem_acarreo, tiem_cola, tiem_retro, tiem_descarga, tiem_viajando, tonelaje, tonelajevims, id_descarga, coorxdesc, coorydesc, coorzdesc, llegadareal, cuadrareal, cuadradoreal, acarreoreal, colareal, retroreal, viajandoreal, tiem_listo, listoreal,  is_fixed, ticket, guia
+from tp_cargadescarga tpcd
+where tpcd.id_equipo = (select id_equipo from ts_equipos where nombre like 'VL366')
+and  tpcd.tiem_viajando > '2021-06-18 23:30:00'
+and  tpcd.tiem_viajando < '2021-06-19 01:50:00';
+
+
+
+#Cuando sale error en git por etiquetas
+git pull --tags
+#En caso de error [rejected] 
+git pull --tags -f
+
+#SDK EN ANDROID PARA SOLUCIONAR EL ERROR
+//EN -> local.properties
+sdk.dir=C\:\\Users\\MS4M\\AppData\\Local\\Android\\Sdk
+#ndk.dir=/Users/henrylopez/Documents/Android_ADT/sdk/ndk-bundle
+ndk.dir=C\:\\Users\\MS4M\\AppData\\Local\\Android\\Sdk\\ndk\\21.1.6352462
+
+MAC
+sdk.dir=/Users/jhordan/Library/Android/sdk
+#ndk.dir=/Users/henrylopez/Documents/Android_ADT/sdk/ndk-bundle
+ndk.dir=/Users/jhordan/Library/Android/sdk/ndk/21.1.6352462
+
+
+*************************************************************
+NOTAS RÁPIDAS:
+*************************************************************
+pgadmin: admin
+
+us: omestanza
+pw: allitnam
+
+serial key - apk
+contraseña principal: MSS2015
+cs_mobile: CSMobile2017
+################################################
+GENERA APK - ANDROID
+-> En android ir a build/generatesinglebundle/
+-->seleccionar APK, siguiente
+-->KeyStorePath: esta en el disco C o en Documentos KeyCsMobile
+-->ingresar los passwords anteriores
+-->en key alias seleccionar: csmobile, siguiente
+-->seleccionar release
+-->ir a finish
+################################################
+SERIAL KEY PARTS:
+RELEASE_STORE_FILE=/Users/mfge/Dropbox/RepositorioAplicacionesMSS/MSS.jks
+RELEASE_STORE_PASSWORD=MSS2015
+RELEASE_KEY_ALIAS=csmobile
+RELEASE_KEY_PASSWORD=CSMobile2017
+
+**clion ubuntu**
+cd /opt/clion-2021.1.2/bin
+./clion.sh
+
+marcobre
+*************************************************************
+
+#Levantamiento de BD SQLITE3 en Emulador!
+1. ubicarse en la carpeta del backup
+2. ejecutar el comando 
+adb push .\DBCMobile.db sdcard
+-- cp DBCMobile /data/data/com.mss.pms.csmobile/databases
+3. ingresar al Emulador con el comando
+adb shell
+4. ingresar a
+cd /data/data/com.mss.pms.csmobile/databases
+5. listar ls
+6. debería de aparecer DBCSMobile
+7. ejecutar 
+sqlite3 DBCMobile
+8. una vez en la bd, realizar la consulta:
+.tables -> listar todas las tablas 
+select * from configuration where id=109;
+9. la respuesta sería 
+109|0|SIMULATOR_MODE
+10. realizar el update del value:
+update configuration set value = 1 where id= 109;
+update configuration set value = 0 where id= 10;
+update configuration set value = 3 where id= 422;
+
+#LIMPIAR BD DE ANDROID - SQLITE3
+adb shell pm clear com.mss.pms.csmobile
+#DESPUES DE LIMPIAR BD DE ANDROID - INICIARLA - SQLITE3
+adb shell am start com.mss.pms.csmobile
+Gsoporte
+Peru2019
+
+---------------------------------------------------------
+#QUERIES EJECUTADAS
+---------------------------------------------------------
+#PARA CONSULTA DE LOGS 
+
+SELECT tal.id_equipo,
+       incrusta_valores(taml.mensaje_log, tal.array_inc),
+       to_char(tal.tiem_suceso, 'YYYY-MM-DD HH24:MI:SS')
+FROM ta_log tal
+    LEFT JOIN ts_equipos te1 ON tal.id_equipo = te1.id_equipo
+    LEFT JOIN tp_usuarios tpt ON tpt.id = (SELECT ID FROM tp_usuarios WHERE ID_Usuarios = tal.id_usuario ORDER BY ID DESC LIMIT 1)
+    LEFT JOIN TA_MensajeLog taml ON taml.id = (SELECT ID FROM TA_MensajeLog WHERE Id_Mensaje_Log = tal.Id_Mensaje_Log AND id_idioma = 1
+    ORDER BY ID DESC limit 1)
+WHERE te1.id_equipo = 280 --like 'V2072' --'EX05'
+and  tal.tiem_suceso > '2021-06-23 07:50:00'
+and  tal.tiem_suceso < '2021-06-23 08:10:00'
+order by tal.tiem_suceso asc ;
+
+
+--select * from ts_equipos where id_equipo = 280
+
+SELECT tal.id_equipo,
+       incrusta_valores(taml.mensaje_log, tal.array_inc),
+       to_char(tal.tiem_suceso, 'YYYY-MM-DD HH24:MI:SS')
+FROM ta_log tal
+    LEFT JOIN ts_equipos te1 ON tal.id_equipo = te1.id_equipo
+    LEFT JOIN tp_usuarios tpt ON tpt.id = (SELECT ID FROM tp_usuarios WHERE ID_Usuarios = tal.id_usuario ORDER BY ID DESC LIMIT 1)
+    LEFT JOIN TA_MensajeLog taml ON taml.id = (SELECT ID FROM TA_MensajeLog WHERE Id_Mensaje_Log = tal.Id_Mensaje_Log AND id_idioma = 1
+    ORDER BY ID DESC limit 1)
+WHERE te1.id_equipo = 280 --like 'V2072' --'EX05'
+and  tal.tiem_suceso > '2021-06-23 07:50:00'
+and  tal.tiem_suceso < '2021-06-23 08:10:00'
+order by tal.tiem_suceso asc ;
+
+select *
+from tp_systemlogs tps
+ where id_equipo = 280--select id_equipo from ts_equipos where nombre like 'CA13')
+and  tps.tiem_suceso > '2021-06-23 07:50:00'
+and  tps.tiem_suceso < '2021-06-23 08:10:00'
+order by tps.tiem_suceso asc ;
+
+
+select *
+from ta_mensajelog where id_mensaje_log = 267;
+select  id_equipo, id_trabajador, tiem_llegada, tiem_cuadra, tiem_cuadrado, tiem_carga, tiem_acarreo, tiem_cola, tiem_retro, tiem_descarga, tiem_viajando, tonelaje, tonelajevims, id_descarga, coorxdesc, coorydesc, coorzdesc, llegadareal, cuadrareal, cuadradoreal, acarreoreal, colareal, retroreal, viajandoreal, tiem_listo, listoreal,  is_fixed, ticket, guia
+from tp_cargadescarga tpcd
+where tpcd.id_equipo = --(select id_equipo from ts_equipos where nombre like 'VL366')
+and  tpcd.tiem_viajando > '2021-06-18 23:30:00'
+and  tpcd.tiem_viajando < '2021-06-19 01:50:00';
+
+--select * from ts_configuracion order by id
+
+--select * from tp_usuarios where usuario = 'mgil'
+
+
+
+*******************************************************************************
+
+SELECT tal.id_equipo,
+       incrusta_valores(taml.mensaje_log, tal.array_inc),
+       to_char(tal.tiem_suceso, 'YYYY-MM-DD HH24:MI:SS')
+FROM ta_log tal
+    LEFT JOIN ts_equipos te1 ON tal.id_equipo = te1.id_equipo
+    LEFT JOIN tp_usuarios tpt ON tpt.id = (SELECT ID FROM tp_usuarios WHERE ID_Usuarios = tal.id_usuario ORDER BY ID DESC LIMIT 1)
+    LEFT JOIN TA_MensajeLog taml ON taml.id = (SELECT ID FROM TA_MensajeLog WHERE Id_Mensaje_Log = tal.Id_Mensaje_Log AND id_idioma = 1
+    ORDER BY ID DESC limit 1)
+WHERE te1.nombre like 'CA13'
+and  tal.tiem_suceso > '2021-06-17 12:00:00'
+and  tal.tiem_suceso < '2021-06-17 13:00:00'
+order by tal.tiem_suceso asc ;
+
+
+select *
+from tp_systemlogs tps
+ where id_equipo = (select id_equipo from ts_equipos where nombre like 'V2076')
+and  tps.tiem_suceso > '2021-06-18 17:35:00'
+and  tps.tiem_suceso < '2021-06-18 18:00:00'
+order by tps.tiem_suceso asc ;
+
+select *
+from tp_systemlogs tps
+ where id_equipo = (select id_equipo from ts_equipos where nombre like 'VL66')
+and  tps.tiem_suceso > '2021-06-18 17:30:00'
+and  tps.tiem_suceso < '2021-06-18 18:00:00'
+order by tps.tiem_suceso asc ;
+
+select *
+from ta_mensajelog where id_mensaje_log = 267;
+select  id_equipo, id_trabajador, tiem_llegada, tiem_cuadra, tiem_cuadrado, tiem_carga, tiem_acarreo, tiem_cola, tiem_retro, tiem_descarga, tiem_viajando, tonelaje, tonelajevims, id_descarga, coorxdesc, coorydesc, coorzdesc, llegadareal, cuadrareal, cuadradoreal, acarreoreal, colareal, retroreal, viajandoreal, tiem_listo, listoreal,  is_fixed, ticket, guia
+from tp_cargadescarga tpcd
+where tpcd.id_equipo = (select id_equipo from ts_equipos where nombre like 'VL366')
+and  tpcd.tiem_viajando > '2021-06-18 23:30:00'
+and  tpcd.tiem_viajando < '2021-06-19 01:50:00';
+
+
+SELECT * FROM ts_equipos WHERE id_equipo = 346
+
+-----------------------------------------
+#OTRA CONSULTA DE LOGS 
+
+SELECT
+	TSE.NOMBRE FLOTAPRINCIPAL,
+	TS.NOMBRE FLOTASECUNDARIA,
+	TS_E.NOMBRE EQUIPO,
+    TSE.isespecial ,
+	TS.isespecial
+,	TS_E.isespecial
+FROM
+	TS_EQUIPOS TSE
+	JOIN TS_EQUIPOS TS ON
+		TSE.ID = TS.ID_FLOTA
+	JOIN TS_EQUIPOS TS_E ON
+		TS.ID = TS_E.ID_FLOTA
+WHERE
+	TSE.ISFLOTA and TSE.tiem_elimin
+ORDER BY
+	TSE.ISFLOTA ASC LIMIT 100;
+
+update ts_equipos
+set  isespecial =  TRUE
+where nombre LIKE 'PH01';
+
+
+select * from ts_equipos where nombre LIKE 'PH01'
+
+
+******************************************
+
+SELECT tal.id_equipo,
+       incrusta_valores(taml.mensaje_log, tal.array_inc),
+       to_char(tal.tiem_suceso, 'YYYY-MM-DD HH24:MI:SS')
+FROM ta_log tal
+    LEFT JOIN ts_equipos te1 ON tal.id_equipo = te1.id_equipo
+    LEFT JOIN tp_usuarios tpt ON tpt.id = (SELECT ID FROM tp_usuarios WHERE ID_Usuarios = tal.id_usuario ORDER BY ID DESC LIMIT 1)
+    LEFT JOIN TA_MensajeLog taml ON taml.id = (SELECT ID FROM TA_MensajeLog WHERE Id_Mensaje_Log = tal.Id_Mensaje_Log AND id_idioma = 1
+    ORDER BY ID DESC limit 1)
+WHERE te1.nombre like 'VL366'
+and  tal.tiem_suceso > '2021-06-18 23:30:00'
+and  tal.tiem_suceso < '2021-06-19 01:50:00';
+
+
+select *
+from tp_systemlogs tps
+ where id_equipo = (select id_equipo from ts_equipos where nombre like 'VL366')
+and  tps.tiem_suceso > '2021-06-18 23:30:00'
+and  tps.tiem_suceso < '2021-06-19 01:50:00';
+
+select  id_equipo, id_trabajador, tiem_llegada, tiem_cuadra, tiem_cuadrado, tiem_carga, tiem_acarreo, tiem_cola, tiem_retro, tiem_descarga, tiem_viajando, tonelaje, tonelajevims, id_descarga, coorxdesc, coorydesc, coorzdesc, llegadareal, cuadrareal, cuadradoreal, acarreoreal, colareal, retroreal, viajandoreal, tiem_listo, listoreal,  is_fixed, ticket, guia
+from tp_cargadescarga tpcd
+where tpcd.id_equipo = (select id_equipo from ts_equipos where nombre like 'VL366')
+and  tpcd.tiem_viajando > '2021-06-18 23:30:00'
+and  tpcd.tiem_viajando < '2021-06-19 01:50:00';
+
+select *
+from ta_log tal
+where
+    id_equipo = (select id_equipo from ts_equipos where nombre like 'VL390')
+    and  tal.tiem_suceso > '2021-06-18 01:30:00'
+    and  tal.tiem_suceso < '2021-06-18 02:20:00';
+
+--*********
+select *
+from tp_systemlogs tps
+ where id_equipo = (select id_equipo from ts_equipos where nombre like 'VL390')
+and  tps.tiem_suceso > '2021-06-18 01:30:00'
+and  tps.tiem_suceso < '2021-06-18 02:20:00';
+
+
+
+
+
+
+
+
+
+
+
+
+
+SELECT tal.id_equipo, incrusta_valores(taml.mensaje_log, tal.array_inc), to_char(tal.tiem_suceso, 'YYYY-MM-DD HH24:MI:SS')
+FROM ta_log tal
+       LEFT JOIN ts_equipos te1 ON tal.id_equipo = te1.id_equipo
+       LEFT JOIN tp_usuarios tpt ON tpt.id = (SELECT ID FROM tp_usuarios WHERE ID_Usuarios = tal.id_usuario ORDER BY ID DESC LIMIT 1)
+       LEFT JOIN TA_MensajeLog taml ON taml.id = (SELECT ID
+                                       FROM TA_MensajeLog
+                                       WHERE Id_Mensaje_Log = tal.Id_Mensaje_Log
+                                         AND id_idioma = 1
+                                       ORDER BY ID DESC
+                                       limit 1)
+WHERE te1.nombre like 'VL59'
+  and tal.tiem_suceso > '2021-06-30 10:50:00'
+  and tal.tiem_suceso < '2021-06-30 11:30:00';
+
+select *
+from tp_systemlogs tps
+where id_equipo = (select id_equipo from ts_equipos where nombre like 'VL59')
+  and tps.tiem_suceso > '2021-06-30 10:50:00'
+  and tps.tiem_suceso < '2021-06-30 11:30:00';
+
+select id_equipo,
+      id_trabajador,
+      tiem_llegada,
+      tiem_cuadra,
+      tiem_cuadrado,
+      tiem_carga,
+      tiem_acarreo,
+      tiem_cola,
+      tiem_retro,
+      tiem_descarga,
+      tiem_viajando,
+      tonelaje,
+      tonelajevims,
+      id_descarga,
+      coorxdesc,
+      coorydesc,
+      coorzdesc,
+      llegadareal,
+      cuadrareal,
+      cuadradoreal,
+      acarreoreal,
+      colareal,
+      retroreal,
+      viajandoreal,
+      tiem_listo,
+      listoreal,
+      is_fixed,
+      ticket,
+      guia
+from tp_cargadescarga tpcd
+where tpcd.id_equipo = (select id_equipo from ts_equipos where nombre like 'VL59')
+  and tpcd.tiem_viajando > '2021-06-30 10:50:00'
+  and tpcd.tiem_viajando < '2021-06-30 11:30:00';
+  ---------------------------------------------------------
+
+  #PARA ACTUALIZAR LOS IPS AL CONFIGURAR UN EQUIPO
+
+  SELECT
+	TSE.NOMBRE FLOTAPRINCIPAL,
+	TS.NOMBRE FLOTASECUNDARIA,
+	TS_E.NOMBRE EQUIPO,
+    TS_E.grupoconexion,
+	TS_E.ipequipo
+FROM
+	TS_EQUIPOS TSE
+	JOIN TS_EQUIPOS TS ON
+		TSE.ID = TS.ID_FLOTA
+	JOIN TS_EQUIPOS TS_E ON
+		TS.ID = TS_E.ID_FLOTA
+WHERE
+	/*TSE.NOMBRE = 'Acarreo en Mina'
+    TSE.NOMBRE = 'Carguio en Mina'*/
+    TSE.NOMBRE = 'Perforadoras'
+ORDER BY
+	TSE.ISFLOTA ASC LIMIT 100;
+
+SELECT
+	--TSE.NOMBRE FLOTAPRINCIPAL,
+	--TS.NOMBRE FLOTASECUNDARIA,
+    TS_E.id,
+	TS_E.NOMBRE EQUIPO,
+    TS_E.grupoconexion,
+	TS_E.ipequipo
+FROM
+	TS_EQUIPOS TSE
+	JOIN TS_EQUIPOS TS ON
+		TSE.ID = TS.ID_FLOTA
+	JOIN TS_EQUIPOS TS_E ON
+		TS.ID = TS_E.ID_FLOTA
+WHERE
+	--TSE.NOMBRE = 'Acarreo en Mina'
+	--TSE.NOMBRE = 'Carguio en Mina'
+	TSE.NOMBRE = 'Perforadoras'
+ORDER BY
+	TSE.ISFLOTA ASC LIMIT 100;
+
+UPDATE TS_EQUIPOS set grupoconexion = Null
+where id > 0
+
+
+--PARA ACTUALIZAR EL IP DEL EMULADOR AL EQUIPO
+UPDATE TS_EQUIPOS
+    set grupoconexion = 0
+--set ipequipo = '10.242.65.9'--'10.242.92.165' --'10.242.141.155'
+WHERE
+      ID = 36;
+--##excavadora
+UPDATE TS_EQUIPOS -- grupoconexion = 0
+set ipequipo = '10.242.200.135'
+WHERE
+      ID = 99;
+--cargador frontal
+UPDATE TS_EQUIPOS
+--set grupoconexion = 0
+set ipequipo = '10.242.200.135'
+WHERE
+      ID = 72; --nombre 'CF010'
+--perforadora
+UPDATE TS_EQUIPOS
+--set grupoconexion = 0
+set ipequipo = '10.242.230.217'
+WHERE
+      ID = 62; --nombre 'CF010'
+-----------------
+UPDATE TS_EQUIPOS
+--set grupoconexion = 0
+set ipequipo = '10.242.140.190'--(emulador-controlsense-perfo-2) --'192.168.1.34'
+WHERE
+      ID = 63; --nombre 'PE02'
+-----------------
+UPDATE TS_EQUIPOS
+--set grupoconexion = 0
+set ipequipo = '192.168.1.100'
+WHERE
+      ID = 64; --nombre 'PE03'
+      ---------------
+UPDATE TS_EQUIPOS
+set grupoconexion = 1
+--set ipequipo = '192.168.1.56'
+WHERE
+      ID = 66; --nombre 'PE03'
+
+--PARA ACTUALIZAR EL IP DEL SERVER, EN ESTE CASO UBUNTU
+UPDATE ts_configuracion_equipo_detalle
+SET valor = '1' --'10.242.135.190' --'192.168.195.179'
+WHERE id_equipo=36
+    and id_configuracion_equipo= 109;
+--##Excavadora
+UPDATE ts_configuracion_equipo_detalle
+SET valor = '1' --'10.242.135.190' --'192.168.195.179'
+WHERE id_equipo=99
+    and id_configuracion_equipo= 109;
+--cargador frontal
+UPDATE ts_configuracion_equipo_detalle
+SET valor = '1' --'10.242.135.190' --'192.168.195.179'
+WHERE id_equipo=72
+    and id_configuracion_equipo= 109;
+--perforadora
+UPDATE ts_configuracion_equipo_detalle
+SET valor = '10.242.135.190' --'192.168.195.179'
+WHERE id_equipo=62
+    and id_configuracion_equipo= 102 --109;
+-------------------------
+UPDATE ts_configuracion_equipo_detalle
+SET
+    --valor = '1'
+    valor = '10.242.135.190' --'192.168.195.179'
+WHERE id_equipo=63
+    and id_configuracion_equipo= 102; --109;
+-------------------------
+UPDATE ts_configuracion_equipo_detalle
+SET
+    --valor = '1'
+    valor = '10.242.135.190'--'10.242.135.190' --'192.168.195.179'
+WHERE id_equipo=66
+    and id_configuracion_equipo= 103;
+
+
+UPDATE ts_configuracion_equipo_detalle
+SET
+    --valor = '1'
+    valor = '10.242.135.190' --'192.168.195.179'
+WHERE id_equipo=63
+    and id_configuracion_equipo= 102; --103; --109;
+--para consultar el ip guardado del servidor = 102
+--para consultar el estado del modo del simulador = 109
+SELECT
+    tsq.id_configuracion_equipo,
+    TSQ.valor,
+    TSE.nombre
+FROM ts_configuracion_equipo_detalle TSQ
+    LEFT JOIN ts_configuracion_equipo TSE  ON
+        TSQ.id_configuracion_equipo = TSE.id
+WHERE
+      TSQ.id_equipo in (66,63)
+    --and tsq.id_configuracion_equipo= 102 
+ORDER BY TSQ.id_configuracion_equipo;
+--10.242.135.190
+--10.242.135.190
+
+SELECT * FROM ts_configuracion_equipo;
+
+
+REFRESH MATERIALIZED VIEW camionesarregloop;
+select * from camionesarregloop where nombrecamion like 'CA05';
+
+SELECT * from palasarreglo
+
+---------------------------------------------------------------
+
+
+
+***************************************************************************
+*****************EJECUCIÓN EN CONTROL SENSE TABLE**************************
+***************************************************************************
+
+#INSTALAR APK
+
+1. Ensure IP address configurated in previous steps is correct in order to avoid problems with
+equipment.
+2. Upload application to Control Screen through scp command:
+    scp -i system_key /<path Application>/CSMobile.apk root@<ip_ControlScreen>:~/sdcard/
+3. Enter passphrase.
+4. Connect to Control Screen and enter default passphrase:
+    ssh -i system_key root@192.168.2.10
+5. Install application or update it if its already installed
+    a. Install 
+        pm install /sdcard/CSMobile.apk
+    b. Update 
+        pm -r install /sdcard/CSMobile.apk
+
+        > pm install -r /sdcard/app-release.apk (-d debug pero no tomarlo en cuenta)
+6. Start application:
+ am start com.mss.pms.csmobile
+
+ pm install -r -d /sdcard/C4Mobile-release-2023.06a2-truck.apk
+ am start com.mss.pms.csmobile
+----------------------------------------------------------------
+am force-stop com.mss.pms.csmobile
+pm clear com.mss.pms.csmobile
+am start com.mss.pms.csmobile
+----------------------------------------------
+Key: mssadminkey2018 
+
+ssh-add system_key
+
+#########################################################
+BROCAL UG - DEPRECATED!!
+
+Host ebugapp01
+    User app01
+    HostName 10.10.92.11
+    Port 22
+    IdentityFile ~/.ssh/id_rsa
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
+    #Mine2021!
+    
+Host ebugapp01r
+    User root
+    HostName 10.10.92.11
+    Port 22
+    IdentityFile ~/.ssh/id_rsa
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
+    # ProxyJump w10
+    #M$4Mine2021!
+    
+    
+Host ebugdb01
+    User db01
+    HostName 10.10.92.12
+    Port 22
+    IdentityFile ~/.ssh/id_rsa
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
+    #Mine2021!
+    
+Host ebugdb01r
+    User root
+    HostName 10.10.92.12
+    Port 22
+    IdentityFile ~/.ssh/id_rsa
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
+    #M$4Mine2021!
+    
+    
+Host ebugrep01
+    User rep01
+    HostName 10.10.92.13
+    Port 22
+    IdentityFile ~/.ssh/id_rsa
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
+    #Mine2021!
+    
+    
+Host ebugrep01r
+    User root
+    HostName 10.10.92.13
+    Port 22
+    IdentityFile ~/.ssh/id_rsa
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
+    #M$4Mine2021!
+
+    
+    
+Host ebugrsp01
+    User rsp01
+    HostName 10.10.92.14
+    Port 22
+    IdentityFile ~/.ssh/id_rsa
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
+    #Mine2021!
+
+    
+Host ebugrsp01r
+    User root
+    HostName 10.10.92.14
+    Port 22
+    IdentityFile ~/.ssh/id_rsa
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
+    #M$4Mine2021!
+
+
+
+Host ebugapp02
+    User app02
+    HostName 10.10.92.16
+    Port 22
+    IdentityFile ~/.ssh/id_rsa
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
+    #Mine2021!
+    
+
+Host ebugapp02r
+    User root
+    HostName 10.10.92.16
+    Port 22
+    IdentityFile ~/.ssh/id_rsa
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
+    #M$4Mine2021!
+ 
+
+Host ebugdb02
+    User db02
+    HostName 10.10.92.17
+    Port 22
+    IdentityFile ~/.ssh/id_rsa
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
+    #M$4Mine2021!
+
+Host ebugdb02r
+    User root
+    HostName 10.10.92.17
+    Port 22
+    IdentityFile ~/.ssh/id_rsa
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
+    #M$4Mine2021!
+ 
+Host ebugrep02
+    User rep02
+    HostName 10.10.92.18
+    Port 22
+    IdentityFile ~/.ssh/id_rsa
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
+    #Mine2021!
+
+Host ebugrep02r
+    User root
+    HostName 10.10.92.18
+    Port 22
+    IdentityFile ~/.ssh/id_rsa
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
+    #M$4Mine2021!
+
+    
+Host ebugrsp02
+    User rsp02
+    HostName 10.10.92.19
+    Port 22
+    IdentityFile ~/.ssh/id_rsa
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
+    #Mine2021!
+    
+    
+Host ebugrsp02r
+    User root
+    HostName 10.10.92.19
+    Port 22
+    IdentityFile ~/.ssh/id_rsa
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
+    #Mine2021!
+##########################################################
+
+//BROCAL (conect for checkpoint)
+https://200.48.125.14/sslvpn/Login/Login
+-> EB-USRMI05  (Marzo2022)
+-> EB-USRMI06  (Julio2026)
+-> EB-USRMI07  (Enero2027) --> password actualizado 14/02
+
+para su postgres:
+->postgres: ebsamss
+---------------------------------------
+iris:
+/opt/minesense/iris/iris-back/
+---------------------------------------
+IPS ACTUALIZADAS BROCAL! 14/02
+user : app01 ip: 10.10.36.20 nat: 10.10.92.78
+user : db01 ip: 10.10.36.13 nat: 10.10.92.79
+user : rep01 ip: 10.10.36.15 nat: 10.10.92.80
+user : rsp01 ip: 10.10.36.22 nat: 10.10.92.81
+user : app02 ip: 10.10.36.12 nat: 10.10.92.82
+user : db02 ip: 10.10.36.14 nat: 10.10.92.83
+user : rep02 ip: 10.10.36.16 nat: 10.10.92.84
+user : rsp02 ip: 10.10.36.18 nat: 10.10.92.77
+
+-> omestanza
+PASS: Mestanz@7
+
+PARA INGRESAR:
+ssh omestanza@10.10.92.79
+PASS: Mestanz@7
+
+################################################
+BROCAL UG
+
+Host ebugapp01
+    User app01
+    HostName 10.10.92.11
+    Port 22
+    IdentityFile ~/.ssh/id_rsa
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
+    #Mine2021!
+    
+Host ebugapp01r
+    User root
+    HostName 10.10.92.11
+    Port 22
+    IdentityFile ~/.ssh/id_rsa
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
+    # ProxyJump w10
+    #M$4Mine2021!
+    
+    
+Host ebugdb01
+    User db01
+    HostName 10.10.92.12
+    Port 22
+    IdentityFile ~/.ssh/id_rsa
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
+    #Mine2021!
+    
+Host ebugdb01r
+    User root
+    HostName 10.10.92.12
+    Port 22
+    IdentityFile ~/.ssh/id_rsa
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
+    #M$4Mine2021!
+    
+    
+Host ebugrep01
+    User rep01
+    HostName 10.10.92.13
+    Port 22
+    IdentityFile ~/.ssh/id_rsa
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
+    #Mine2021!
+    
+    
+Host ebugrep01r
+    User root
+    HostName 10.10.92.13
+    Port 22
+    IdentityFile ~/.ssh/id_rsa
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
+    #M$4Mine2021!
+
+    
+    
+Host ebugrsp01
+    User rsp01
+    HostName 10.10.92.14
+    Port 22
+    IdentityFile ~/.ssh/id_rsa
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
+    #Mine2021!
+
+    
+Host ebugrsp01r
+    User root
+    HostName 10.10.92.14
+    Port 22
+    IdentityFile ~/.ssh/id_rsa
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
+    #M$4Mine2021!
+
+
+
+Host ebugapp02
+    User app02
+    HostName 10.10.92.16
+    Port 22
+    IdentityFile ~/.ssh/id_rsa
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
+    #Mine2021!
+    
+
+Host ebugapp02r
+    User root
+    HostName 10.10.92.16
+    Port 22
+    IdentityFile ~/.ssh/id_rsa
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
+    #M$4Mine2021!
+ 
+
+Host ebugdb02
+    User db02
+    HostName 10.10.92.17
+    Port 22
+    IdentityFile ~/.ssh/id_rsa
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
+    #M$4Mine2021!
+
+Host ebugdb02r
+    User root
+    HostName 10.10.92.17
+    Port 22
+    IdentityFile ~/.ssh/id_rsa
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
+    #M$4Mine2021!
+ 
+Host ebugrep02
+    User rep02
+    HostName 10.10.92.18
+    Port 22
+    IdentityFile ~/.ssh/id_rsa
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
+    #Mine2021!
+
+Host ebugrep02r
+    User root
+    HostName 10.10.92.18
+    Port 22
+    IdentityFile ~/.ssh/id_rsa
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
+    #M$4Mine2021!
+
+    
+Host ebugrsp02
+    User rsp02
+    HostName 10.10.92.19
+    Port 22
+    IdentityFile ~/.ssh/id_rsa
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
+    #Mine2021!
+    
+    
+Host ebugrsp02r
+    User root
+    HostName 10.10.92.19
+    Port 22
+    IdentityFile ~/.ssh/id_rsa
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
+    #Mine2021!
+Host ebugapp02
+    User app02
+    HostName 10.10.92.16
+    Port 22
+    IdentityFile ~/.ssh/id_rsa
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
+    #Mine2021!
+
+
+################################################
+COIMOLACHE 
+-> IRIS -> 192.168.37.84
+------------------------------------------
+https://200.48.125.14/sslvpn/Login/Login
+-> EB-USRMI05  (SystemMine2021!)
+-> EB-USRMI06  (Julio2026)
+-> EB-USRMI07  (Enero2027)
+
+EB-USRMI05  (Marzo2022)
+
+EB-USRMI06  (Julio2026)
+
+EB-USRMI07  (Enero2027)
+
+ssh esanchez@192.168.37.82 (app02?)
+ssh esanchez@192.168.37.84
+password: Alexander$4
+
+postgres: chsamss
+
+###############################################
+SERVERSOCKET
+###############################################
+
+#Ejecutar modo servicio sin que se caiga:
+> opt/minesense/protobuffer
+
+sudo ./ServerSocketChecker 
+
+#################################################
+vistas a refrescar
+#################################################
+refresh materialized view palasarreglo;
+refresh materialized view camionesarregloop;
+
+
+################################################
+IRIS - MARCOBRE?
+################################################
+USER_DATA_BASE = system_calibration_rw
+PASS_DATA_BASE = system_calibration_rw
+NAME_DATA_BASE = ControlSenseDB
+PORT_DATA_BASE = 5432
+HOST_DATA_BASE = 10.10.88.143
+#################################################
+USER_DATA_BASE = postgres
+PASS_DATA_BASE = mcsamss
+NAME_DATA_BASE = ControlSenseDBHB
+PORT_DATA_BASE = 5432
+HOST_DATA_BASE = 192.168.1.14
+
+
+
+###################################################
+SERVERSOCKET CONFIG BD
+###################################################
+# para configurar la coneccion a la bd ejecutar el archivo ConfiguracionDBOptimizadorCLI
+./ConfiguracionDBOptimizadorCLI
+# e ingresar los datos
+
+
+
+##################################################
+#execute java File
+java -jar namefile.jar
+
+
+#ejecutar jar con gitbash pára poder hacer una busqueda con grep "palabra"
+java -jar controlSenseAuto.2021.07a1.jar | grep FTP
+
+###################################################
+#para ver los logs de ftpd
+sudo tail -f /var/log/vsftpd.log 
+#para ver los logs guardados de ftpd
+sudo cat /var/log/vsftpd.log
+#para dar permisos a todos los elementos (*)
+chmod 777 *
+#Para cambiar los permisos de root a "usuario" a todos los archivos 2021.0...
+sudo chown -R controlsenseadmin:controlsenseadmin 2021.0*
+#o usar
+sudo chown controlsenseadmin:controlsenseadmin linux mac windows
+#para conectarse de una maquina virtual a otra (puenteo)
+ssh -L 0.0.0.0:5432:10.242.135.190:5432 -N 127.0.0.1
+
+
+##################################################################
+CONTROLSENSEDESKTOP - GENERAR JAR
+##################################################################
+IdiomasBundle!
+ant instalacion
+
+.vscode
+tasks
+build jar win
+
+-build jar -> linux
+-- actualizacion manual
+compilar jar sin ofuscar: C:\\ant\\bin\\ant -f build.xml jar
+
+--> Para compilar movernos a la carpeta dist y poner el nombre "controlSenseAuto" al jar generado, aquí saldrá el jar ofuscado
+compilar ofuscado - windows: java -jar proguard/proguard.jar @proguard/ConfigurationProGuard_win.cfg (PARA EL JAVA.7)
+(JAVA 11) java -jar .\proguard\proguard_v7.jar @proguard\ConfigurationProGuard_win_java11.cfg
+
+
+carpeta codificador - pegar y ejecutar // cambiar nombre a "Nuevaversion"
+
+
+Ejecutar el win8 en vmware donde se encuentra el compilador con java17
+//codificador e instalador
+https://drive.google.com/file/d/1JAg3dq1nUbFKBbZ7KdM_WLZxIvfJjdiU/view
+//solo se codifica en windows
+#######
+EJECUTAR JAR 17
+
+> java -jar --module-path /Library/Java/JavaVirtualMachines/javafx-sdk-17.0.4/lib --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.media,javafx.swing,javafx.base,javafx.web '/Users/jhordan/Documents/projects/cs_desktop/dist/C4M_Desktop.jar'
+#######
+
+35838174
+880711763
+
+
+35836508
+880707877
+
+perforado
+no perforado
+ciclotdrill
+
+tamallatdrill
+tataladrotdrill
+tpusuario
+tsequipo
+tpperforacion (inicio-finperdoracion)
+tacicletdrill = 1
+
+2- setupwin-resourse-pegar el codificado
+regresar a setupwindows y buscar ejecutar
+(setup - ejecutar)
+
+
+1.1.- WIN7 -> VSCODE -> Ir a tarea -> tareas:ejecutar tarea -> build jar win
+en caso de no poder generar con el anterior, por cmd ubicado en el proyecto: C:\\ant\\bin\\ant -f build.xml jar
+luego generar el ofuscado: java -jar proguard/proguard.jar @proguard/ConfigurationProGuard_win.cfg
+
+
+El generado en la carpeta codificador, se debe de hacer con el paso 2. 
+Recordar que para enviar el codificado, es necesario cambiar al nombre "ControlSense2", solo para que se reemplace.
+Recordar que el jar que se ejecuta en la carpeta codificador es el ofuscado.
+ControlSense2 - para actualizar cambiar el nombre
+
+##################################################################
+
+BROCAL
+
+user : ebsamssapp01    -- ip: 10.10.36.20  nat: 10.10.88.143 -- ssh ebsamssapp01@10.10.88.143
+user : ebsamssdb01     -- ip: 10.10.36.13  nat: 10.10.88.144 -- ssh ebsamssdb01@10.10.88.144
+user : ebsamssrep01    -- ip: 10.10.36.15  nat: 10.10.88.145 -- ssh ebsamssrep01@10.10.88.145
+user : ebsamssrsplus01 -- ip: 10.10.36.22  nat: 10.10.88.146 -- ssh ebsamssrsplus01@10.10.88.146
+user : ebsamssapp02    -- ip: 10.10.36.12  nat: 10.10.88.147 -- ssh ebsamssapp02@10.10.88.147
+user : ebsamssdb02     -- ip: 10.10.36.14  nat: 10.10.88.148 -- ssh ebsamssdb02@10.10.88.148
+user : ebsamssrep02    -- ip: 10.10.36.16  nat: 10.10.88.149 -- ssh ebsamssrep02@10.10.88.149
+user : ebsamssrsplus01 -- ip: 10.10.36.18  nat: 10.10.88.142 -- ssh ebsamssrsplus01@10.10.88.142
+
+https://ms4m.atlassian.net/browse/ST01-3129
+
+
+##############################################################
+#para scp uso de descarga - de un ip 
+scp omestanza@10.10.88.147:~/auditory_app.tar.gz .
+
+#para scp subir archivos a un ip
+scp c:\Users\MS4M\Documents\calibracion_gps_back\dist2810.zip ms4m@10.240.94.71:/opt/minesense/iris
+
+##################################################################
+vpn.buenaventura.com.pe
+EB-USRMI06  (Buen@Ventur@202)
+ip: 10.10.36.20   nat: 10.10.88.143
+https://200.48.125.14/sslvpn/Login/Login
+4rll1vmssHBminerals
+USER_DATA_BASE = system_calibration_rw
+PASS_DATA_BASE = system_calibration_rw
+user : ebsamssapp02   ip: 10.10.36.12   nat: 10.10.88.147
+omestanza
+Mestanz@7
+
+
+
+
+############################################
+DISABLED A.D Brocal
+############################################
+ruta del archivo nano /etc/hosts (descomentar la linea):
+#Block AD.BROCAL
+#0.0.0.0        cmbsaa.com
+
+
+
+####################################################
+LINDERO
+####################################################
+Instalar el programa softether vpn - manual en documentos
+-
+#ingreso por ssh:
+ssh app02@10.1.64.112
+password: LNMarm$2045
+
+##Otros ingresos
+user : app01     ip: 10.1.64.120
+user : db01      ip: 10.1.64.113
+user : rep01     ip: 10.1.64.115
+password: LNMarm$2045
+user : app02     ip: 10.1.64.112
+password: LNMarm$2045
+
+DB ->
+10.1.64.112
+controlsys
+4rll1vmssHBminerals
+lnsamss (postgres)
+
+
+---------------------------------------
+sudo apt install open-vm-tools-desktop
+#########################################
+#descomprimir un archivo tar
+tar -xvzf dist.tar.gz
+unzip tuarchivo.zip
+gunzip tuarchivo.gz
+#comprimir un archivo tar
+tar -zcvf html.tar.gz html
+zip -r tuarchivo.zip directorio
+#eviar un archivo /subir por scp a un ssh
+scp dist.tar.gz app02@10.1.64.112:/home/app02/
+
+MARCOBRE conexion ACTUALIZADA!
+
+Hubo cambio en el puerto de ssh! Por politicas de seguridad!
+Ahora para el ssh se utiliza el puerto 9922
+la conexion por ssh seria:
+> ssh postgres@172.23.131.14 -p 9922
+> ssh mcdb01@172.23.131.14 -p 9922
+> scp -P 9922 mcdb02@172.23.131.13:/home/mcdb02/bk_mac.tar.gz .
+
+user : mcapp01        -- ip:  172.23.131.20  pass: Mine2021!
+user : mcdb01          -- ip:  172.23.131.14  pass: Mine2021!
+user : mcrep01         -- ip:  172.23.131.16  pass: Mine2021!
+user : mcrsp01         -- ip:  172.23.131.19 pass: Mine2021!
+user : health01    -- ip:  172.23.131.21 pass: MCMArm$2045 
+
+
+user:networksense --ip: 172.23.131.25 pass:12345
+
+user : mcapp02       -- ip:  172.23.131.12  pass: Mine2021!
+user : mcdb02         -- ip:  172.23.131.13  pass: Mine2021!
+user : mcrep02        -- ip:  172.23.131.15  pass: Mine2021!
+user : mcrsp02         -- ip:  172.23.131.18   pass: Mine2021!
+user : health02         -- ip:  172.23.131.22  pass: MCMarm$2045plus
+
+****
+Desactualizados:
+ user: ueminesense pssw:MSSadminkey$00$ 
+ user: ueminesense1 pssw:MSSadminkey$01
+Update 14/10/21
+ user: ueminesense2  pssw:MSSadminkey$02 -> (usar token de google authentication)
+
+user: UEMINESENSE1 pssw: MSSadminkey$01
+user: UEMINESENSE2 pssw: MSSadminkey$02
+ 
+vpn
+172.23.131.20
+POSTGRES
+mcsamss
+
+
+
+#############################################
+KUMTOR:
+Conexión por AnyDesk
+id: 661442157
+password: Minesense2021$
+
+
+conexion por forticlient
+password postgres: kgsamss
+
+
+Password: KGMarm$2045
+usr: app01          -- IP : 10.240.94.71
+usr: db01           -- IP : 10.240.94.72
+usr: rep01          -- IP : 10.240.94.73
+usr: repplus01      -- IP : 10.240.94.74
+###########################################
+GOLDFIELDS - HenryDB
+
+
+--> iris 10.112.52.48
+
+172.29.95.40
+5455
+postgres
+gfsamss2017$
+------------
+controlsys
+4rll1vmssHBminerals
+
+
+
+###########################33
+$ ssh -L 0.0.0.0:5432:172.29.95.40:5455 -N 127.0.0.1
+
+
+
+####################################################
+-- Obtener backup, solo esquema
+
+pg_dumpall -s -f DDL_MC.sql
+
+-- Obtener backup sin datos pesados o sin importancia, (-T ignorar tabla):
+
+pg_dump -d ControlSenseDB -T ta_speed_limits_exceeded -T ta_mensajesopt -T ta_wrongcarguiodesc -T at_data_floor -T ta_logreasignacarguio -T tb_shovel_log -T ta_outroutecamion -T ts_confirmaestado -T ta_datacarga_dig -T ta_mensajes_detalle -T ta_controlbateria -T ta_datacarga_sensores -T ta_onoffhor -T ta_prisma_hp -T ta_tmp_hardware -T ta_androidlogs -T ta_datacamion_historic -T at_collision_alerts -T ta_log -T pt_reg_temp_parameters_cr  -T ta_alertasvims -T ta_datadigline -T tp_systemlogs -T ta_data_auxiliares_historic -T ta_datapala_historic -T ta_datadiglineacumulado -T tp_systemlogs -T ta_datacarga -T ta_registro_horometro   -T ta_datadiglineacumuladodetalle  -T pt_reg_temp_coor_cr   -T ta_balanceoptimizador  > Backupgf240423.sql
+pg_dump -d ControlSenseDB -T ta_speed_limits_exceeded -T ta_mensajesopt -T ta_wrongcarguiodesc -T at_data_floor -T ta_logreasignacarguio -T tb_shovel_log -T ta_outroutecamion -T ts_confirmaestado -T ta_datacarga_dig -T ta_mensajes_detalle -T ta_controlbateria -T ta_datacarga_sensores -T ta_onoffhor -T ta_prisma_hp -T ta_tmp_hardware -T ta_androidlogs -T ta_datacamion_historic -T at_collision_alerts -T ta_log -T pt_reg_temp_parameters_cr  -T ta_alertasvims -T ta_datadigline -T tp_systemlogs -T ta_data_auxiliares_historic -T ta_datapala_historic -T ta_datadiglineacumulado -T tp_systemlogs -T ta_datacarga -T ta_registro_horometro   -T ta_datadiglineacumuladodetalle  -T pt_reg_temp_coor_cr   -T ta_balanceoptimizador  > BackupMC120423.sql
+pg_dump -d ControlSenseDB -T ta_speed_limits_exceeded -T ta_mensajesopt -T ta_wrongcarguiodesc -T at_data_floor -T ta_logreasignacarguio -T tb_shovel_log -T ta_outroutecamion -T ts_confirmaestado -T ta_datacarga_dig -T ta_mensajes_detalle -T ta_controlbateria -T ta_datacarga_sensores -T ta_onoffhor -T ta_prisma_hp -T ta_tmp_hardware -T ta_androidlogs -T at_collision_alerts -T ta_log -T pt_reg_temp_parameters_cr  -T ta_alertasvims -T tp_systemlogs  -T tp_systemlogs -T ta_registro_horometro   -T ta_datadiglineacumuladodetalle  -T pt_reg_temp_coor_cr   -T ta_balanceoptimizador  > BackupEB2207.sql
+
+-- Comprimimos backup
+
+tar czf BackupLight.tar.gz BackupLight.sql
+
+-- Restaurar backup, primero solo el esquema
+
+psql -p 5455 -f DDL.sql
+
+-- Restaurar backup de datos
+
+7z x -so BackupLight.tar.gz | psql -p 5455 -d ControlSenseDB 
+
+
+
+
+---------------------------------------------------->
+En el caso de Lindero:
+->ingresamos por ssh
+ssh db01@10.1.64.113
+password: LNMarm$2045
+
+->ingresamos a postgres
+su postgres
+password: lnsamss
+
+-> damos un cd y concultamos con pwd, la ruta:
+/var/lib/postgresql
+
+->Ahora si podemos ejecutar cualquiera de los comandos de arriba, por ejemplo:
+pg_dumpall -s -f DDL_GF_160222.sql
+
+-> para descargar el archivo usamos scp
+scp db01@10.1.64.113:/var/lib/postgresql/DDL_CH_Lindero.sql .
+
+LNMarm$2045
+##############################################################
+BD - HenryDB
+
+IP: 192.168.5.86
+->Marcobre origen: 5501 postgres mcsamss
+->Lindero destino: 5502 postgres lnsamss
+
+
+##############################################
+CONFIGURAR IPS Y ACTUALIZAR EL SERVIDOR DEL EQUIPO: MINIMIZADO - SIMPLIFICADO
+
+ SELECT
+	TS_E.id,
+    TSE.NOMBRE FLOTAPRINCIPAL,
+	TS.NOMBRE FLOTASECUNDARIA,
+	TS_E.NOMBRE EQUIPO,
+    TS_E.grupoconexion,
+	TS_E.ipequipo
+FROM
+	TS_EQUIPOS TSE
+	JOIN TS_EQUIPOS TS ON
+		TSE.ID = TS.ID_FLOTA
+	JOIN TS_EQUIPOS TS_E ON
+		TS.ID = TS_E.ID_FLOTA
+WHERE
+	/*TSE.NOMBRE = 'Acarreo en Mina'
+    TSE.NOMBRE = 'Carguio en Mina'*/
+    TSE.NOMBRE = 'Perforadoras'
+    AND TS_E.tiem_elimin IS NULL --tener en cuenta que el equipo no este eliminado
+ORDER BY
+	TSE.ISFLOTA ASC LIMIT 100;
+
+UPDATE TS_EQUIPOS set grupoconexion = Null
+where id > 0;
+
+--PARA ACTUALIZAR EL IP DEL EMULADOR AL EQUIPO
+UPDATE TS_EQUIPOS
+    set grupoconexion = 1
+-- set ipequipo = '10.242.65.9'
+WHERE
+      ID = 42;
+
+--PARA ACTUALIZAR EL IP DEL SERVER, EN ESTE CASO UBUNTU (ES LA IP Y PORT DONDE SE ENCUENTRA EL POSTGRES
+SI SE ENCUENTRA EN TU LOCAL Y UTILIZAS UN DOCKER, ENTONCES ES EL DEL LOCAL Y EL PUERTO DEL POSTGRES DONDE ESTA TU BD)
+UPDATE ts_configuracion_equipo_detalle
+SET
+    valor = '10.242.135.190'
+--         valor = '5440'
+--         valor = '1'
+WHERE id_equipo=42
+    and id_configuracion_equipo=
+        102;
+--         103;
+-- 108; --PORT
+--         109;
+-------------------------
+
+SELECT
+    tsq.id_configuracion_equipo,
+    TSQ.valor,
+    TSE.nombre
+FROM ts_configuracion_equipo_detalle TSQ
+    LEFT JOIN ts_configuracion_equipo TSE  ON
+        TSQ.id_configuracion_equipo = TSE.id
+WHERE
+      TSQ.id_equipo= 42
+ORDER BY TSQ.id_configuracion_equipo;
+
+##############################################
+para listar los errores en el SERVERSOCKET 
+-> ir a ServerSochert | debuger
+-> edit configurations
+-> En program arguments ingresar:
+--profile-queries
+-> save and test
+
+##############################################
+listar la ruta de una carpeta
+pwd
+
+
+#############################################
+ONEDRIVE HENRY
+https://msspe-my.sharepoint.com/:f:/g/personal/henry_lopez_ms4m_com/EtX7stdDVtFBrYli-Tyv8a8B2-OCxKaE0TiOmpgKJivZiA?e=CgCYDg
+
+
+#############################################
+$$
+declare
+    equipment_id bigint;
+BEGIN
+    for equipment_id in (select unnest('{1,2,3,43,45,5}'::bigint[])) loop
+        raise notice 'equipment_id:%',equipment_id;
+        end loop;
+end;
+$$
+
+
+
+
+
+
+
+###############################################
+restaurar bd descargada de servidor
+
+psql -U postgres ControlSenseDB | .\BackupLight1.sql 
+
+
+
+###########################################
+COSAPI
+
+
+desktop-njbe69f@ad
+
+
+---------------------
+usuarios vpn:
+vpnusr06 -> r@WyHefaC
+vpnusr07 -> fedTc#Q&N
+vpnusr08 -> 49Jp!HvT5
+
+---------------------
+ VLAN 50 de Servidor TPS
+
+ 10.11.89.4 – Servidor Actual (Físico) Prestado por Minesense
+ 10.11.89.5 – Servidor Nuevo (Físico)
+ 10.11.89.6 – Servidor BD TPS (Virtual)
+ 10.11.89.7 - Servidor Aplicaciones TPS (Virtual)
+ 10.11.89.42 – Laptop 1 conectado a servidor nuevo
+ 10.11.89.43 – Laptop Ivan Davila para conexiones
+
+ VLAN 20 de Usuarios
+
+ 10.11.86.33 – Laptop conectada a servidor nuevo
+ 10.11.86.89 – Laptop Ivan Davila para descargas de TPS
+
+
+
+
+-->Dataquality: 
+app\node_modules\pg\lib\connection.js
+connection.js -> this.stream.setNoDelay(true)
+    		 this.stream.connect(5456, host)
+cloud.js ->  options.apiBaseUrl = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '5456');
+
+--ejecutar
+cd app
+>sails lif
+
+
+-->IRIS: 
+app\node_modules\pg\lib\connection.js
+connection.js -> this.stream.setNoDelay(true)
+    		 this.stream.connect(5456, host)
+//cloud.js ->  options.apiBaseUrl = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '5456');
+
+
+
+---------------------------------------------------
+KUMTOR
+
+por fortclient!
+
+Nombre: Erick Alexander Sanchez Aguilar
+user: Erick.Sanchez@kumtor.kg
+user: Erick.Sanchez
+password: TGGDsWG7IiJR
+---------------------------------------------------
+USUARIO: MestanzaO  
+pass: Rd4ML09q$uxzbpmj
+
+--------------------------------------------
+>ssh ms4m@10.240.94.71
+access ip: 10.240.94.71
+credentials: 
+ usuario: ms4m 
+ password: Pr1v2MS$!!
+
+[09:06] Henry López - MS4M
+controlsys 4rll1vmssHBminerals
+
+
+
+----------------------------------------------------------
+BACKUP DATABASES ALL OPERATIONS
+
+https://msspe-my.sharepoint.com/:f:/g/personal/henry_lopez_ms4m_com/EnRuMkv9nBZJhRDA7MQ3UXoB9hST78nFdwGsew6EhN467g?e=5%3aEBp0ZZ&at=9
+
+
+----------------------------------------------------------
+COIMOLACHE
+----------------------------------------------------------
+#Servidores COSAPI
+
+#Servidor en produccion
+
+ip: 10.11.89.102
+
+
+# Servidores Nuevos
+
+app01: 10.11.89.7 
+user:app01
+pass:Mine2021!
+
+
+
+db01: 10.11.89.6
+user:db01
+pass:Mine2021!
+
+--------------------------------------------
+access ip: 10.240.94.71
+credentials: 
+ usuario: ms4m 
+ password: Pr1v2MS$!!
+
+[09:06] Henry López - MS4M
+controlsys 4rll1vmssHBminerals
+
+######################################################
+GOLDFIELDS
+
+AnyDesk - 908551099
+
+pass - mss@2021 (646430131)
+######################################################
+HUDBAY
+
+https://appspe.hudbayminerals.com/vpn/index.html
+--CREDENTIALS--
+user: mcorrea pass: MCC*21$hbp
+
+user : hbsacudapc01      -- ip:  172.23.46.20  -- app01 (Password: HbMarm$2045)
+user : hbsacuddbc01       -- ip:  172.23.46.13   -- db01 (Pasword: HBMarm$2045$$)
+
+minesense password:  Minesense0020$
+
+principal-->172.23.46.13
+replica-->172.23.46.15
+
+
+
+################################################
+https://appspe.hudbayminerals.com/vpn/index.html
+
+
+
+
+##############################################
+
+deshabilitar el "digprocesor";
+
+detener el cliper y detener el monit!
+detener el digprocesor; --comentar del monit o mejor: monit unmonitor digprocessor;
+
+
+tuplas vivas - terminal:
+
+PARA VER LOS NIVELES QUE SE LOQUEAN
+SELECT nivel, issuperior, COUNT(*)
+FROM ta_datadiglineacumulado ta
+LEFT JOIN ta_datadiglineacumuladodetalle tad on ta.id_datadiglineacumulado = tad.id_datadiglineacumulado
+WHERE intervalo = 'global'
+AND ta.tiem_elimin IS NULL
+AND tad.tiem_elimin IS NULL
+AND nivel IN (4095, 4200, 4220, 4275)
+GROUP BY nivel, issuperior
+ORDER BY 1, 2;
+
+PARA VER DESDE CUANTO CRECEN LAS QUERYS:
+select to_char(tiem_creac, 'yyyy-mm-dd'), count(*)
+from ta_datadiglineacumuladodetalle
+where tiem_creac > now() - interval('2 week')
+group by 1
+order by 1 desc
+limit 10;
+
+
+DROP TABLE ta_datadiglineacumulado_tmp;
+CREATE TABLE ta_datadiglineacumulado_tmp AS  select * from ta_datadiglineacumulado  order by 1;
+TRUNCATE ta_datadiglineacumulado;
+insert into ta_datadiglineacumulado select * from ta_datadiglineacumulado_tmp order by 1;
+
+
+
+
+check status - actualiza los viajes! (lista los viajes y chequea que esten bien)
+verificación en el chromcat
+
+
+tail -f /var/log/syslog
+ tail -f protobuffer.log
+
+
+ querys activas!
+
+ SELECT pid,
+          client_addr,
+          datname,
+          client_hostname,
+          query_start,
+        now()
+            - query_start as time_runing
+          ,
+          query
+    --               ,
+    --               *
+                            --  ,siz
+                            --  select pg_terminate_backend(22463);
+                            --  pg_terminate_backend(22463)
+          --        *
+    FROM pg_stat_activity
+    where 
+    datname like 'ControlSenseDB'
+      and 
+      query not like '%pg_stat_activity%'
+      -- AND QUERY like '%locacion_move%'
+      -- AND ( now()
+            --  - query_start) < INTERVAL '1 second'
+    -- AND pid IN (
+    --    64258
+    --     )oin
+    ORDER BY query_start ASC ;
+
+
+    tuplas muertas!
+
+    SELECT schemaname
+     , relname
+     , n_live_tup
+     , n_dead_tup
+     , last_autovacuum
+     , (n_dead_tup
+  / (n_live_tup
+       * current_setting('autovacuum_vacuum_scale_factor')::float8
+    + current_setting('autovacuum_vacuum_threshold')::float8)) 
+     , now()
+FROM pg_stat_all_tables
+-- where 
+-- last_autovacuum notnull
+--   and 
+  -- schemaname like 'public'
+-- and 
+-- relname SIMILAR TO ''||
+-- 'ta_datadigline%|'
+-- 'ta_coordelay%|'
+-- 'ta_posicionequipos%|'
+-- 'ts_poligono%|'
+-- 'public.ta_datacamion%|'
+ORDER BY n_dead_tup 
+DESC;
+
+
+
+
+--ubicar el Carguio
+palas arreglo -> id_equipo
+
+palasarregloloop where id del equipo
+(camiones asignados)
+--
+select * from deshabilita_carguio (funcion que se habilita)
+()
+
+
+
+
+SERVICIOS DE LOGS!
+-- lista de todos los servicios:
+cd /opt/minesense/init/
+--activar el servicio (lista de querys activas, igual que el sql que se ejecuta guarda por tiempo)
+./SLogPgStatActivity
+sudo ./SLockMonitory start
+./SLogPgStatActivity  status
+tail -f /opt/minesense/log/pg_stat_activity.log
+-- LockMonitory - update que ver si la query dura demasiado tiempo - y en que tiempo se ejecutan 
+./SLockMonitory
+sudo ./SLockMonitory start
+tail -f /opt/minesense/log/SLockMonitory.log
+tail -f /opt/minesense/log/pg_stat_activity.log
+--Postgres --> para ver el crontab 
+- sudo su postgres
+- crontab -l (listar)
+- crontab -e (abrir contab)
+
+BROCAL:
+-> 
+
+
+
+INVESTIGAR SSH ARCHIVO DE CONFIGURACION!
+
+######################################################33
+print  desde equipo
+> logcat -v time | grep target
+
+
+---------------------------------------->
+kumtor - forticlient:
+
+user: Cristhian.Gamboa
+password: RsMBMnj6Px4Q
+
+
+
+
+
+manera maual txf control
+en sql sever ya se encuentra
+ETL
+borraria la data ingresada en minado 
+
+
+->ingreso de perforaciones!
+de un taladro!
+->cuando ingresa: pone la fecha inicial,
+los tiempos que puedes perforar.
+el orden del 0!
+->VALIDACION PARA EL INPUT DE LOS 4 ESTADOS!
+
+
+
+--------------------------------------------->
+ETL -> BLOQUES Y POLÍGONOS!
+
+
+
+
+#############################################################
+#entrar al terminal:
+docker exec -it "nombre_docker" bash
+
+sudo timedatectl set-timezone America/Lima
+timedatectl
+
+apt install sudo -y
+
+sudo apt -y update && sudo apt -y upgrade 
+
+apt install lsb_release
+apt install -y net-tools gnupg2 curl iputils-ping iproute2 netcat systemd rsyslog
+sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+sudo apt -y install curl ca-certificates
+
+apt install net-tools gnupg2 curl
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 7FCC7D46ACCC4CF8 #id--keyserver
+curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+
+
+sudo apt -y update
+
+#####PARA INSTALAR POSTGRES#######
+sudo apt install postgresql-10 postgresql-client-10 -y
+#sudo apt install postgresql-12 postgresql-client-12 -y
+
+
+
+//Restaurar BD
+#copiar los usuarios
+docker cp c:\Users\MS4M\Downloads\globals.gz db01:root
+
+#copiar la bd
+docker cp c:\Users\MS4M\Downloads\bacup.tar.gz db01:root
+
+#crear la bd en postgres
+su - postgres 
+psql
+create database "ControlSenseDB";
+
+#para evitar conflictos copiar a la carpeta /var/lib/postgres
+chmod 777 "nombre_del_archivo"
+
+#restaurar la bd
+psql -d ControlSenseDB -f "nombrearchivo"
+
+
+
+//install docker and run image in docker
+docker run --name db01 -p 5433:5432 --cap-add=NET_ADMIN --device=/dev/net/tun -it -d ubuntu:18.04
+
+
+
+//consultar tamaño de archivos - ubuntu
+> df -h /
+> df -h
+
+->iniciar docker
+docker exec -it "id o nombre del docker" bash
+->levantar el servido de postgres en docker
+/etc/init.d/postgresql status
+/etc/init.d/postgresql start
+
+
+
+
+//CREACIÓN ARCHIVO .PGPASS
+CREAR EN EL HOME DE POSTGRES: su - postgres
+> nano .pgpass (postgres /home) -> en el home del usuario! 
+ -> *:*:*:postgres:ebsamss (de acuerdo a cada operación)
+> agrega permisos
+ ->chmod 600 .pgpass
+ ->chmod 600 /root/.pgpass
+
+> drop database 'ControlSenseDB';
+> create database 'ControlSenseDB';
+> ingresa a psql 
+ -> alter user postgres with password 'ebsamss'; (de acuerdo al documento .pgpass)
+> testeamos el .pgpass
+ -> psql -U postgres -w (-w utiliza el archivo .pgpass)
+
+
+
+PGPASS GF
+######################
+gfpe-cer-bd04@GFPE-CER-BD04:~$ cat .pgpass
+*:*:*:postgres:gfsamss2017$
+*:*:*:controlsys:4rll1vmssHBminerals
+*:*:*:systemcsdesktop:systemcsdesktop2019
+*:*:*:pisystem:pisystem2020
+localhost:5432:*:controlsys:4rll1vmssHBminerals
+localhost:5432:*:postgres:gfsamss2017$
+localhost:5432:*:systemcsdesktop:systemcsdesktop2019
+#######################
+
+
+>restaura la bd utilizando el .sh! 
+
+
+
+> Para consultar en postgres ingresando a psql si tiene conexiones en uso:
+SELECT  * FROM pg_stat_activity WHERE datname='ControlSenseDB';
+> Para matar el proceso listado anteriormente se ingresa el pid
+SELECT pg_terminate_backend('pid');
+SELECT pg_terminate_backend(1952);
+
+
+########
+REFRESH VIEWS
+
+refresh materialized view "lastloadcargo";
+refresh materialized view "polielimin";
+refresh materialized view "time_equipment_status";
+refresh materialized view "nearestpolygons";
+refresh materialized view "infoholesturn";
+refresh materialized view "dashboard_carguio_acomodo";
+refresh materialized view "dashboard_carguio_espera";
+refresh materialized view "dashboard_carguio_uso";
+refresh materialized view "current_shift_states";
+refresh materialized view "points_projects";
+refresh materialized view "hang_shovel";
+refresh materialized view "lastloadcargo";
+refresh materialized view "datacamiongps";
+--refresh materialized view "camionesarregloug";
+refresh materialized view "camionesarregloop";
+refresh materialized view "tonnageallpolygons";
+select update_tv_tables_clean();
+
+
+SupdateTableTables-> Servicio para refrescar las vistas materializadas 
+
+cd opt/minesense/
+./SupdateTableTables restart
+/opt/minesense/init/SupdateTableTables start (inicializa el servicio)
+sudo /etc/init.d/SUpdateTvTables status (Verifica el estado del servicio para refrescar vistas)
+
+
+
+##CS_POLIGONOS
+en caso de querer reprocesar:
+> ingresar una fecha anterior:
+/opt/minesense/bin$ cat polygonlastexec.out 
+
+> limpiar los datos que contien:    
+/opt/minesense/bin$ cat poligon_processed_files
+
+##AGREGAR VERSION CS
+select * from app_version;
+
+##LOGIN CUENTA BLOQUEADA
+select * from ta_systemintentoslogin order by tiem_creac desc ;
+
+
+
+##Dataquality
+> Genera compilado:
+npm run build
+> Edita compilado para otras operaciones:
+- cd dist 
+- nano main. ... .js
+--> buscar en la carpeta anterior por la ip y modificar 
+
+
+LOGS POSTGRES
+cd /var/lib/postgres/10/main/log 
+
+
+PIT STOP:
+0 -> croncab
+2 -> apk
+
+
+
+#CONECCIÓN POR ADB
+adb connect 192.168.1.100 (IP DEL EMULADOR)
+
+
+###################################################################
+CREACIÓN MAQUINA UBUNTU DOCKER!
+###################################################################
+ apt-get update && apt-get install sudo
+ sudo apt install net-tools
+ sudo apt install curl
+ sudo apt install git
+ sudo apt install nano
+ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+ sudo apt install iputils-ping
+
+ GIT:
+ ssh-keygen -o
+ cat ~/.ssh/id_rsa.pub
+
+
+###CONFIGURAR JAVA VERSIONS
+https://www.happycoders.eu/java/how-to-switch-multiple-java-versions-windows/
+
+
+
+
+
+####IRIS SOFTWARE####
+-> Back:
+node: 10.16.0 
+:: para actualizar a 12.22.10
+npm install socket.io-parser (error socker.io-parser)
+:: generar build
+tsc -w
+nodemon dist/
+
+-> Front:
+:: para compilar
+npm run start
+::para generar build
+npm run build
+####DATAQUALITY SOFTWARE####
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+##DESCARGAR ARCHIVOS DE DOCKER
+-> docker cp iris_soft:/home/cs_iris/calibracion_back_20220301.tar.gz .
+
+
+
+
+
+##############CONSTANCIA###############
+conexión por citrix!
+https://appspe.hudbayminerals.com/
+(se tiene que llamar para el ingreso :v)
+
+password: HbMarm$2045
+ip: 172.23.46.14 (bd)
+app: 172.23.46.12
+http://172.23.46.12/iris/#/login (ubicación Iris)
+
+
+CITRIX UPDATE!
+-> documentos de ingreso: https://docs.google.com/document/d/1VjMXPXcZ5iuDL5daxBn1fcfBz_XKa5vcbPmH5qRGuN4/edit
+email: cristhian.gamboa@ms4m.com
+usuario-cs: cgamboa
+password: Upfer2541
+-> ingresar a: contractos-virtual
+
+select * from app_version;
+CadenaConexxion: HUDBAY:
+4-Dv-2;4-M-3;4-4-6;4-L-9;4-d4V-2;1-XogO.96oUEfgEa1-2;5-XogO.96oYGy-1;4-6.96XVG67GA.81O5.96ef.95FY-1;FTP=4-6.96XVG67GA.81O5.96ef.95FY-1;
+Garbage: HUDBAY:
+--module-path "C:\Program Files\Java\JavaFX-17\lib"
+--add-modules=javafx.controls,javafx.fxml,javafx.graphics,javafx.media,javafx.swing,javafx.web
+-server -XX:+UseZGC -Xms1g -Xmx4g -XX:NewRatio=5 -XX:GCTimeRatio=19
+
+
+####################################
+https://hudbay.cloud.com/Citrix/StoreWeb/#/login
+
+Erick.sanchez@ms4m.com
+Constancia$$2023
+esanchez
+--------------------
+CONSTANCIA ACCESOS - CITRIX:
+user : hbsacudapc01      -- ip:  172.23.46.20  -- app01 (Password: HbMarm$2045)
+user : hbsacuddbc01       -- ip:  172.23.46.13   -- db01 (Pasword: HBMarm$2045$$)
+Otros Password: HbMarm$2045
+user: minesense              --ip:172.23.46.11    pass:Minesense0020$ (RS+ ETL)
+user : hbsacuddbc03      -- ip:  172.23.46.15     -- rep01 (user:minesense pass:Minesense0020$) (RS+ Files y Web, Instancia de Postgres 5433)
+user : hbsacudapc02      -- ip:  172.23.46.12     -- 
+user : hbsacuddbc02       -- ip:  172.23.46.14    -- db02 (user:minesense pass:Minesense0020$)
+user : hbsacuddbc04      -- ip:  172.23.46.16      -- pass HbMarm$2045
+Usuario Report2: voporto001 / C0nst4nc142021
+servidor olap 172.23.101.218 / C0nst4nc142020$
+servidor olap 172.23.46.18 / C0nst4nc142020$
+172.23.101.36     puerto: 1338       /User:  healthsense (Password:12345)
+user: lmiranda    passw: Peru2024
+Servidor H4M
+user: minesense                  --ip:10.23.6.10       --pass: Min3s3ns32022
+
+
+#####IRIS - LINDERO#####
+Levantado en app02 con sudo su!
+http://10.1.64.112/iris
+
+
+
+CS_DESKTOP 
+> EXECUTE JAVA 11
+java -jar --module-path "C:\Program Files\Java\javafx-sdk-11.0.2\lib" --add-modules javafx.controls,javafx.fxml controlSenseAuto.2022.03a1.JDK11.jar
+
+
+
+
+DQ-GOLDFIELDS-CONFIGURATIONS
+BACK:
+->10.112.93.205
+->postgres
+->gfsamss2017$
+FRONT:
+->10.112.93.211:8080
+
+
+
+
+#########INSTALAR SERVERSOCKER - DOCKER#########
+docker run --name dev18 -p 6000:6000 --cap-add=NET_ADMIN --device=/dev/net/tun -it -d msfourmmg/devserver:1.0.6
+
+-> configurar la conexion
+/usr/bin/ConfiguracionDBOptimizadorCLI
+
+-> clonar proyecto
+generar ssh:
+> ssh-keygen -o
+> cat ~/.ssh/id_rsa.pub
+
+-> ejercutar la tarea de compilar
+en vscode:
+>task: run task
+>buil release with make
+
+-> se generara una carpeta bin
+-> ingresar a la ruta /home/cs_serversocket/bin/Release
+-> donde se tendra el ServerSocket compilado
+-> copiar el compilado a /opt/minesense/protobuffer
+> cp ServerSocket /opt/minesense/protobuffer/
+-> para mantener ejecutandose 
+> ./ServerSocketChecker 
+
+
+ANDROID CAMBIO JDK:
+#############JDK11###########
+->Cambiar en variables de entorno y globales - path (ruta del jdk) 
+C:\Program Files\Java\jdk-11\bin
+->En IntellIJ
+--> en run, cambiar por JAVA 11
+--> build and run, escoger: java 11 version 11.0.11
+--> en project settings:
+--> project: sdk: 11 version 11.0.11
+--> language level:11 - Local variable syntax for lambda parameters
+
+ #############JDK7###########
+ ->Cambiar en variables de entorno y globales - path (ruta del jdk) 
+C:\Program Files\Java\jdk1.7.0_80\bin
+->En IntellIJ
+--> en run, cambiar por JAVA 7
+--> build and run, escoger: java 7 1.7
+--> en project settings:
+--> project: sdk: 1.7 java version "1.7"
+--> language level: 7 - Diamonds, ARM, multi-catch etc.
+
+
+
+
+
+#############BASH RC PARA CONECCIÓN DIRECTA ############################
+SSH_ENV="$HOME/.ssh/agent-environment"
+
+
+
+function start_agent {
+
+echo "Initialising new SSH agent..."
+
+/usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
+
+echo succeeded
+
+chmod 600 "${SSH_ENV}"
+
+. "${SSH_ENV}" > /dev/null
+
+/usr/bin/ssh-add;
+
+}
+
+
+
+# Source SSH settings, if applicable
+
+
+
+if [ -f "${SSH_ENV}" ]; then
+
+. "${SSH_ENV}" > /dev/null
+
+#ps ${SSH_AGENT_PID} doesn't work under cywgin
+
+ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
+
+start_agent;
+
+}
+
+else
+
+start_agent;
+
+fi
+##############################################################
+
+
+KUMTOR -> 
+/opt/minesense/log -> archivo de errores de postgres
+pg_start_activity.log
+-> buscamos el mas reciente!
+tail -f pg_start_activity.log -> para poder verificar los logs
+-> SI EL SERVICIO NO ESTA CORRIENDO
+/etc/init.d/SLogPgStatActivity status 
+/etc/init.d/SLogPgStatActivity start -> para activar almacenamiento de logs de postgres
+cat .SLogPgStatActivity | grep nohub  -> para ver donde lanza el proceso en segundo plano
+:: Para que escriba se reinicia con root!
+así se ve que se estaba ejecutando en paralelo
+->./etc/init.d/SLogPgStatActivity stop // despues start
+->./etc/init.d/SLogMonitory stop // despues start (para ver el reinicio de tablas)
+
+PARA VERIFICAR LOS ARCHIVOS
+cd /opt/minesense/log
+tail -f SLockMonitory.log -> para ver los logs
+tail -f pg_stat_activity.log -> para verificar las querys pegadas
+
+
+nohup ./AutoRestartReplication.sh >> replaction.log 2>&1
+
+
+
+cromtab
+
+
+
+
+
+COMANDO PARA SACAR BACKUP DE UNA TABLA EN ESPECÍFIVO: -- tabla
+pg_dump -h 127.0.0.1 -p 5432 -U postgres -a -d ControlSenseDB -t ta_datacamion_historic | gzip -1 > ta_datacamion_historic.gz
+
+pg_dump -h 127.0.0.1 -p 5432 -U postgres -a -d ControlSenseDB -t tp_cargadescarga | gzip -1 > tp_cargadescarga.gz
+pg_dump -h 127.0.0.1 -p 5432 -U postgres -a -d ControlSenseDB -t tp_estados | gzip -1 > tp_estados.gz
+pg_dump -h 127.0.0.1 -p 5432 -U postgres -a -d ControlSenseDB -t tp_palas | gzip -1 > tp_palas.gz
+pg_dump -h 127.0.0.1 -p 5432 -U postgres -a -d ControlSenseDB -t ta_datacarga_sensores | gzip -1 > ta_datacarga_sensores.gz
+
+
+pg_dump -h 127.0.0.1 -p 5432 -U postgres -a -d ControlSenseDB -t ta_log | gzip -1 > ta_log.gz
+gunzip -c tp_cargadescarga.gz  | psql -h 127.0.0.1 -U postgres -p 5444 -w -d ControlSenseDB
+gunzip -c tp_estados.gz  | psql -h 127.0.0.1 -U postgres -p 5444 -w -d ControlSenseDB
+gunzip -c tp_palas.gz  | psql -h 127.0.0.1 -U postgres -p 5444 -w -d ControlSenseDB
+
+#######################
+ESPACIO DISPONIBLE:
+df -h
+
+#######################
+BACKUP TABLA::
+
+
+PARA GENERAR BACKUP:
+psql -U postgres -d ControlSenseDB -c "COPY (
+select id, id_palas, id_equipo, id_trabajador, id_crew, id_locacion, id_poligono, id_tandem, id_locacionnext, id_poligononext, id_descarganext, id_tandemnext, tiem_cargado, isspot, tiem_esperando, bool_estado, bool_equipo_next, cola, tiem_creac, tiem_update, tiem_elimin
+from tp_palas
+where id in (
+    select idtablatppalas
+    from camionesarregloop
+)
+) TO stdout DELIMITER ',' CSV HEADER" \
+    | gzip -9 > tp_palas.csv.gz
+
+psql -U postgres -d ControlSenseDB -c "COPY (Select id,id_equipo            ,frecuencia           ,id_trabajador        ,senhalgps            ,senhalwireless       ,calidadwireless      ,tempeje1             ,tempeje2             ,tempeje3             ,tempeje4             ,tempeje5             ,tempeje6             ,presllanta1          ,presllanta2          ,presllanta3          ,presllanta4          ,presllanta5          ,presllanta6          ,velocidad            ,isload               ,tonelaje             ,marcha               ,incl_roll            ,incl_pitch           ,latitude             ,longitud             ,xcoor                ,ycoor                ,zcoor                ,precisiongps         ,tramosids            ,direccion            ,combustibleint       ,templlanta1          ,templlanta2          ,templlanta3          ,templlanta4          ,templlanta5          ,templlanta6          ,bateriasensorllanta1 ,bateriasensorllanta2 ,bateriasensorllanta3 ,bateriasensorllanta4 ,bateriasensorllanta5 ,bateriasensorllanta6 ,tiem_creac           ,tiem_update          ,segment_angle        ,fuel_rate  from ta_datacamion_historic) TO stdout DELIMITER ',' CSV HEADER" \
+| gzip -9 > ta_datacamion_historic.csv.gz
+
+PARA RESTAURAR:
+psql -U postgres -d ControlSenseDB -t -c "copy tp_palas(id, id_palas, id_equipo, id_trabajador, id_crew, id_locacion, id_poligono, id_tandem, id_locacionnext, id_poligononext, id_descarganext, id_tandemnext, tiem_cargado, isspot, tiem_esperando, bool_estado, bool_equipo_next, cola, tiem_creac, tiem_update, tiem_elimin)  from '/var/lib/postgres/tp_palas.csv' DELIMITER ',' CSV HEADER;"
+psql -U postgres -d ControlSenseDB -t -c "copy ta_datacamion_historic(id                   ,
+    id_equipo            ,
+    frecuencia           ,
+    id_trabajador        ,
+    senhalgps            ,
+    senhalwireless       ,
+    calidadwireless      ,
+    tempeje1             ,
+    tempeje2             ,
+    tempeje3             ,
+    tempeje4             ,
+    tempeje5             ,
+    tempeje6             ,
+    presllanta1          ,
+    presllanta2          ,
+    presllanta3          ,
+    presllanta4          ,
+    presllanta5          ,
+    presllanta6          ,
+    velocidad            ,
+    isload               ,
+    tonelaje             ,
+    marcha               ,
+    incl_roll            ,
+    incl_pitch           ,
+    latitude             ,
+    longitud             ,
+    xcoor                ,
+    ycoor                ,
+    zcoor                ,
+    precisiongps         ,
+    tramosids            ,
+    direccion            ,
+    combustibleint       ,
+    templlanta1          ,
+    templlanta2          ,
+    templlanta3          ,
+    templlanta4          ,
+    templlanta5          ,
+    templlanta6          ,
+    bateriasensorllanta1 ,
+    bateriasensorllanta2 ,
+    bateriasensorllanta3 ,
+    bateriasensorllanta4 ,
+    bateriasensorllanta5 ,
+    bateriasensorllanta6 ,
+    tiem_creac           ,
+    tiem_update          ,
+    segment_angle        ,
+    fuel_rate)  from '/var/lib/postgres/ta_datacamion_historic.csv' DELIMITER ',' CSV HEADER;"
+
+
+
+
+##languaje PSQL CHANGE UBUNTU
+sudo apt-get install language-pack-en-base
+sudo dpkg-reconfigure locales
+locale -a
+export LC_ALL="en.utf-8"
+
+#################################################################################################################
+//Configurar PSQL para conexiones externas
+> nano /etc/postgresql/10/main/pg_hba.conf
+-> agregar en la última línea:
+    host    all             all             0.0.0.0 0.0.0.0         md5
+    host    all             all             0.0.0.0/0         md5
+> nano /etc/postgresql/10/main/postgresql.conf
+-> descomentar la línea y cambiar por:
+    listen_addresses = '*'
+
+PSQL - POSTGRES EN MAC 
+la configuracion anterior se realiza en los archivo de acuerdo a cada bd
+> /Users/jhordan/Library/Application Support/Postgres/
+> nano pg_hba.conf 
+> nano postgresql.conf
+###############################################################################################################
+RESTAURAR BASE DE DATOS
+gunzip -c mydb.pgsql.gz | psql -U postgres (sin crear la bd)
+gunzip -c mydb.pgsql.gz | psql -U postgres -d mydb (cuando existe la bd)
+
+
+
+###############################################################################################################
+ALTER SCHEMAS
+###############################################################################################################
+GRANT ALL ON ALL TABLES IN SCHEMA data_quality TO controlsys;
+GRANT SELECT ON ALL TABLES IN SCHEMA data_quality TO controlreader;
+GRANT SELECT ON ALL TABLES IN SCHEMA data_quality TO cs_servicedesk_n1;
+GRANT SELECT ON ALL TABLES IN SCHEMA data_quality TO cs_servicedesk_n2;
+GRANT INSERT, SELECT, UPDATE, TRUNCATE ON ALL TABLES IN SCHEMA data_quality TO cs_servicedesk_n3;
+GRANT SELECT, INSERT, UPDATE ON ALL TABLES IN SCHEMA data_quality TO cs_developer;
+GRANT ALL ON ALL TABLES IN SCHEMA data_quality TO cs_developer_sr;
+GRANT SELECT ON ALL TABLES IN SCHEMA data_quality TO cs_app_r;
+GRANT INSERT, SELECT, UPDATE, DELETE ON ALL TABLES IN SCHEMA data_quality TO cs_app_rw;
+GRANT SELECT ON ALL TABLES IN SCHEMA data_quality TO system_dashboard_hp_r;
+GRANT INSERT, SELECT, UPDATE, DELETE ON ALL TABLES IN SCHEMA data_quality TO system_dashboard_hp_rw;
+
+
+
+
+###########################################33
+OBTENER ESQUEMAS (PAD)
+
+pg_dump -p 5432 -U postgres -d ControlSenseDB -h 127.0.0.1  --schema=data_quality -v -a | gzip -9 > schema.data_quality.gz
+pg_dump -p 5432 -U postgres -d ControlSenseDB -h 127.0.0.1  --schema=clbrtn -v -a | gzip -9 > schema.clbrtn.gz
+gunzip -c schema.data_quality.gz  | psql -h 127.0.0.1 -U postgres -p 5437 -w -d ControlSenseDB
+
+###########################################33
+COIMOLACHE: LISTA DE BD
+192.168.37.85 (DB02 - REPLICA)
+192.168.37.80 (DB01 - PRINCIPAL)
+
+
+
+
+
+###############################################
+SETEO DE BD EN TABLET COMMANDS
+###############################################
+adb shell run-as com.mss.pms.csmobile chmod 666 /data/data/com.mss.pms.csmobile/databases/DBCSMobile
+sleep 2
+adb shell cp  /data/data/com.mss.pms.csmobile/databases/DBCSMobile /sdcard/V201.db
+sleep 2
+adb pull /sdcard/V201.db .
+(APK tiene q ser un debug)
+
+
+
+#############################################
+MICHILLA - CHILE (OPENVPN)
+#############################################
+--Password :Mine2021!
+
+user : app01     ip: 10.9.201.5 
+user :   db01     ip: 10.9.201.6 (BASE DE DATOS PRINCIPAL)
+user :  rep01     ip: 
+user :  rsp01     ip:  10.9.201.8
+user :  rsp02     ip: 10.9.201.248
+
+USUARIO CS (Gsoporte1 - Peru2022)
+
+
+#############################################
+SERVICIO TRACKING
+#############################################
+tracking: (existen 2 servicios)
+-> jala cordenadas 10m registra
+-> valida ultimo viaje del equipo si hay nuevas coordenadas
+//HABILITAR LOS SERVICIOS!
+
+-> /etc/init.d/STrackingGpsTransform log
+
+-> POST: http://190.12.73.86/json/tracklog/history.php
+{
+    "placa":"CT-21",
+    "inicio":"2022-03-14 19:00:00",
+    "final":"2022-03-15 20:00"
+}
+
+BINARIO TRACKING PARA GENERAR CICLOS
+/opt/minesense/tracking_generate_cycles
+/opt/minesense/init# ./STrackingGenerateCycles status
+/opt/minesense# /etc/init.d/STrackingGenerateCycles start
+
+
+#########################################################
+POSTGRES
+#########################################################
+PESO POR BD
+
+SELECT
+pg_database.datname,
+pg_size_pretty(pg_database_size(pg_database.datname)) AS size
+FROM pg_database;
+
+#########################################################
+PESO POR TABLA
+SELECT
+relname as table,
+pg_size_pretty(pg_total_relation_size(relid)) As size,
+pg_size_pretty(pg_total_relation_size(relid) - pg_relation_size(relid)) as external_size
+FROM pg_catalog.pg_statio_user_tables
+ORDER BY pg_total_relation_size(relid) DESC LIMIT 40;
+
+#########################################################
+VERIFICAR REPLICA EN POSTGRES:
+
+select * from pg_stat_replication ; (Tabla dónde están todas las ip de las replicas)
+
+| async
+  8362 |    16387 | repl    | pg_basebackup    | 172.23.131.13 |                 |       56354 | 2022-08-17 16:44:45.777856-05 |              | backup    |               |               |               |               |                 |                 |                 |             0 | async
+  7621 |    16387 | repl    | pg_basebackup    | 172.23.131.13 |                 |       56340 | 2022-08-17 16:44:36.659316-05 |              | backup    |               |               |               |               |                 |                 |                 |             0 | async
+  3152 |    16387 | repl    | pg_basebackup    | 172.23.131.13 |                 |       56262 | 2022-08-17 16:43:39.463943-05 |              | backup    |   
+
+Para terminar un pid de replicación, se consulta la tabla anterior y seguidamente se mata el procedimiento con la sgt función:
+select * from pg_terminate_backend(7621);
+
+#########################################################
+LEVANTAR REPLICA DE BD Y DEJAR EN LOG
+
+cd /opt/minesense/replication
+nohup ./AutoRestartReplication.sh > replaction.log 2>&1 &
+
+verificar el log de la replicación:
+cd /opt/minesense/replication
+tail -f replaction.log  (aqui se almacenan el log de la replica que se realiza)
+#########################################################
+PG_DUMPALL Y COMPRIMIDO EN GZ
+
+pg_dumpall -p5432 -U postgres | gzip -9 > pg_dumpall.kumtor.demo.gz
+
+
+
+
+########################################################
+postgresql Formato función return query
+
+CREATE FUNCTION /* function name */()
+RETURNS TABLE (
+  /* definitions of columns */
+)
+AS $$
+BEGIN
+RETURN QUERY
+  /* query definition */
+END;
+$$ LANGUAGE plpgsql;
+
+
+########################################################
+VPN LIMA
+
+Conexión
+> ip: 200.60.21.18
+> shared Secret : admin123
+> name: Jjulcamoro
+> password: 1234*Admin
+> service: any
+> profile: default
+########################################################
+
+KADIA
+anydesk: 563259343 
+password: ms4m2022
+
+
+
+
+
+##########################################################
+MEDIR TIEMPO DEMORA QUERYS EN PSQL
+
+> su - postgres
+> psql -d ControlSenseDB
+> \timing
+> select now();
+
+
+refresh materialized view update_tv_tables(1);
+refresh materialized view camionesarregloop;
+
+########################################################
+JIRA COMANDO ESCALADO A TERCER NIVEL
+
+project = "ST01" AND status = "ESCALATED TO THIRD LEVEL" AND assignee IN ("557058:ef925fa8-4715-4fac-adff-35bb29dc18dc","5c1ab73063d3584fe075ae96") ORDER BY created DESC
+
+########################################################
+
+COIMOLACHE ACCESOS 05/25/2022
+
+PASS: CHMarm$2045
+
+user : app01     ip: 10.10.139.20     nat 192.168.37.79  << – password : CHMarm$2045@plus
+user : db01      ip: 10.10.139.13     nat 192.168.37.80  
+user : rep01     ip: 10.10.139.15     nat 192.168.37.81 --> NO GENERAR BACKUPS DEBIDO A QUE ESTA CONECTADO A REPORT
+user : rsp01     ip: 10.10.139.18     nat 192.168.37.82   (WEB y FILES) - PROYECTO PAD 
+user : health1   ip: 10.10.139.21     nat 192.168.37.83
+
+user : app02   ip: 10.10.139.12     nat 192.168.37.84
+
+
+user : app02     ip: 10.10.139.12     nat 192.168.37.84
+user : db02      ip: 10.10.139.14     nat 192.168.37.85 --> GENERAR BACKUP SIEMPRE DE AQUÍ
+user : rep02     ip: 10.10.139.16     nat 192.168.37.86
+user : rsp02     ip: 10.10.139.19     nat 192.168.37.87 (ETL y PROCESS)
+user : health2   ip: 10.10.139.22     nat 192.168.37.88
+
+Usuario ControlSense: Gsoporte → Peru2020
+chsamss
+
+########################################################
+PROYECTO PAD
+
+levantar pm2 (front) - dentro del proyecto
+pm2 start npm --name pad_front -- run "start"
+
+
+
+ACTIVAR JOISTICK EN PALAS
+
+CLASE: UIOptions.java (linea 233)
+cambiar la variable por true, así:
+
+->boolean enable = true;
+if (activity.getEquipment() instanceof SimulatedEquipment && enable) { ...
+
+
+
+
+
+
+CS_PROTOBUFFER:
+#####################################
+compilar con task-> build protos
+c++ en el serversocker
+java en el apk
+
+se compila, se copia y se ejecuta
+la carpeta c++ se copia en el serversocker en la carpeta db_protobuf
+en java solo reemplazar los archivos del "java" a la direccion C:\Users\MS4M\Documents\cs_mobile\CSMobile\src\main\java\com\mss\pms\protobuf
+
+
+CS_WEB3D_API: 
+#####################################
+-> https://10.10.92.11:8002
+-> https://10.10.92.16:8002
+-> https://3dwebug.buenaventura.com.pe:8002/
+ss -lnt | grep 8002 para consultar un puerto!
+
+
+#####################################################################
+SCRIP PARA DESCARGAR BACKUP BD MINIMIZADO - 08/17/22
+https://drive.google.com/file/d/16kLYCrwJ-FvhEtRn4txN3aefpNMqOs8k/view?usp=sharing  (CORREGIDO)
+
+restaura csv manualmente:
+conectarse a psql-> su - postgres
+luego -> psql
+conectarse a la bd -> \c ControlSenseDB
+ingresar la query :: copy tp_estados FROM '/var/lib/postgresql/small_mc/2022-08-17/tables/tp_estados.csv' DELIMITER ',' CSV HEADER;
+se restaura la tabl
+
+https://drive.google.com/open?id=17jYlqQbKpa1vWD2gsmegR38JTDd_gUnD&authuser=mfgile%40unc.edu.pe&usp=drive_fs (CON ERRORES)
+
+psql -U postgres -p 5448 -d ControlSenseDB -t -c "copy tp_cargadescarga(id, id_cargadescarga, id_equipo, id_trabajador, id_palas, id_palanext, id_trabajadordescarga, tiem_llegada, tiem_cuadra, tiem_cuadrado, tiem_carga, tiem_acarreo, tiem_cola, tiem_retro, tiem_descarga, tiem_viajando, tonelaje, tonelajevims, id_descarga, id_mezcla, yn_estado, yn_operador, id_viajevacio, id_viajecargado, id_crewcarga, id_crewdescarga, ids_resumen, id_factor, efhcargado, efhvacio, distinclinadacargado, distinclinadavacia, disthorizontalcargado, disthorizontalvacia, distrealcargado, distrealvacio, coorxdesc, coorydesc, coorzdesc, idzonaseccarga, idzonasecdescarga, tipodescargaidentifier, tonelajevvanterior, tonelajevvposterior, aactualtemp, dumpreal, loadreal, tiem_creac, tiem_update, tiem_elimin, velocidadvimscargado, velocidadvimsvacio, velocidadgpscargado, velocidadgpsvacio, tonelajevimsretain, nivelcombuscargado, nivelcombusdescargado, llegadareal, cuadrareal, cuadradoreal, acarreoreal, colareal, retroreal, viajandoreal, volumen, aplicafactor_vol, tiem_listo, listoreal, coorzniveldescarga, id_turnocarga, id_turnodescarga, tiem_esperando, esperandoreal, user_create, user_edit, user_eliminate, is_report, is_fixed, ticket, guia, origen_tracking, efh_factor_loaded, efh_factor_empty)  from '/Users/jhordan/Downloads/GF_BACKUP/small/2023-04-24/tp_cargadescarga.csv' DELIMITER ',' CSV HEADER;"
+psql -U postgres -p 5448 -d ControlSenseDB -t -c "copy tp_palas(id, id_palas, id_equipo, id_trabajador, id_crew, id_locacion, id_poligono, id_tandem, id_locacionnext, id_poligononext, id_descarganext, id_tandemnext, tiem_cargado, isspot, tiem_esperando, bool_estado, bool_equipo_next, cola, tiem_creac, tiem_update, tiem_elimin)  from '/Users/jhordan/Downloads/GF_BACKUP/small/2023-04-24/tp_palas.csv' DELIMITER ',' CSV HEADER;"
+psql -U postgres -p 5448 -d ControlSenseDB -t -c "copy tp_estados(id, id_estados, id_equipo, id_detal_estado, id_trabajador, tiempo_inicio, tiempo_estimado, idnodo, idenestado, comentario, ids_resumen, tiem_creac, tiem_update, tiem_elimin, id_detal_estado2, idubicacionsupervisor, tipoubicacionsupervisor, end_time, id_main_status, is_processed, duration, start_horometer, end_horometer, id_tp_estado_next, id_approved, id_request_trabajador, id_request_usuario, id_change_user)  from '/Users/jhordan/Downloads/GF_BACKUP/small/2023-04-24/tp_estados.csv' DELIMITER ',' CSV HEADER;"
+
+#####################################################################
+:::::script para descargar backup BD - DEPRECATED:
+-- link https://drive.google.com/open?id=17jYlqQbKpa1vWD2gsmegR38JTDd_gUnD&authuser=mfgile%40unc.edu.pe&usp=drive_fs
+
+#!/bin/bash
+# backup-postgresql-without-huge-tables.sh
+# by MS4M
+
+remote_host=127.0.0.1
+port_remote=5432
+user_remote=postgres
+
+DUMPALL="pg_dumpall"
+PGDUMP="pg_dump"
+PSQL="psql"
+Gzip="gzip -6 BackupControlSense"
+
+BASE_DIR="/var/lib/postgresql/small_hb"
+YMD=$(date "+%Y-%m-%d")
+DIR="$BASE_DIR/$YMD"
+DIR_TABLES="$BASE_DIR/$YMD/tables"
+mkdir -p $DIR
+mkdir -p $DIR_TABLES
+cd $DIR
+
+
+echo  "Inicio de copia de seguridad  `date`"
+
+echo "Start backaping at $(date) " >> backup_database_daily.log
+# Print current size database
+psql -h $remote_host -p $port_remote -U $user_remote -w -d ControlSenseDB -c "Copy (SELECT pg_size_pretty(pg_database_size('ControlSenseDB') )as database_size) To STDOUT With CSV HEADER DELIMITER ',';" >> backup_database_daily.log
+# Print list of huge tables
+psql -h $remote_host -p $port_remote -U $user_remote -w -d ControlSenseDB  -c "COPY (SELECT relname AS table_name, pg_size_pretty(pg_total_relation_size(C.oid)) AS table_size FROM pg_class C LEFT JOIN pg_namespace N ON (N.oid = C.relnamespace) WHERE nspname NOT IN ('pg_catalog', 'information_schema')  ORDER BY pg_total_relation_size(C.oid) DESC LIMIT 5) To STDOUT With CSV HEADER DELIMITER '|';"  >> backup_database_daily.log
+
+# next dump globals (roles and tablespaces) only
+echo "$DUMPALL  -h $remote_host -p $port_remote -U $user_remote -w -g | gzip -9 > $DIR/globals.gz"
+echo "$DUMPALL  -h $remote_host -p $port_remote -U $user_remote -w -g | gzip -9 > $DIR/globals.gz" >>  backup_database_daily.log
+#  pg_dumpall -h 10.240.94.72 -p $port_remote -U $user_remote -w -g | gzip -9 > /var/backups/postgres/test/globals.gz
+
+$DUMPALL -h $remote_host -p $port_remote -U $user_remote -w -g | gzip -9 > "$DIR/globals.gz"
+
+# Now it will be done, a backup of the scheme and the data separately
+database=ControlSenseDB
+SCHEMA=$DIR/$database.schema.gz
+DATA=$DIR/$database.data.gz
+# export data from database ControlSenseDB to plain text
+echo "$PGDUMP -h $remote_host -p $port_remote -U $user_remote -w  -c -s $database | gzip -9 > $SCHEMA"
+echo "$PGDUMP -h $remote_host -p $port_remote -U $user_remote -w  -c -s $database | gzip -9 > $SCHEMA" >> backup_database_daily.log
+#  pg_dump -h 10.240.94.72 -p $port_remote -U $user_remote -w -C  -s ControlSenseDB | gzip -9 > /var/backups/postgres/test/ControlSenseDB.schema.gz
+
+$PGDUMP -h $remote_host -p $port_remote -U $user_remote -w -s $database | gzip -9 > $SCHEMA
+
+# dump data
+
+
+# backup table one by one
+
+query_alltables="    SELECT relname                                       AS name_table,
+             pg_size_pretty(pg_total_relation_size(C.oid)) AS pretty_total_size
+              ,
+             (pg_total_relation_size(C.oid))               AS total_size
+      FROM pg_class C
+               LEFT JOIN pg_namespace N ON (N.oid = C.relnamespace)
+      WHERE nspname NOT IN ('pg_catalog', 'information_schema')
+        AND C.relkind <> 'i'
+        AND nspname !~ '^pg_toast'
+        AND nspname = 'public'
+        AND pg_total_relation_size(C.oid) > 0
+        and relname not like '%ta_prisma_hp%'
+        and relname not like '%cycle_info%'
+        and relname not like '%equipment_pass_per_hour%'
+        and relname not like '%ta_datacamion_historic%'
+        and relname not like '%ta_log%'
+        and relname not like '%at_collision_alerts%'
+        and relname not like '%ta_alertasvims%'
+        and relname not like '%ta_datacamion%'
+        and relname not like '%ta_datapala_historic%'
+        and relname not like '%ta_data_auxiliares%'
+        and relname not like '%ta_data_auxiliares_historic%'
+        and relname not like '%ta_androidlogs%'
+        and relname not like '%tp_systemlogs%'
+        and relname not like '%ta_datadigline%'
+        and relname not like '%ta_datadiglineacumuladodetalle%'
+        and relname not like '%ta_datadiglineacumulado%'
+        and relname not like '%pt_reg_temp_parameters_cr%'
+        and relname not like '%at_collision_alerts%'
+        and relname not like '%ta_datacamion_historic%'
+        and relname not like '%ta_data_auxiliares_historic%'
+        and relname not like '%ta_alertasvims%'
+        and relname not like '%ta_datapala_historic%'
+        and relname not like '%ta_datacamion%'
+        and relname not like '%ta_datadigline%'
+        and relname not like '%tp_systemlogs%'
+        and relname not like '%ta_registro_horometro%'
+        and relname not like '%ta_datapala%'
+        and relname not like '%ta_balanceoptimizador%'
+        and relname not like '%ta_datadiglineacumuladodetalle%'
+        and relname not like '%pt_reg_temp_coor_cr%'
+        and relname not like '%ta_logreasignacarguio%'
+        and relname not like '%ta_data_auxiliares%'
+        and relname not like '%ta_mensajes_detalle%'
+        and relname not like '%ta_checklistdetalle%'
+        and relname not like '%cyclessummarywithstates%'
+        and relname not like '%cyclessummary%'
+        and relname not like '%at_data_floor%'
+        and relname not like '%statessummary%'
+        and relname not like '%ts_confirmaestado%'
+        and relname not like '%statessummarytruck%'
+        and relname not like '%ta_controlbateria%'
+        and relname not like '%ta_speed_limits_exceeded%'
+        and relname not like '%at_data_floor_resume%'
+        and relname not like '%ta_wrongcarguiodesc%'
+        and relname not like '%auxiliaresarreglo%'
+        and relname not like '%camionesarregloop%'
+        and relname not like '%statessummaryshovel%'
+        and relname not like '%ta_datacamion_historic%'
+        and relname not like '%ta_log%'
+        and relname not like '%at_collision_alerts%'
+        and relname not like '%ta_alertasvims%'
+        and relname not like '%ta_datacamion%'
+        and relname not like '%ta_datapala_historic%'
+        and relname not like '%ta_data_auxiliares%'
+        and relname not like '%ta_data_auxiliares_historic%'
+        and relname not like '%ta_androidlogs%'
+        and relname not like '%tp_systemlogs%'
+        and relname not like '%ta_datadigline%'
+        and relname not like '%ta_datadiglineacumuladodetalle%'
+        and relname not like '%ta_datadiglineacumulado%'
+        and relname not like '%pt_reg_temp_parameters_cr%'
+        and relname not like '%at_collision_alerts%'
+        and relname not like '%ta_datacamion_historic%'
+        and relname not like '%ta_data_auxiliares_historic%'
+        and relname not like '%ta_alertasvims%'
+        and relname not like '%ta_datapala_historic%'
+        and relname not like '%ta_datacamion%'
+        and relname not like '%ta_datadigline%'
+        and relname not like '%tp_systemlogs%'
+        and relname not like '%ta_registro_horometro%'
+        and relname not like '%ta_datapala%'
+        and relname not like '%ta_balanceoptimizador%'
+        and relname not like '%ta_datadiglineacumuladodetalle%'
+        and relname not like '%pt_reg_temp_coor_cr%'
+        and relname not like '%ta_logreasignacarguio%'
+        and relname not like '%ta_data_auxiliares%'
+        and relname not like '%ta_mensajes_detalle%'
+        and relname not like '%ta_checklistdetalle%'
+        and relname not like '%cyclessummarywithstates%'
+        and relname not like '%cyclessummary%'
+        and relname not like '%at_data_floor%'
+        and relname not like '%statessummary%'
+        and relname not like '%ta_datapala%'
+        and relname not like '%ts_confirmaestado%'
+        and relname not like '%statessummarytruck%'
+        and relname not like '%ta_controlbateria%'
+        and relname not like '%ta_speed_limits_exceeded%'
+        and relname not like '%at_data_floor_resume%'
+        and relname not like '%ta_wrongcarguiodesc%'
+        and relname not like '%auxiliaresarreglo%'
+        and relname not like '%camionesarregloop%'
+        and relname not like '%statessummaryshovel%'
+        and relname not like '%ta_tmp_hardware%'
+        and relname not like '%ta_onoffhor%'
+        and relname not like '%ta_acarreopalafija%'
+        and relname not like '%ta_outroutecamion%'
+        and relname not like '%at_data_spray%'
+        and relname not like '%cyclessummary2%'
+        and relname not like '%ta_mensajesopt%'
+        and relname not like '%tp_cargadescarga%'
+        and relname not like '%tp_palas%'
+        and relname not like '%tp_estados%'
+      ORDER BY pg_total_relation_size(C.oid) DESC;";
+
+psql \
+-X \
+-h $remote_host \
+-p $port_remote \
+-d ControlSenseDB \
+-U $user_remote -w \
+-c "$query_alltables" \
+--single-transaction \
+--set AUTOCOMMIT=off \
+--set ON_ERROR_STOP=on \
+--no-align \
+-t \
+-w \
+--field-separator ' ' \
+--quiet \
+$DB_NAME | while read -a Record ; do
+ 	name_table_current=${Record[0]} 
+	
+	DATA_TABLE=$DIR_TABLES/$name_table_current.data.gz
+
+	echo "Start backaping table $name_table_current at $(date) " >> backup_database_daily.log
+
+	echo "$PGDUMP -h $remote_host -p $port_remote -U $user_remote -w -a  -d $database -t $name_table_current -v  | gzip -9 > $DATA_TABLE"
+	echo "$PGDUMP -h $remote_host -p $port_remote -U $user_remote -w -a -d $database -t $name_table_current -v  | gzip -9 > $DATA_TABLE" >> backup_database_daily.log
+	$PGDUMP -h $remote_host -p $port_remote -U $user_remote -w -a -d $database -t $name_table_current   | gzip -9 > $DATA_TABLE
+
+	echo "End backaping table $name_table_current at $(date) " >> backup_database_daily.log
+
+	# sleep 2
+done
+
+
+echo "End backaping from all data tables at $(date) " >> backup_database_daily.log
+
+echo "$(ls -lhs $DIR/) " >> backup_database_daily.log
+echo "$(du -hs $DIR_TABLES/) " >> backup_database_daily.log
+
+echo `{ echo " $DIR_TABLES/ -> " ; ls  $DIR_TABLES/ | wc -l; echo " Files.";} | sed ':a;N;s/\n/ /;ba';`"\n"; >> backup_database_daily.log
+echo `{ echo " $DIR_TABLES/ -> " ; echo "$(du -hs $DIR_TABLES/) " ; echo  " Size.";} | sed ':a;N;s/\n/ /;ba';`"\n"; >> backup_database_daily.log
+
+echo "End backup at $(date)  " >> backup_database_daily.log
+
+echo "Fin de copia de seguridad `date`"
+
+
+
+psql -U postgres -d ControlSenseDB -c "COPY (
+    select id, id_cargadescarga, id_equipo, id_trabajador, id_palas, id_palanext, id_trabajadordescarga, tiem_llegada, tiem_cuadra, tiem_cuadrado, tiem_carga, tiem_acarreo, tiem_cola, tiem_retro, tiem_descarga, tiem_viajando, tonelaje, tonelajevims, id_descarga, id_mezcla, yn_estado, yn_operador, id_viajevacio, id_viajecargado, id_crewcarga, id_crewdescarga, ids_resumen, id_factor, efhcargado, efhvacio, distinclinadacargado, distinclinadavacia, disthorizontalcargado, disthorizontalvacia, distrealcargado, distrealvacio, coorxdesc, coorydesc, coorzdesc, idzonaseccarga, idzonasecdescarga, tipodescargaidentifier, tonelajevvanterior, tonelajevvposterior, aactualtemp, dumpreal, loadreal, tiem_creac, tiem_update, tiem_elimin, velocidadvimscargado, velocidadvimsvacio, velocidadgpscargado, velocidadgpsvacio, tonelajevimsretain, nivelcombuscargado, nivelcombusdescargado, llegadareal, cuadrareal, cuadradoreal, acarreoreal, colareal, retroreal, viajandoreal, volumen, aplicafactor_vol, tiem_listo, listoreal, coorzniveldescarga, id_turnocarga, id_turnodescarga, tiem_esperando, esperandoreal, user_create, user_edit, user_eliminate, is_report, is_fixed, ticket, guia, origen_tracking, efh_factor_loaded, efh_factor_empty 
+from tp_cargadescarga
+where id in (
+    select idcargadescarga
+    from camionesarregloop
+)
+) TO stdout DELIMITER ',' CSV HEADER" \
+    | gzip -9 > tp_cargadescarga.csv.gz
+
+
+psql -U postgres -d ControlSenseDB -c "COPY (
+select id, id_palas, id_equipo, id_trabajador, id_crew, id_locacion, id_poligono, id_tandem, id_locacionnext, id_poligononext, id_descarganext, id_tandemnext, tiem_cargado, isspot, tiem_esperando, bool_estado, bool_equipo_next, cola, tiem_creac, tiem_update, tiem_elimin
+from tp_palas
+where id in (
+    select idtablatppalas
+    from camionesarregloop
+)
+) TO stdout DELIMITER ',' CSV HEADER" \
+    | gzip -9 > tp_palas.csv.gz
+
+psql -U postgres -d ControlSenseDB -c "COPY (
+select id, id_estados, id_equipo, id_detal_estado, id_trabajador, tiempo_inicio, tiempo_estimado, idnodo, idenestado, comentario, ids_resumen, tiem_creac, tiem_update, tiem_elimin, id_detal_estado2, idubicacionsupervisor, tipoubicacionsupervisor, end_time, id_main_status, is_processed, duration, start_horometer, end_horometer, id_tp_estado_next, id_approved, id_request_trabajador, id_request_usuario, id_change_user
+from tp_estados where  id in  (
+select tp.id
+from ts_equipos e
+         left join tp_estados tp on tp.id = (
+    select ee.id
+    from tp_estados ee
+    where ee.tiem_elimin is null
+      and ee.id_equipo = e.id_equipo
+    order by ee.tiempo_inicio desc
+    limit 1
+)
+where e.isflota = false
+  and e.tiem_elimin is null)
+) TO stdout DELIMITER ',' CSV HEADER" \
+    | gzip -9 > tp_estados.csv.gz
+
+
+
+# CREATE SCRIPT FOR RESTORE
+echo "#! /bin/bash
+#RUN SCRIPT WITH USER POSTGRES
+The restore started at \$(date)
+#restore all users
+gunzip -c globals.gz  | psql -h 127.0.0.1 -U $user_remote -w 
+#restore all database 
+gunzip -c ControlSenseDB.schema.gz  | psql -h 127.0.0.1 -U $user_remote -w -d ControlSenseDB
+"> $DIR/restore.database.ControlSenseDB.sh
+
+for file in $(ls -l $DIR_TABLES | awk '{print $9}');
+do
+filename=$(echo $file | cut -d" " -f2)
+# CREATE SCRIPT FOR RESTORE
+echo "echo \" Restore table $filename\"
+gunzip -c  tables/$filename | psql -h 127.0.0.1 -U $user_remote -w -d $database">> $DIR/restore.database.$database.sh
+done;
+
+
+echo "echo \" Restore table tpcd\"
+gunzip  tables/tp_cargadescarga.csv.gz
+psql -U postgres -d ControlSenseDB -t -c "copy tp_cargadescarga(id, id_cargadescarga, id_equipo, id_trabajador, id_palas, id_palanext, id_trabajadordescarga, tiem_llegada, tiem_cuadra, tiem_cuadrado, tiem_carga, tiem_acarreo, tiem_cola, tiem_retro, tiem_descarga, tiem_viajando, tonelaje, tonelajevims, id_descarga, id_mezcla, yn_estado, yn_operador, id_viajevacio, id_viajecargado, id_crewcarga, id_crewdescarga, ids_resumen, id_factor, efhcargado, efhvacio, distinclinadacargado, distinclinadavacia, disthorizontalcargado, disthorizontalvacia, distrealcargado, distrealvacio, coorxdesc, coorydesc, coorzdesc, idzonaseccarga, idzonasecdescarga, tipodescargaidentifier, tonelajevvanterior, tonelajevvposterior, aactualtemp, dumpreal, loadreal, tiem_creac, tiem_update, tiem_elimin, velocidadvimscargado, velocidadvimsvacio, velocidadgpscargado, velocidadgpsvacio, tonelajevimsretain, nivelcombuscargado, nivelcombusdescargado, llegadareal, cuadrareal, cuadradoreal, acarreoreal, colareal, retroreal, viajandoreal, volumen, aplicafactor_vol, tiem_listo, listoreal, coorzniveldescarga, id_turnocarga, id_turnodescarga, tiem_esperando, esperandoreal, user_create, user_edit, user_eliminate, is_report, is_fixed, ticket, guia, origen_tracking, efh_factor_loaded, efh_factor_empty)  from 'tables/tp_cargadescarga.csv' DELIMITER ',' CSV HEADER;"
+">> $DIR/restore.database.$database.sh
+
+echo "echo \" Restore table tpp\"
+gunzip  tables/tp_palas.csv.gz
+psql -U postgres -d ControlSenseDB -t -c "copy tp_palas(id, id_palas, id_equipo, id_trabajador, id_crew, id_locacion, id_poligono, id_tandem, id_locacionnext, id_poligononext, id_descarganext, id_tandemnext, tiem_cargado, isspot, tiem_esperando, bool_estado, bool_equipo_next, cola, tiem_creac, tiem_update, tiem_elimin)  from 'tables/tp_palas.csv' DELIMITER ',' CSV HEADER;"
+">> $DIR/restore.database.$database.sh
+
+echo "echo \" Restore table tp\"
+gunzip  tables/tp_estados.csv.gz
+psql -U postgres -d ControlSenseDB -t -c "copy tp_estados(id, id_estados, id_equipo, id_detal_estado, id_trabajador, tiempo_inicio, tiempo_estimado, idnodo, idenestado, comentario, ids_resumen, tiem_creac, tiem_update, tiem_elimin, id_detal_estado2, idubicacionsupervisor, tipoubicacionsupervisor, end_time, id_main_status, is_processed, duration, start_horometer, end_horometer, id_tp_estado_next, id_approved, id_request_trabajador, id_request_usuario, id_change_user)  from 'tables/tp_estados.csv' DELIMITER ',' CSV HEADER;"
+">> $DIR/restore.database.$database.sh
+
+echo "echo \"The restoration has been completed at \$(date)\" " >> $DIR/restore.database.$database.sh
+
+
+chmod 755 $DIR/restore.database.$database.sh 
+
+tar zcvf small_hb.tar.gz /var/lib/postgresql/small_hb/
+
+###################################################################
+
+CADIA!
+vpn
+
+Ingresar al siguiente link
+#https://vpn.newcrest.com.au/
+Ingresar usuario y password:
+#######################USUARIO1################ 
+# GilM
+# Wel2022come!
+Escoger vpn:
+# CGM via VPN
+#######################USUARIO2################
+#Javier.Castillo@newcrest.com.au
+
+# Cadia@Ms4m2022
+#######################USUARIO3################
+Oswaldo.Mestanza@newcrest.com.au
+#######################USUARIO4################
+Erick.Sanchez@newcrest.com.au
+Conejitas21$$
+#######################USUARIO5################
+Jose.Leyva@newcrest.com.au
+Sistemas123!!
+--> Se necesita token (solicitar)
+
+> ssh cdapp01
+>password: BlueB3rry
+> ms4m
+> m1cr0Tube#1
+
+PASSWORD
+BlueB3rry
+
+
+APLICACIONES 1: cdapp01 PASSWORD:m1cr0Tube#1
+PARA INGRESAR 
+
+#####################################
+172.22.208.16 (BASE DE DATOS)
+
+mms
+172.20.6.2
+--> BlueB3rry (password mms)
+
+Servers
+--> m1cr0Tube#1 (password ms4m) 
+####################################
+
+generar pgdumpall pesado!:
+pg_dumpall | gzip -9 > pg_dumpall.cadia.15.06.gz
+
+##########################################################################################
+CADIA ACCESO DQ
+
+DQ_BACK:
+> /opt/ms4m/cs_dataquality_back
+DQ_FRONT:
+> var/www/html/dq
+ACCESO URL
+> http://172.22.208.16:8080/
+
+##########################################################################################
+
+
+
+
+
+ACTIVAR JOISTICK EN PALAS
+
+CLASE: UIOptions.java (linea 233)
+cambiar la variable por true, así:
+
+->boolean enable = true;
+if (activity.getEquipment() instanceof SimulatedEquipment && enable) { ...
+
+
+
+
+
+
+CS_PROTOBUFFER:
+#####################################
+compilar con task-> build protos
+c++ en el serversocker
+java en el apk
+
+se compila, se copia y se ejecuta
+la carpeta c++ se copia en el serversocker en la carpeta db_protobuf
+en java solo reemplazar los archivos del "java" a la direccion C:\Users\MS4M\Documents\cs_mobile\CSMobile\src\main\java\com\mss\pms\protobuf
+
+
+CS_WEB3D_API: 
+#####################################
+-> https://10.10.92.11:8002
+-> https://10.10.92.16:8002
+-> https://3dwebug.buenaventura.com.pe:8002/
+ss -lnt | grep 8002 para consultar un puerto!
+
+
+
+:::::script para descargar backup BD:
+-- link https://drive.google.com/open?id=17jYlqQbKpa1vWD2gsmegR38JTDd_gUnD&authuser=mfgile%40unc.edu.pe&usp=drive_fs
+
+#!/bin/bash
+# backup-postgresql-without-huge-tables.sh
+# by MS4M
+
+remote_host=127.0.0.1
+port_remote=5432
+user_remote=postgres
+
+DUMPALL="pg_dumpall"
+PGDUMP="pg_dump"
+PSQL="psql"
+Gzip="gzip -6 BackupControlSense"
+
+BASE_DIR="/var/lib/postgresql/small_hb"
+YMD=$(date "+%Y-%m-%d")
+DIR="$BASE_DIR/$YMD"
+DIR_TABLES="$BASE_DIR/$YMD/tables"
+mkdir -p $DIR
+mkdir -p $DIR_TABLES
+cd $DIR
+
+
+echo  "Inicio de copia de seguridad  `date`"
+
+echo "Start backaping at $(date) " >> backup_database_daily.log
+# Print current size database
+psql -h $remote_host -p $port_remote -U $user_remote -w -d ControlSenseDB -c "Copy (SELECT pg_size_pretty(pg_database_size('ControlSenseDB') )as database_size) To STDOUT With CSV HEADER DELIMITER ',';" >> backup_database_daily.log
+# Print list of huge tables
+psql -h $remote_host -p $port_remote -U $user_remote -w -d ControlSenseDB  -c "COPY (SELECT relname AS table_name, pg_size_pretty(pg_total_relation_size(C.oid)) AS table_size FROM pg_class C LEFT JOIN pg_namespace N ON (N.oid = C.relnamespace) WHERE nspname NOT IN ('pg_catalog', 'information_schema')  ORDER BY pg_total_relation_size(C.oid) DESC LIMIT 5) To STDOUT With CSV HEADER DELIMITER '|';"  >> backup_database_daily.log
+
+# next dump globals (roles and tablespaces) only
+echo "$DUMPALL  -h $remote_host -p $port_remote -U $user_remote -w -g | gzip -9 > $DIR/globals.gz"
+echo "$DUMPALL  -h $remote_host -p $port_remote -U $user_remote -w -g | gzip -9 > $DIR/globals.gz" >>  backup_database_daily.log
+#  pg_dumpall -h 10.240.94.72 -p $port_remote -U $user_remote -w -g | gzip -9 > /var/backups/postgres/test/globals.gz
+
+$DUMPALL -h $remote_host -p $port_remote -U $user_remote -w -g | gzip -9 > "$DIR/globals.gz"
+
+# Now it will be done, a backup of the scheme and the data separately
+database=ControlSenseDB
+SCHEMA=$DIR/$database.schema.gz
+DATA=$DIR/$database.data.gz
+# export data from database ControlSenseDB to plain text
+echo "$PGDUMP -h $remote_host -p $port_remote -U $user_remote -w  -c -s $database | gzip -9 > $SCHEMA"
+echo "$PGDUMP -h $remote_host -p $port_remote -U $user_remote -w  -c -s $database | gzip -9 > $SCHEMA" >> backup_database_daily.log
+#  pg_dump -h 10.240.94.72 -p $port_remote -U $user_remote -w -C  -s ControlSenseDB | gzip -9 > /var/backups/postgres/test/ControlSenseDB.schema.gz
+
+$PGDUMP -h $remote_host -p $port_remote -U $user_remote -w -s $database | gzip -9 > $SCHEMA
+
+# dump data
+
+
+# backup table one by one
+
+query_alltables="    SELECT relname                                       AS name_table,
+             pg_size_pretty(pg_total_relation_size(C.oid)) AS pretty_total_size
+              ,
+             (pg_total_relation_size(C.oid))               AS total_size
+      FROM pg_class C
+               LEFT JOIN pg_namespace N ON (N.oid = C.relnamespace)
+      WHERE nspname NOT IN ('pg_catalog', 'information_schema')
+        AND C.relkind <> 'i'
+        AND nspname !~ '^pg_toast'
+        AND nspname = 'public'
+        AND pg_total_relation_size(C.oid) > 0
+        and relname not like '%ta_prisma_hp%'
+        and relname not like '%cycle_info%'
+        and relname not like '%equipment_pass_per_hour%'
+        and relname not like '%ta_datacamion_historic%'
+        and relname not like '%ta_log%'
+        and relname not like '%at_collision_alerts%'
+        and relname not like '%ta_alertasvims%'
+        and relname not like '%ta_datacamion%'
+        and relname not like '%ta_datapala_historic%'
+        and relname not like '%ta_data_auxiliares%'
+        and relname not like '%ta_data_auxiliares_historic%'
+        and relname not like '%ta_androidlogs%'
+        and relname not like '%tp_systemlogs%'
+        and relname not like '%ta_datadigline%'
+        and relname not like '%ta_datadiglineacumuladodetalle%'
+        and relname not like '%ta_datadiglineacumulado%'
+        and relname not like '%pt_reg_temp_parameters_cr%'
+        and relname not like '%at_collision_alerts%'
+        and relname not like '%ta_datacamion_historic%'
+        and relname not like '%ta_data_auxiliares_historic%'
+        and relname not like '%ta_alertasvims%'
+        and relname not like '%ta_datapala_historic%'
+        and relname not like '%ta_datacamion%'
+        and relname not like '%ta_datadigline%'
+        and relname not like '%tp_systemlogs%'
+        and relname not like '%ta_registro_horometro%'
+        and relname not like '%ta_datapala%'
+        and relname not like '%ta_balanceoptimizador%'
+        and relname not like '%ta_datadiglineacumuladodetalle%'
+        and relname not like '%pt_reg_temp_coor_cr%'
+        and relname not like '%ta_logreasignacarguio%'
+        and relname not like '%ta_data_auxiliares%'
+        and relname not like '%ta_mensajes_detalle%'
+        and relname not like '%ta_checklistdetalle%'
+        and relname not like '%cyclessummarywithstates%'
+        and relname not like '%cyclessummary%'
+        and relname not like '%at_data_floor%'
+        and relname not like '%statessummary%'
+        and relname not like '%ts_confirmaestado%'
+        and relname not like '%statessummarytruck%'
+        and relname not like '%ta_controlbateria%'
+        and relname not like '%ta_speed_limits_exceeded%'
+        and relname not like '%at_data_floor_resume%'
+        and relname not like '%ta_wrongcarguiodesc%'
+        and relname not like '%auxiliaresarreglo%'
+        and relname not like '%camionesarregloop%'
+        and relname not like '%statessummaryshovel%'
+        and relname not like '%ta_datacamion_historic%'
+        and relname not like '%ta_log%'
+        and relname not like '%at_collision_alerts%'
+        and relname not like '%ta_alertasvims%'
+        and relname not like '%ta_datacamion%'
+        and relname not like '%ta_datapala_historic%'
+        and relname not like '%ta_data_auxiliares%'
+        and relname not like '%ta_data_auxiliares_historic%'
+        and relname not like '%ta_androidlogs%'
+        and relname not like '%tp_systemlogs%'
+        and relname not like '%ta_datadigline%'
+        and relname not like '%ta_datadiglineacumuladodetalle%'
+        and relname not like '%ta_datadiglineacumulado%'
+        and relname not like '%pt_reg_temp_parameters_cr%'
+        and relname not like '%at_collision_alerts%'
+        and relname not like '%ta_datacamion_historic%'
+        and relname not like '%ta_data_auxiliares_historic%'
+        and relname not like '%ta_alertasvims%'
+        and relname not like '%ta_datapala_historic%'
+        and relname not like '%ta_datacamion%'
+        and relname not like '%ta_datadigline%'
+        and relname not like '%tp_systemlogs%'
+        and relname not like '%ta_registro_horometro%'
+        and relname not like '%ta_datapala%'
+        and relname not like '%ta_balanceoptimizador%'
+        and relname not like '%ta_datadiglineacumuladodetalle%'
+        and relname not like '%pt_reg_temp_coor_cr%'
+        and relname not like '%ta_logreasignacarguio%'
+        and relname not like '%ta_data_auxiliares%'
+        and relname not like '%ta_mensajes_detalle%'
+        and relname not like '%ta_checklistdetalle%'
+        and relname not like '%cyclessummarywithstates%'
+        and relname not like '%cyclessummary%'
+        and relname not like '%at_data_floor%'
+        and relname not like '%statessummary%'
+        and relname not like '%ta_datapala%'
+        and relname not like '%ts_confirmaestado%'
+        and relname not like '%statessummarytruck%'
+        and relname not like '%ta_controlbateria%'
+        and relname not like '%ta_speed_limits_exceeded%'
+        and relname not like '%at_data_floor_resume%'
+        and relname not like '%ta_wrongcarguiodesc%'
+        and relname not like '%auxiliaresarreglo%'
+        and relname not like '%camionesarregloop%'
+        and relname not like '%statessummaryshovel%'
+        and relname not like '%ta_tmp_hardware%'
+        and relname not like '%ta_onoffhor%'
+        and relname not like '%ta_acarreopalafija%'
+        and relname not like '%ta_outroutecamion%'
+        and relname not like '%at_data_spray%'
+        and relname not like '%cyclessummary2%'
+        and relname not like '%ta_mensajesopt%'
+        and relname not like '%tp_cargadescarga%'
+        and relname not like '%tp_palas%'
+        and relname not like '%tp_estados%'
+      ORDER BY pg_total_relation_size(C.oid) DESC;";
+
+psql \
+-X \
+-h $remote_host \
+-p $port_remote \
+-d ControlSenseDB \
+-U $user_remote -w \
+-c "$query_alltables" \
+--single-transaction \
+--set AUTOCOMMIT=off \
+--set ON_ERROR_STOP=on \
+--no-align \
+-t \
+-w \
+--field-separator ' ' \
+--quiet \
+$DB_NAME | while read -a Record ; do
+ 	name_table_current=${Record[0]} 
+	
+	DATA_TABLE=$DIR_TABLES/$name_table_current.data.gz
+
+	echo "Start backaping table $name_table_current at $(date) " >> backup_database_daily.log
+
+	echo "$PGDUMP -h $remote_host -p $port_remote -U $user_remote -w -a  -d $database -t $name_table_current -v  | gzip -9 > $DATA_TABLE"
+	echo "$PGDUMP -h $remote_host -p $port_remote -U $user_remote -w -a -d $database -t $name_table_current -v  | gzip -9 > $DATA_TABLE" >> backup_database_daily.log
+	$PGDUMP -h $remote_host -p $port_remote -U $user_remote -w -a -d $database -t $name_table_current   | gzip -9 > $DATA_TABLE
+
+	echo "End backaping table $name_table_current at $(date) " >> backup_database_daily.log
+
+	# sleep 2
+done
+
+
+echo "End backaping from all data tables at $(date) " >> backup_database_daily.log
+
+echo "$(ls -lhs $DIR/) " >> backup_database_daily.log
+echo "$(du -hs $DIR_TABLES/) " >> backup_database_daily.log
+
+echo `{ echo " $DIR_TABLES/ -> " ; ls  $DIR_TABLES/ | wc -l; echo " Files.";} | sed ':a;N;s/\n/ /;ba';`"\n"; >> backup_database_daily.log
+echo `{ echo " $DIR_TABLES/ -> " ; echo "$(du -hs $DIR_TABLES/) " ; echo  " Size.";} | sed ':a;N;s/\n/ /;ba';`"\n"; >> backup_database_daily.log
+
+echo "End backup at $(date)  " >> backup_database_daily.log
+
+echo "Fin de copia de seguridad `date`"
+
+
+
+psql -U postgres -d ControlSenseDB -c "COPY (
+    select id, id_cargadescarga, id_equipo, id_trabajador, id_palas, id_palanext, id_trabajadordescarga, tiem_llegada, tiem_cuadra, tiem_cuadrado, tiem_carga, tiem_acarreo, tiem_cola, tiem_retro, tiem_descarga, tiem_viajando, tonelaje, tonelajevims, id_descarga, id_mezcla, yn_estado, yn_operador, id_viajevacio, id_viajecargado, id_crewcarga, id_crewdescarga, ids_resumen, id_factor, efhcargado, efhvacio, distinclinadacargado, distinclinadavacia, disthorizontalcargado, disthorizontalvacia, distrealcargado, distrealvacio, coorxdesc, coorydesc, coorzdesc, idzonaseccarga, idzonasecdescarga, tipodescargaidentifier, tonelajevvanterior, tonelajevvposterior, aactualtemp, dumpreal, loadreal, tiem_creac, tiem_update, tiem_elimin, velocidadvimscargado, velocidadvimsvacio, velocidadgpscargado, velocidadgpsvacio, tonelajevimsretain, nivelcombuscargado, nivelcombusdescargado, llegadareal, cuadrareal, cuadradoreal, acarreoreal, colareal, retroreal, viajandoreal, volumen, aplicafactor_vol, tiem_listo, listoreal, coorzniveldescarga, id_turnocarga, id_turnodescarga, tiem_esperando, esperandoreal, user_create, user_edit, user_eliminate, is_report, is_fixed, ticket, guia, origen_tracking, efh_factor_loaded, efh_factor_empty 
+from tp_cargadescarga
+where id in (
+    select idcargadescarga
+    from camionesarregloop
+)
+) TO stdout DELIMITER ',' CSV HEADER" \
+    | gzip -9 > tp_cargadescarga.csv.gz
+
+
+psql -U postgres -d ControlSenseDB -c "COPY (
+select id, id_palas, id_equipo, id_trabajador, id_crew, id_locacion, id_poligono, id_tandem, id_locacionnext, id_poligononext, id_descarganext, id_tandemnext, tiem_cargado, isspot, tiem_esperando, bool_estado, bool_equipo_next, cola, tiem_creac, tiem_update, tiem_elimin
+from tp_palas
+where id in (
+    select idtablatppalas
+    from camionesarregloop
+)
+) TO stdout DELIMITER ',' CSV HEADER" \
+    | gzip -9 > tp_palas.csv.gz
+
+psql -U postgres -d ControlSenseDB -c "COPY (
+select id, id_estados, id_equipo, id_detal_estado, id_trabajador, tiempo_inicio, tiempo_estimado, idnodo, idenestado, comentario, ids_resumen, tiem_creac, tiem_update, tiem_elimin, id_detal_estado2, idubicacionsupervisor, tipoubicacionsupervisor, end_time, id_main_status, is_processed, duration, start_horometer, end_horometer, id_tp_estado_next, id_approved, id_request_trabajador, id_request_usuario, id_change_user
+from tp_estados where  id in  (
+select tp.id
+from ts_equipos e
+         left join tp_estados tp on tp.id = (
+    select ee.id
+    from tp_estados ee
+    where ee.tiem_elimin is null
+      and ee.id_equipo = e.id_equipo
+    order by ee.tiempo_inicio desc
+    limit 1
+)
+where e.isflota = false
+  and e.tiem_elimin is null)
+) TO stdout DELIMITER ',' CSV HEADER" \
+    | gzip -9 > tp_estados.csv.gz
+
+
+
+# CREATE SCRIPT FOR BACKUP - DB
+#!/bin/bash
+# backup-postgresql-without-huge-tables.sh
+# by MS4M
+
+remote_host=127.0.0.1
+port_remote=5432
+user_remote=postgres
+
+DUMPALL="pg_dumpall"
+PGDUMP="pg_dump"
+PSQL="psql"
+Gzip="gzip -6 BackupControlSense"
+
+BASE_DIR="/var/lib/postgresql/small_hb"
+YMD=$(date "+%Y-%m-%d")
+DIR="$BASE_DIR/$YMD"
+DIR_TABLES="$BASE_DIR/$YMD/tables"
+mkdir -p $DIR
+mkdir -p $DIR_TABLES
+cd $DIR
+
+
+echo  "Inicio de copia de seguridad  `date`"
+
+echo "Start backaping at $(date) " >> backup_database_daily.log
+# Print current size database
+psql -h $remote_host -p $port_remote -U $user_remote -w -d ControlSenseDB -c "Copy (SELECT pg_size_pretty(pg_database_size('ControlSenseDB') )as database_size) To STDOUT With CSV HEADER DELIMITER ',';" >> backup_database_daily.log
+# Print list of huge tables
+psql -h $remote_host -p $port_remote -U $user_remote -w -d ControlSenseDB  -c "COPY (SELECT relname AS table_name, pg_size_pretty(pg_total_relation_size(C.oid)) AS table_size FROM pg_class C LEFT JOIN pg_namespace N ON (N.oid = C.relnamespace) WHERE nspname NOT IN ('pg_catalog', 'information_schema')  ORDER BY pg_total_relation_size(C.oid) DESC LIMIT 5) To STDOUT With CSV HEADER DELIMITER '|';"  >> backup_database_daily.log
+
+# next dump globals (roles and tablespaces) only
+echo "$DUMPALL  -h $remote_host -p $port_remote -U $user_remote -w -g | gzip -9 > $DIR/globals.gz"
+echo "$DUMPALL  -h $remote_host -p $port_remote -U $user_remote -w -g | gzip -9 > $DIR/globals.gz" >>  backup_database_daily.log
+#  pg_dumpall -h 10.240.94.72 -p $port_remote -U $user_remote -w -g | gzip -9 > /var/backups/postgres/test/globals.gz
+
+$DUMPALL -h $remote_host -p $port_remote -U $user_remote -w -g | gzip -9 > "$DIR/globals.gz"
+
+# Now it will be done, a backup of the scheme and the data separately
+database=ControlSenseDB
+SCHEMA=$DIR/$database.schema.gz
+DATA=$DIR/$database.data.gz
+# export data from database ControlSenseDB to plain text
+echo "$PGDUMP -h $remote_host -p $port_remote -U $user_remote -w  -c -s $database | gzip -9 > $SCHEMA"
+echo "$PGDUMP -h $remote_host -p $port_remote -U $user_remote -w  -c -s $database | gzip -9 > $SCHEMA" >> backup_database_daily.log
+#  pg_dump -h 10.240.94.72 -p $port_remote -U $user_remote -w -C  -s ControlSenseDB | gzip -9 > /var/backups/postgres/test/ControlSenseDB.schema.gz
+
+$PGDUMP -h $remote_host -p $port_remote -U $user_remote -w -s $database | gzip -9 > $SCHEMA
+
+# dump data
+
+
+# backup table one by one
+
+query_alltables="    SELECT relname                                       AS name_table,
+             pg_size_pretty(pg_total_relation_size(C.oid)) AS pretty_total_size
+              ,
+             (pg_total_relation_size(C.oid))               AS total_size
+      FROM pg_class C
+               LEFT JOIN pg_namespace N ON (N.oid = C.relnamespace)
+      WHERE nspname NOT IN ('pg_catalog', 'information_schema')
+        AND C.relkind <> 'i'
+        AND nspname !~ '^pg_toast'
+        AND nspname = 'public'
+        AND pg_total_relation_size(C.oid) > 0
+        and relname not like '%ta_prisma_hp%'
+        and relname not like '%cycle_info%'
+        and relname not like '%equipment_pass_per_hour%'
+        and relname not like '%ta_datacamion_historic%'
+        and relname not like '%ta_log%'
+        and relname not like '%at_collision_alerts%'
+        and relname not like '%ta_alertasvims%'
+        and relname not like '%ta_datacamion%'
+        and relname not like '%ta_datapala_historic%'
+        and relname not like '%ta_data_auxiliares%'
+        and relname not like '%ta_data_auxiliares_historic%'
+        and relname not like '%ta_androidlogs%'
+        and relname not like '%tp_systemlogs%'
+        and relname not like '%ta_datadigline%'
+        and relname not like '%ta_datadiglineacumuladodetalle%'
+        and relname not like '%ta_datadiglineacumulado%'
+        and relname not like '%pt_reg_temp_parameters_cr%'
+        and relname not like '%at_collision_alerts%'
+        and relname not like '%ta_datacamion_historic%'
+        and relname not like '%ta_data_auxiliares_historic%'
+        and relname not like '%ta_alertasvims%'
+        and relname not like '%ta_datapala_historic%'
+        and relname not like '%ta_datacamion%'
+        and relname not like '%ta_datadigline%'
+        and relname not like '%tp_systemlogs%'
+        and relname not like '%ta_registro_horometro%'
+        and relname not like '%ta_datapala%'
+        and relname not like '%ta_balanceoptimizador%'
+        and relname not like '%ta_datadiglineacumuladodetalle%'
+        and relname not like '%pt_reg_temp_coor_cr%'
+        and relname not like '%ta_logreasignacarguio%'
+        and relname not like '%ta_data_auxiliares%'
+        and relname not like '%ta_mensajes_detalle%'
+        and relname not like '%ta_checklistdetalle%'
+        and relname not like '%cyclessummarywithstates%'
+        and relname not like '%cyclessummary%'
+        and relname not like '%at_data_floor%'
+        and relname not like '%statessummary%'
+        and relname not like '%ts_confirmaestado%'
+        and relname not like '%statessummarytruck%'
+        and relname not like '%ta_controlbateria%'
+        and relname not like '%ta_speed_limits_exceeded%'
+        and relname not like '%at_data_floor_resume%'
+        and relname not like '%ta_wrongcarguiodesc%'
+        and relname not like '%auxiliaresarreglo%'
+        and relname not like '%camionesarregloop%'
+        and relname not like '%statessummaryshovel%'
+        and relname not like '%ta_datacamion_historic%'
+        and relname not like '%ta_log%'
+        and relname not like '%at_collision_alerts%'
+        and relname not like '%ta_alertasvims%'
+        and relname not like '%ta_datacamion%'
+        and relname not like '%ta_datapala_historic%'
+        and relname not like '%ta_data_auxiliares%'
+        and relname not like '%ta_data_auxiliares_historic%'
+        and relname not like '%ta_androidlogs%'
+        and relname not like '%tp_systemlogs%'
+        and relname not like '%ta_datadigline%'
+        and relname not like '%ta_datadiglineacumuladodetalle%'
+        and relname not like '%ta_datadiglineacumulado%'
+        and relname not like '%pt_reg_temp_parameters_cr%'
+        and relname not like '%at_collision_alerts%'
+        and relname not like '%ta_datacamion_historic%'
+        and relname not like '%ta_data_auxiliares_historic%'
+        and relname not like '%ta_alertasvims%'
+        and relname not like '%ta_datapala_historic%'
+        and relname not like '%ta_datacamion%'
+        and relname not like '%ta_datadigline%'
+        and relname not like '%tp_systemlogs%'
+        and relname not like '%ta_registro_horometro%'
+        and relname not like '%ta_datapala%'
+        and relname not like '%ta_balanceoptimizador%'
+        and relname not like '%ta_datadiglineacumuladodetalle%'
+        and relname not like '%pt_reg_temp_coor_cr%'
+        and relname not like '%ta_logreasignacarguio%'
+        and relname not like '%ta_data_auxiliares%'
+        and relname not like '%ta_mensajes_detalle%'
+        and relname not like '%ta_checklistdetalle%'
+        and relname not like '%cyclessummarywithstates%'
+        and relname not like '%cyclessummary%'
+        and relname not like '%at_data_floor%'
+        and relname not like '%statessummary%'
+        and relname not like '%ta_datapala%'
+        and relname not like '%ts_confirmaestado%'
+        and relname not like '%statessummarytruck%'
+        and relname not like '%ta_controlbateria%'
+        and relname not like '%ta_speed_limits_exceeded%'
+        and relname not like '%at_data_floor_resume%'
+        and relname not like '%ta_wrongcarguiodesc%'
+        and relname not like '%auxiliaresarreglo%'
+        and relname not like '%camionesarregloop%'
+        and relname not like '%statessummaryshovel%'
+        and relname not like '%ta_tmp_hardware%'
+        and relname not like '%ta_onoffhor%'
+        and relname not like '%ta_acarreopalafija%'
+        and relname not like '%ta_outroutecamion%'
+        and relname not like '%at_data_spray%'
+        and relname not like '%cyclessummary2%'
+        and relname not like '%ta_mensajesopt%'
+        and relname not like '%tp_cargadescarga%'
+        and relname not like '%tp_palas%'
+        and relname not like '%tp_estados%'
+      ORDER BY pg_total_relation_size(C.oid) DESC;";
+
+psql \
+-X \
+-h $remote_host \
+-p $port_remote \
+-d ControlSenseDB \
+-U $user_remote -w \
+-c "$query_alltables" \
+--single-transaction \
+--set AUTOCOMMIT=off \
+--set ON_ERROR_STOP=on \
+--no-align \
+-t \
+-w \
+--field-separator ' ' \
+--quiet \
+$DB_NAME | while read -a Record ; do
+ 	name_table_current=${Record[0]} 
+	
+	DATA_TABLE=$DIR_TABLES/$name_table_current.data.gz
+
+	echo "Start backaping table $name_table_current at $(date) " >> backup_database_daily.log
+
+	echo "$PGDUMP -h $remote_host -p $port_remote -U $user_remote -w -a  -d $database -t $name_table_current -v  | gzip -9 > $DATA_TABLE"
+	echo "$PGDUMP -h $remote_host -p $port_remote -U $user_remote -w -a -d $database -t $name_table_current -v  | gzip -9 > $DATA_TABLE" >> backup_database_daily.log
+	$PGDUMP -h $remote_host -p $port_remote -U $user_remote -w -a -d $database -t $name_table_current   | gzip -9 > $DATA_TABLE
+
+	echo "End backaping table $name_table_current at $(date) " >> backup_database_daily.log
+
+	# sleep 2
+done
+
+
+echo "End backaping from all data tables at $(date) " >> backup_database_daily.log
+
+echo "$(ls -lhs $DIR/) " >> backup_database_daily.log
+echo "$(du -hs $DIR_TABLES/) " >> backup_database_daily.log
+
+echo `{ echo " $DIR_TABLES/ -> " ; ls  $DIR_TABLES/ | wc -l; echo " Files.";} | sed ':a;N;s/\n/ /;ba';`"\n"; >> backup_database_daily.log
+echo `{ echo " $DIR_TABLES/ -> " ; echo "$(du -hs $DIR_TABLES/) " ; echo  " Size.";} | sed ':a;N;s/\n/ /;ba';`"\n"; >> backup_database_daily.log
+
+echo "End backup at $(date)  " >> backup_database_daily.log
+
+echo "Fin de copia de seguridad `date`"
+
+
+
+psql -U postgres -d ControlSenseDB -c "COPY (
+    select id, id_cargadescarga, id_equipo, id_trabajador, id_palas, id_palanext, id_trabajadordescarga, tiem_llegada, tiem_cuadra, tiem_cuadrado, tiem_carga, tiem_acarreo, tiem_cola, tiem_retro, tiem_descarga, tiem_viajando, tonelaje, tonelajevims, id_descarga, id_mezcla, yn_estado, yn_operador, id_viajevacio, id_viajecargado, id_crewcarga, id_crewdescarga, ids_resumen, id_factor, efhcargado, efhvacio, distinclinadacargado, distinclinadavacia, disthorizontalcargado, disthorizontalvacia, distrealcargado, distrealvacio, coorxdesc, coorydesc, coorzdesc, idzonaseccarga, idzonasecdescarga, tipodescargaidentifier, tonelajevvanterior, tonelajevvposterior, aactualtemp, dumpreal, loadreal, tiem_creac, tiem_update, tiem_elimin, velocidadvimscargado, velocidadvimsvacio, velocidadgpscargado, velocidadgpsvacio, tonelajevimsretain, nivelcombuscargado, nivelcombusdescargado, llegadareal, cuadrareal, cuadradoreal, acarreoreal, colareal, retroreal, viajandoreal, volumen, aplicafactor_vol, tiem_listo, listoreal, coorzniveldescarga, id_turnocarga, id_turnodescarga, tiem_esperando, esperandoreal, user_create, user_edit, user_eliminate, is_report, is_fixed, ticket, guia, origen_tracking, efh_factor_loaded, efh_factor_empty 
+from tp_cargadescarga
+where id in (
+    select idcargadescarga
+    from camionesarregloop
+)
+) TO stdout DELIMITER ',' CSV HEADER" \
+    | gzip -9 > tp_cargadescarga.csv.gz
+
+
+psql -U postgres -d ControlSenseDB -c "COPY (
+select id, id_palas, id_equipo, id_trabajador, id_crew, id_locacion, id_poligono, id_tandem, id_locacionnext, id_poligononext, id_descarganext, id_tandemnext, tiem_cargado, isspot, tiem_esperando, bool_estado, bool_equipo_next, cola, tiem_creac, tiem_update, tiem_elimin
+from tp_palas
+where id in (
+    select idtablatppalas
+    from camionesarregloop
+)
+) TO stdout DELIMITER ',' CSV HEADER" \
+    | gzip -9 > tp_palas.csv.gz
+
+psql -U postgres -d ControlSenseDB -c "COPY (
+select id, id_estados, id_equipo, id_detal_estado, id_trabajador, tiempo_inicio, tiempo_estimado, idnodo, idenestado, comentario, ids_resumen, tiem_creac, tiem_update, tiem_elimin, id_detal_estado2, idubicacionsupervisor, tipoubicacionsupervisor, end_time, id_main_status, is_processed, duration, start_horometer, end_horometer, id_tp_estado_next, id_approved, id_request_trabajador, id_request_usuario, id_change_user
+from tp_estados where  id in  (
+select tp.id
+from ts_equipos e
+         left join tp_estados tp on tp.id = (
+    select ee.id
+    from tp_estados ee
+    where ee.tiem_elimin is null
+      and ee.id_equipo = e.id_equipo
+    order by ee.tiempo_inicio desc
+    limit 1
+)
+where e.isflota = false
+  and e.tiem_elimin is null)
+) TO stdout DELIMITER ',' CSV HEADER" \
+    | gzip -9 > tp_estados.csv.gz
+
+
+
+# CREATE SCRIPT FOR RESTORE
+echo "#! /bin/bash
+#RUN SCRIPT WITH USER POSTGRES
+The restore started at \$(date)
+#restore all users
+gunzip -c globals.gz  | psql -h 127.0.0.1 -U $user_remote -w 
+#restore all database 
+gunzip -c ControlSenseDB.schema.gz  | psql -h 127.0.0.1 -U $user_remote -w -d ControlSenseDB
+"> $DIR/restore.database.ControlSenseDB.sh
+
+for file in $(ls -l $DIR_TABLES | awk '{print $9}');
+do
+filename=$(echo $file | cut -d" " -f2)
+# CREATE SCRIPT FOR RESTORE
+echo "echo \" Restore table $filename\"
+gunzip -c  tables/$filename | psql -h 127.0.0.1 -U $user_remote -w -d $database">> $DIR/restore.database.$database.sh
+done;
+
+
+echo "echo \" Restore table tpcd\"
+gunzip  tables/tp_cargadescarga.csv.gz
+psql -U postgres -d ControlSenseDB -t -c "copy tp_cargadescarga(id, id_cargadescarga, id_equipo, id_trabajador, id_palas, id_palanext, id_trabajadordescarga, tiem_llegada, tiem_cuadra, tiem_cuadrado, tiem_carga, tiem_acarreo, tiem_cola, tiem_retro, tiem_descarga, tiem_viajando, tonelaje, tonelajevims, id_descarga, id_mezcla, yn_estado, yn_operador, id_viajevacio, id_viajecargado, id_crewcarga, id_crewdescarga, ids_resumen, id_factor, efhcargado, efhvacio, distinclinadacargado, distinclinadavacia, disthorizontalcargado, disthorizontalvacia, distrealcargado, distrealvacio, coorxdesc, coorydesc, coorzdesc, idzonaseccarga, idzonasecdescarga, tipodescargaidentifier, tonelajevvanterior, tonelajevvposterior, aactualtemp, dumpreal, loadreal, tiem_creac, tiem_update, tiem_elimin, velocidadvimscargado, velocidadvimsvacio, velocidadgpscargado, velocidadgpsvacio, tonelajevimsretain, nivelcombuscargado, nivelcombusdescargado, llegadareal, cuadrareal, cuadradoreal, acarreoreal, colareal, retroreal, viajandoreal, volumen, aplicafactor_vol, tiem_listo, listoreal, coorzniveldescarga, id_turnocarga, id_turnodescarga, tiem_esperando, esperandoreal, user_create, user_edit, user_eliminate, is_report, is_fixed, ticket, guia, origen_tracking, efh_factor_loaded, efh_factor_empty)  from 'tables/tp_cargadescarga.csv' DELIMITER ',' CSV HEADER;"
+">> $DIR/restore.database.$database.sh
+
+echo "echo \" Restore table tpp\"
+gunzip  tables/tp_palas.csv.gz
+psql -U postgres -d ControlSenseDB -t -c "copy tp_palas(id, id_palas, id_equipo, id_trabajador, id_crew, id_locacion, id_poligono, id_tandem, id_locacionnext, id_poligononext, id_descarganext, id_tandemnext, tiem_cargado, isspot, tiem_esperando, bool_estado, bool_equipo_next, cola, tiem_creac, tiem_update, tiem_elimin)  from 'tables/tp_palas.csv' DELIMITER ',' CSV HEADER;"
+">> $DIR/restore.database.$database.sh
+
+echo "echo \" Restore table tp\"
+gunzip  tables/tp_estados.csv.gz
+psql -U postgres -d ControlSenseDB -t -c "copy tp_estados(id, id_estados, id_equipo, id_detal_estado, id_trabajador, tiempo_inicio, tiempo_estimado, idnodo, idenestado, comentario, ids_resumen, tiem_creac, tiem_update, tiem_elimin, id_detal_estado2, idubicacionsupervisor, tipoubicacionsupervisor, end_time, id_main_status, is_processed, duration, start_horometer, end_horometer, id_tp_estado_next, id_approved, id_request_trabajador, id_request_usuario, id_change_user)  from 'tables/tp_estados.csv' DELIMITER ',' CSV HEADER;"
+">> $DIR/restore.database.$database.sh
+
+echo "echo \"The restoration has been completed at \$(date)\" " >> $DIR/restore.database.$database.sh
+
+
+chmod 755 $DIR/restore.database.$database.sh 
+
+tar zcvf small_hb.tar.gz /var/lib/postgresql/small_hb/
+
+###################################################################
+
+CADIA!
+vpn
+
+Ingresar al siguiente link
+#https://vpn.newcrest.com.au/
+Ingresar usuario y password:
+# GilM
+# Wel2022come!
+Escoger vpn:
+# CGM via VPN
+
+
+PASSWORD
+BlueB3rry
+
+ssh cdapp01
+APLICACIONES 1: cdapp01 PASSWORD: m1cr0Tube#1
+PARA INGRESAR 
+
+generar pgdumpall:
+pg_dumpall | gzip -9 > pg_dumpall.cadia.15.06.gz
+
+#################################### CADIA ######################################################
+
+#
+
+#BRIDGE
+
+# Host dellmc
+
+# HostName 192.168.0.4
+
+# User dell
+
+# IdentityFile ~/.ssh/id_rsa
+
+# StrictHostKeyChecking no
+
+# UserKnownHostsFile=/dev/null
+
+# Port 22
+
+#BRIDGE
+
+#https://vpn.newcrest.com.au/
+
+# GilM
+
+# Wel2022come!
+
+# CGM via VPN
+
+Host cgm
+
+HostKeyAlias cgm
+
+HostName 172.20.6.2
+
+User mms
+
+IdentityFile ~/.ssh/id_rsa
+
+StrictHostKeyChecking no
+
+UserKnownHostsFile=/dev/null
+
+Port 22
+
+# ProxyJump dellmc
+
+#BlueB3rry
+
+
+
+Host cdapp01
+
+HostName 172.22.208.16
+
+User ms4m
+
+IdentityFile ~/.ssh/id_rsa
+
+StrictHostKeyChecking no
+
+UserKnownHostsFile=/dev/null
+
+ProxyJump cgm
+
+#m1cr0Tube#1
+
+Host cddb01
+
+HostName 172.22.208.17
+
+User ms4m
+
+IdentityFile ~/.ssh/id_rsa
+
+StrictHostKeyChecking no
+
+UserKnownHostsFile=/dev/null
+
+ProxyJump cgm
+
+#m1cr0Tube#1
+
+Host cdrep01
+
+HostName 172.22.208.18
+
+User ms4m
+
+IdentityFile ~/.ssh/id_rsa
+
+StrictHostKeyChecking no
+
+UserKnownHostsFile=/dev/null
+
+ProxyJump cgm
+
+#m1cr0Tube#1
+
+Host cdr4m01
+
+HostName 172.22.208.19
+
+User ms4m
+
+IdentityFile ~/.ssh/id_rsa
+
+StrictHostKeyChecking no
+
+UserKnownHostsFile=/dev/null
+
+ProxyJump cgm
+
+#m1cr0Tube#1
+
+Host cddb01
+
+HostName 172.22.208.17
+
+User ms4m
+
+IdentityFile ~/.ssh/id_rsa
+
+StrictHostKeyChecking no
+
+UserKnownHostsFile=/dev/null
+
+ProxyJump cdapp01
+
+#m1cr0Tube#1
+#############################################################333
+
+
+ACTIVAR JOISTICK EN PALAS
+
+CLASE: UIOptions.java (linea 233)
+cambiar la variable por true, así:
+
+->boolean enable = true;
+if (activity.getEquipment() instanceof SimulatedEquipment && enable) { ...
+
+
+
+
+
+
+CS_PROTOBUFFER:
+#####################################
+compilar con task-> build protos
+c++ en el serversocker
+java en el apk
+
+se compila, se copia y se ejecuta
+la carpeta c++ se copia en el serversocker en la carpeta db_protobuf
+en java solo reemplazar los archivos del "java" a la direccion C:\Users\MS4M\Documents\cs_mobile\CSMobile\src\main\java\com\mss\pms\protobuf
+
+
+CS_WEB3D_API: 
+#####################################
+-> https://10.10.92.11:8002
+-> https://10.10.92.16:8002
+-> https://3dwebug.buenaventura.com.pe:8002/
+ss -lnt | grep 8002 para consultar un puerto!
+
+
+
+
+
+
+GF
+----------------------------------
+ANYCONECT
+
+
+ACCESOS 
+
+PASSOWRD: Cs123#MS4M123
+Servidor vpnlim.goldfields.com.pe
+usuario: jcastillo
+
+IPs:
+
+Password: GFMarm$2045
+
+app05  ip : 10.112.93.211      user: gfpe-cer-app05              clave: 5/nialUo*1EVikyq
+
+bd05     ip: 10.112.93.205       user: gfpe-cer-bd05                clave: n37Zia,vak=ekcTq
+
+olap05 ip: 10.112.93.209        user: olap05-admin                clave: O&w6w1K*2eYaaurn
+
+rep05  ip: 10.112.93.207        user: gfpe-cer-rep05               clave: wm*Wgi/!RsBbv84n
+
+app04 ip: 10.120.93.10           user: gfpe-cer-app04              clave: px'zvt82nu1QlBh'
+
+bd04    ip: 10.120.93.11          user: gfpe-cer-bd04                clave: *?ALkhcc9yb8"WKp
+
+olap04 ip: 10.120.93.13          user: administrator                clave: GFMarm$2045
+
+rep04  ip: 10.120.93.12          user: gfpe-cer-rep04               clave: zYiJ0aqk"g"tp4iE
+
+rsp04   ip: 10.112.93.208        user: administrator                clave: 6eckSsh@z.qV9tyx
+
+rsp05 ip: 10.112.93.210          user: gfpe-cer-rsp05               clave: fn*ik8C3veam8.Ik
+
+rsp05_new ip: 10.112.93.213 user: gfpe-cer-rsp05              clave: fn*ik8C3veam8.Ik
+
+BD09   ip: 10.112.0.131          user: reportsenseuser            clave: 5d7Kw6eDzM%c@DlV
+
+
+Vista materializada -> tabla (with no data borra todos los datos de la tabla)
+ refresh materialized view cyclessummary2withstates with no data;
+ (vuelve a tener data cuando se ejecuta el siguiente sql:)
+ refresh materialized view cyclessummary2withstates;
+
+
+ refresh materialized view camionesarregloop with no data;
+ refresh materialized view camionesarregloop;
+
+
+///REFRESH VISTAS DESDE PSQL (Windows) 
+
+ refresh materialized view palasarreglo; \watch -n1
+ refresh materialized view camionesarregloop; \watch -n1
+ refresh materialized view auxiliaresarreglo; \watch -n1
+
+
+EJEMPLO, VARIAS VISTAS:
+
+BEGIN;
+refresh materialized view palasarreglo1;
+refresh materialized view palasarreglo2;
+refresh materialized view palasarreglo3;
+ COMMIT; \watch -n1
+
+
+
+
+
+
+ ####################################
+ PSQL
+ ####################################
+LISTAR BASES DE DATOS 
+\l
+
+
+
+
+
+
+
+
+
+
+#######################################################
+##############  MACRAES  ##############################
+#######################################################
+
+$ ssh -p 3382 ms4m@vpn.minelineresources.com.au  (This is MLM)
+$ ssh -p 4122 ms4m@localhost (access Macraes App server from MLM)
+$ ssh -p 4222 ms4m@localhost (access Macraes DB server from MLM)
+ 
+If you want to add some nice stuff to allow local access from your mac, such as:
+ 
+$ ssh mlm – to access MLM tunnel portal
+ 
+New Window/tab:
+ 
+$ ssh macapp – to access macraes app directly, you can scp with this as well
+$ ssh macdb1 – to access macraes DB server
+ 
+Others (on your mac):
+ 
+Once services installed you can access
+Data Quality here: http://localhost:4180/
+Auditory here: http://localhost:4130/
+ 
+Access the DB directly with
+PgAdmin: host: localhost port: 4132 (via app server/pgpool)
+PgAdmin: host: localhost port: 4232 (directly to DB server)
+ 
+ 
+Here is an example for your .ssh/config file to achieve the above:
+ 
+ 
+# MLM via ML
+Host mlm
+HostKeyAlias    mlm
+HostName        vpn.minelineresources.com.au
+User            ms4m
+LocalForward    4122 localhost:4122 #Macraes C4M App
+LocalForward    4222 localhost:4222 #Macraes C4M DB
+LocalForward    4180 localhost:4180 #C4M Data Quality
+LocalForward    4134 localhost:4134 #C4M Equipment Auditory
+LocalForward    4132 localhost:4132 #C4M Postgress via pgpool on App
+LocalForward    4232 localhost:4232 #C4M Postgress direct to DB1
+Port            3382
+#
+# C4M App via MLM
+Host macapp
+HostKeyAlias    macapp
+HostName        localhost
+User            ms4m
+Port            4122
+#
+# C4M DB via MLM
+Host macdb1
+HostKeyAlias    macdb1
+HostName        localhost
+User            ms4m
+Port            4222
+
+#############################################################################
+
+
+
+hora:
+
+> date 
+
+> timedatectl
+
+> timedatectl (para el detalle)
+
+CS - CONTROLSCREEN:
+
+setprop persist.sys.timezone America/Lima
+
+setprop persist.sys.timezone UTC
+
+pm clear com.mss.pms.csmobile
+
+am start com.mss.pms.csmobile
+
+date -s 20220829.192800
+
+SERVIDORES::
+
+HORA DEL HARDWARE:
+> sudo hwclock --hctosys
+
+HORA DEL SOFTWARE:
+> sudo hwclock --systohc
+
+Para setear la hora correcta!
+>timedatectl set-time 15:58:30.
+
+
+
+NTP configurado?
+Filtra su proxy - habiliten un NTP de ellos!
+servidesk! que soliciten un ntp!
+podríamos ayudarles a configurarlo!
+
+
+
+################################################################
+COMPILACIÓN PROTOBUFFER
+################################################################
+Protobuffer! (en docker - dev18)
+
+Eliminamos la carpeta c++ y la creamos vacia
+rm -r c++
+mkdir c++
+Luego se compila lo modificado con el sgt comando: 
+protoc --java_out=java/ --cpp_out=c++/ --proto_path=Source/ Source/*
+
+COPIA DATOS EN EL SERVERSOCKET: 
+Seguidamente, copiamos la carpeta c++ que se generó al compilar el protobuffer,
+en el serversocket, en la carpeta db_protobuf
+
+En este caso, como se modifico una columna de acarreo, se busca la clase, 
+que queda en db_postgres/equipo/acarreo.cp y de igual manera en acarreo.h
+
+COPIA DATOS EN EL APK - ANDROID:
+Seguidamente, copiamos la carpeta java que se generó al compilar el protobuffer,
+en cs_mobile, la ruta es com/mss/pms/protobuf/ *todos los archivos*
+
+En este caso, se busca en la clase ProtoReader.java la columna que se generó y 
+se la asigna a la variable deseada
+
+
+#################################################################################
+/opt/minesense/log tail -f log_update_tv_tables.3.log
+para saber el tiempo de demora de querys!
+
+
+Para medir la cantidad de demora en tiempo ejecución:
+:: explay analyze select ...´´
+
+
+
+
+#################################################################################
+VISUALIZAR TAR SIN DESCOMPRIMIR
+
+zcat abcd.tar.gz
+
+
+###########################################################3
+REPLICA DB - SERVIDOR REPLICA
+
+SERVIDOR REPLICA 192.168.37.85 :: PARA CUANDO NO SE PUEDE INGRESAR CON USUARIO ROOT!!!! 
+cd /opt/minesense/replication/
+-> ./repl.sh
+En caso de haber detenido el procedimiento, se elimina la carpeta /var/lib/postgres/10/main -> !eliminar main! -->!! RECORDAR QUE ESTA ES DE LA REPLICA MAS NO DE LA MASTER --NO BORRAR DE LA MASTER !!
+y se vuelve a lanzar el ./repl.sh
+
+RECORDAR QUE PARA EVITAR EL PROCEDIMIENTO ANTERIOR: SE LANZA EL ./AutoRestartReplication.sh !!!!!!!!
+
+
+###########################################################3
+
+VERSIONES DEL CONTROL:
+select * from app_version; --versión que soporta el control (versiones que pueden abrir)
+select * from ta_systemloguing order by tiem_ini desc; --(ultimas versiones usadas)
+
+
+
+
+
+
+
+
+
+
+
+
+
+###########################################################
+CONFIGURACIÓN DQ - DATAQUALITY: UN SOLO PUERTO
+###########################################################
+BACK:
+Primero cambiar el ip en datastore.js
+Luego cambiar en app/config/http.js
+    comentar la parte   ->   "/var/www/html/dq"
+    por   ->  "/opt/ms4m/projects/cs_dataquality_front" (esta es la ruta de la carpeta donde se ubica el front)
+
+FRONT:
+Cambiar el archivo environment.js 
+    la parte apiUrl por ->  apiUrl: '/api/'
+
+
+
+
+
+###########################################################
+SETEO HORA EN CONTROL SCREEN 
+###########################################################
+primero se setea la hora en el formato:
+> date -s YYYYMMDD.HHMMSS
+
+recordar que para MACRAES es +5h a la hora actual de Perú
+> date -s 20220831.111238
+
+luego, setear el siguiente comando y reiniciar la CS
+> setprop persist.sys.timezone Pacific/Auckland
+
+
+
+
+###############################################3
+Ver sql de funcion/vista/etc desde PSQL
+################################################
+\d+ nombreFuncion
+
+
+
+################################################
+CLIPPER
+################################################
+-> pidof MSClipper Clipper (para ver si está corriendo el cliper)
+/opt/minesense/bin (ubicación del cliper)
+
+select * from ta_datadigline; (columna isProc para verificar si el clipper ya procesó el digline);
+
+
+
+
+ta_plcamiones: tabla para "plc" es el calculo con el que muestra el tonelaje! 
+
+
+
+################################################
+ACTIVE  - VERIFICAR CRONTAB
+################################################
+Ingresar con: sudo su postgres
+Luego: crontab -e
+En el comando anterior se listan todos los CRONTAB
+
+
+##########################################################
+SHOUGANT
+##########################################################
+
+Conexión por OpenVPN
+
+-- Password: SHMarm$2045
+user : app01      -- ip:  172.16.7.20
+user : db01       -- ip:  172.16.7.13
+user : rep01      -- ip:  172.16.7.15
+user : rsp02     - Master  -- ip:  172.16.7.19 (PWR: $Cat2020*) (RS+ Deshabilitado)
+user : rsMAS
+user : health1   -- ip:  172.16.7.21
+
+user : app02      -- ip:  172.16.7.12
+user : db02       -- ip:  172.16.7.14
+user : rep02      -- ip:  172.16.7.16
+user : rsp01      -- ip:  172.16.7.18 (RS+ ETL, Files y Web)
+user : health2   -- ip:  172.16.7.22
+
+#Usuario actual::
+Usuario: vpn_mss19 	passw: 169036
+#####
+usuario: vpn_mss27
+password: 137733
+#################################
+Conección por OpenVPN -> configurar con el archivo C:\Users\MS4M\Downloads\OpenVPN\OpenVPN\vpn_mss27
+
+
+#####################################
+PGPOOL - POSTGRES!
+
+PARA REINICIAR EL SERVICIO DE PGPOOL
+Ir a /opt/minesense/sh/ -> cat check-fix_pgpool.sh
+
+copiar lo que contine el archivo y ejecutarlo:
+
+/usr/bin/killall pgpool
+/bin/systemctl stop pgpool2
+rm -f /var/run/postgresql/.*PSQL*
+/bin/systemctl start pgpool2
+exit 3
+
+
+
+
+
+######################################################
+MANIPULAR LA UBICACIÓN PUNTO GPS EN CS_MOBILE!
+######################################################
+Verificar el largo y ancho del camión (vehículo en general):
+> select * from ts_configuracion_equipo_detalle where id_configuracion_equipo in (112,113) and id_equipo = 48;
+> select ancho,largo from ts_equipos where id_equipo = 48 and tiem_elimin is null;
+
+Para poder setear el punto en la ubicación deseada, se procede a modificar los id's:
+DISTANCIA_POSICION_GPS_X(328)
+DISTANCIA_POSICION_GPS_Y(329)
+
+Verificar si el equipo cuenta con esos ID's:
+->select * from ts_configuracion_equipo_detalle where id_configuracion_equipo in (328,329) and id_equipo = 48;
+
+En caso de no tener, ingresarlos (Para los carguíos, en Macraes, se solicita que estén ubicados en la parte superior central):
+INSERT INTO public.ts_configuracion_equipo_detalle (id, id_equipo, id_configuracion_equipo, valor, idusuario,tiem_creac, tiem_update, tiem_elimin)
+VALUES ((select  id+1 from ts_configuracion_equipo_detalle order by id desc limit 1) , 48, 328, '346', 30, now(), null, null);
+INSERT INTO public.ts_configuracion_equipo_detalle (id, id_equipo, id_configuracion_equipo, valor, idusuario,tiem_creac, tiem_update, tiem_elimin)
+VALUES ((select  id+1 from ts_configuracion_equipo_detalle order by id desc limit 1) , 48, 329, '0', 30, now(), null, null);
+######################################################
+
+######################################################
+AGREGA ADB EN TERMINAL  - MAC
+
+run command in terminal nano $HOME/.zshrc
+
+Must include next lines:
+
+export PATH=$PATH:~/Library/Android/sdk/platform-tools
+export ANDROID_HOME=~/Library/Android/sdk
+export PATH="$HOME/.bin:$PATH"
+export PATH="~/Library/Android/sdk/platform-tools":$PATH
+Press Ctrl + X to save file in editor,Enter Yes or No and hit Enter key
+
+Run source ~/.zshrc
+
+Check adb in terminal, run adb
+######################################################
+POSTGRES - PSQL - MAC
+
+Instala postgres:
+> brew install postgresql
+Actualiza Postgresql:
+> brew upgrade postgresql
+Iniciar PostgreSQL
+> brew services start postgresql
+Reiniciar PostgreSQL
+> brew services restart postgresql
+Listar servicios postgresql
+> brew services list
+Iniciar linea de comandos psql
+> psql postgres
+Iniciar linea de comandos psql - datos especificos
+> psql -U postgres -p 5432 -d ControlSenseDB
+######################################################
+SWITCH JAVA - MAC
+
+Lista de Java's instalados
+> /usr/libexec/java_home -V
+Seleccionar version del listado anterior
+> export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
+> export JAVA_HOME=`/usr/libexec/java_home -v 1.7`
+Verificar la version
+> java -version
+
+LINK (https://medium.com/@devkosal/switching-java-jdk-versions-on-macos-80bc868e686a)
+
+------->
+Utilizando FISH
+> /usr/libexec/java_home -v 1.7
+> $(/usr/libexec/java_home -v 1.7)
+> set -x JAVA_HOME (/usr/libexec/java_home -v 1.7)
+------>
+PARA FISH - JAVA CHANGE
+export JAVA_HOME=$(/usr/libexec/java_home -v1.8)
+
+######################################################
+INFO CONECC BD - POSTGRESQL
+
+https://www.prisma.io/dataguide/postgresql/connecting-to-postgresql-databases
+
+######################################################
+ERROR EN DESCARGA ASIGNADA DEL POLIGONO - MALA DIRECCION - MACRAES ERROR
+Primero se valida el id del equipo:
+> SELECT * FROM ts_equipos where nombre like 'DT235' and tiem_elimin is null;
+Luego se valida si tiene descarga fija, usualmente no tiene por eso genera el error en el poligono a descarga:
+> SELECT * FROM ta_descargafija where id_equipo = 138; --47; --52
+Para solucionar el error, se inserta una descargafija en 0 para el equipo (usualmente se da cuando no tiene la descarga, pero si tiene y 
+aun esta generando, igual se setea):
+> INSERT INTO public.ta_descargafija (id, id_equipo, id2_descarga, id_usuario, tiem_creac)
+    VALUES ((select max(id)+1 from ta_descargafija), 138, 0, 237, now());
+
+
+
+######################################3
+VERIFICAR ERRORES APK
+
+logcat | grep "err"
+######################################3
+
+
+
+
+BROCAL - Conexión FORTICLIENT - /12/22
+
+EB-USRMI05  (Diciembre2022)
+EB-USRMI06  (Diciembre2022)
+EB-USRMI07  (Diciembre2022)
+
+
+
+
+verificar build.sh dependiendo de la version a compilar!
+
+release (7/11) genera el jar ofuscado y sin ofuscar!
+
+Instalar el javafx 11.0.2// https://gluonhq.com/products/javafx/
+brew install ant@1.10
+
+Ubicacion Compilado proyecto cs_mobile/APK con VSCODE
+/cs_mobile/CSMobile/build/outputs/apk/debug/
+
+
+
+
+###############################
+Filtrar puertosS
+
+> lsof -i -n -P | grep LISTEN
+> ar
+> ss -lnt
+> kill -9 PID //kill port in use   
+
+
+
+###################################################################
+CONEXIONES SEPTIEMBRE 2022!
+###################################################################
+LINDERO 2022 - UPDATE (softether)
+conectar y el kill en manual!
+
+CONEXION MARCOBRE 2022 - UPDATE - NOVIEMBRE
+-> Por Forticlient -> 
+UTILIZAR USUARIO: ueminesense6 password:MineriaBreca20231!  -> PARA MARCOBRE!
+token llega a cel, numero de wssp
+coneccion successfull!
+
+Cambio de password:
+https://desbloqueo.mineriabreca.com/Self_service/Ad_reset
+Recordar que se necesita el numero anterior!
+https://desbloqueo.mineriabreca.com/Self_service/Index
+
+
+->COIMOLACHE 
+->BROCAL -> EB-USRMI07 (Octubre2022) //  Forticlient configurado
+->KUMTOR ->Forticlient (agregar usuario y password)
+
+
+
+
+###############################################
+PASSWORD MD5 (Peru2019)
+> ecd265b5b69151b28a5295cc26394a8b
+
+
+
+###############################################
+JAVA FX UPDATE
+https://www.dropbox.com/sh/pl0atisg2nth4w9/AACe9hKoWEtAZ1KdMmXCp3HWa?dl=0
+
+
+###############################################
+Install NVM in FISH
+https://medium.com/@joshuacrass/nvm-on-mac-for-fish-users-e00af124c540
+
+Install ADB in FISH
+set PATH ~/Library/Android/sdk/platform-tools $PATH
+
+
+
+#############################################
+ZONA HORARIA BD MACRAES:
+
+DATAGRID: properties -> advanced -> VM options: -Duser.timezone=Pacific/Auckland
+
+
+
+#############################################
+SET JAVA_HOME EN FISH TERMINAL
+
+https://www.alex-arriaga.com/how-to-set-java_home-in-mac-os-x-high-sierra-with-fish-shell/
+source ~/.config/fish/conf.d/omf.fish
+cd /Users/jhordan/.config/fish/conf.d
+
+
+
+export PATH="/usr/local/opt/ant@1.9/bin:$PATH"
+
+export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.7.0_80.jdk/Contents/Home/"
+
+#JAVA 11
+#export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-11.0.2.jdk/Contents/Home
+#export PATH_TO_FX=/Library/Java/JavaVirtualMachines/javafx-sdk-11.0.2/lib
+
+#JAVA 17
+#export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-17.0.4.1.jdk/Contents/Home
+#export PATH_TO_FX=/Library/Java/JavaVirtualMachines/javafx-sdk-17.0.4.1/lib
+
+#JAVA 18
+#export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-18.0.2.1.jdk/Contents/Home
+#export PATH_TO_FX=/Library/Java/JavaVirtualMachines/javafx-sdk-18.0.2.1/lib
+
+
+
+
+
+
+
+
+####################
+FOR MAC
+local.properties::::::::
+
+sdk.dir=/Users/jhordan/Library/Android/sdk/
+ndk.dir=/Users/jhordan/Library/Android/sdk/ndk/21.4.7075529
+
+
+
+
+
+
+###########################################################
+CONFIGURACIÓN DQ - IRIS: UN SOLO PUERTO
+###########################################################
+Se genera el compilado del front! (build)
+Se copia el compilado (build) en la carpeta del back
+Se modifica el archivo ecosystem.config.js de acuerdo a la operacion y bd, se indica el puerto donde se despliega
+Para ejecutarlo con pm2:
+> pm2 start ecosystem.config.js
+Se verifica que el proyecto quede desplegado correctamente
+
+::Recuerda verificar que en http.js la ruta del front exista, si esta como:
+"/opt/minesense/projects/cs_dataquality_front" 
+entonces el dist tiene que ser cs_dataquality_front, se le hace un mv a ese nombre
+y cuando no se tiene el ecosystem:
+> pm2 start app/app.js --name DQ -- --port 8080 
+
+
+
+#########################################################
+CONEXION BROCAL - POR MAQUINA VIRTUAL WIN 8
+Usa forticlient!
+#########################################################
+IP de Iris Desplegado en Brocal: 10.10.92.82:3002 
+Esta unificado en un solo puerto que es el 3002
+Para desplegarlo:
+-> generar el compilado del front
+-> generar el compilado del back
+-> copiar el compilado del front en la ruta del back
+-> se despliega con pm2: pm2 start ecosystem.config.js 
+-> recordar que el archivo de configuracion "EN UN SOLO PUERTO" ya no es .env sino el ecosystem!
+
+
+
+#########################################################
+CONEXION VPN - LIMA CON VMWARE
+#########################################################
+IP 192.168.3.10
+	Usuario ms4m
+	Password M1n3s3ns3@
+    ms4m2022
+
+
+Control001 -> 192.168.3.180 // PH001
+Control002 -> 192.168.3.178 // CM34
+Control003 -> 192.168.3.150 // DZ06
+--//Control004 -> 192.168.3.177
+
+adb disconnect all::
+> adb -s device disconnect
+
+#Ruta de todas la VM en el servidor lima
+/vmfs/volumes/EP-MINESENSE
+
+#########################################################
+CONFIFURACION CONEXION SSH
+#########################################################
+ code .ssh/config 
+
+
+
+
+#########################################################
+RESOLUCION CONTROLSCREEN
+#########################################################
+wm size 600x1024
+wm density 140
+
+wm size reset
+wm density reset
+
+
+control + option + delete
+
+
+
+###########################################################
+VPN MICHILLA
+###########################################################
+Jhordan Julcamoro
+Jjulcamoro
+200.29.5.242
+forticlient
+10443
+
+Brocal!
+BrocalUG!
+GF - OK!
+Marcobre 
+Lindero!
+Michilla!
+Shougant!
+Constancia - Hudbay!
+Kumtor!
+Macraes! -->
+Cadia! --> 
+
+
+
+
+
+
+############################################################
+CONTROL LOCAL - MAC
+############################################################
+Ip:192.168.118.131
+
+
+
+############################################################
+BROCAL UG update 22/12/22
+############################################################
+
+user : EB-C4MAPP01 ip: 10.128.128.2
+
+user : EB-C4MDB01 ip: 10.128.128.3
+
+user : EB-C4MREPL01 ip: 10.128.128.4
+
+user : EB-R4MAPP01 ip: 10.128.128.5
+
+user : EB-R4MDB01 ip: 10.128.128.6
+
+user : EB-H4MAPP01 ip: 10.128.128.7
+
+user : EB-H4MDB01 ip: 10.128.128.8
+
+ 
+
+user : EB-C4MAPP02 ip: 10.128.128.9
+
+user : EB-C4MDB02 ip: 10.128.128.10
+
+user : EB-C4MREPL02 ip: 10.128.128.11
+
+user : EB-R4MAPP02 ip: 10.128.128.12
+
+user : EB-R4MDB02 ip: 10.128.128.13
+
+user : EB-H4MAPP02 ip: 10.128.128.14
+
+user : EB-H4MDB02 ip: 10.128.128.15
+
+USUARIO: user1
+PASSWORD: Buenav2022
+
+############################################################
+
+
+
+############################################################
+REPETIR PUERTO // REENVIO DE PUERTO //TUNEL
+############################################################
+
+ssh -N -R 5432:127.0.0.1:5432 dbappbrocalugdb (De mi maquina al servidor)
+
+ssh -N -L 5433:0.0.0.0:5432 dbappbrocalugdb (Del servidor a la maquina)
+
+Lista Puertos Activos
+lsof -i -n -P | grep LISTEN | grep 5433
+
+
+############################################################
+Repite puerto del postgres al 5433 local
+############################################################
+BrocalUG: ssh -N -L 5433:0.0.0.0:5432 dbappbrocalug
+############################################################
+Brocal: ssh -N -L 5433:127.0.0.1:5432 dbappbrocal
+############################################################
+
+
+
+DESACTIVAR PROXY
+
+SETEAR PROXYS:
+export ftp_proxy=http://127.0.0.1:3128
+export http_proxy=http://127.0.0.1:3128
+export https_proxy=http://127.0.0.1:3128
+
+echo $ftp_proxy
+echo $http_proxy
+
+
+
+############################################################
+INTERNET PARA SERVIDORES:
+############################################################
+
+--> EN EL SERVIDOR:
+-> crear archivo en el servidor
+nano /etc/apt/apt.conf.d/proxy.conf
+-> insetar en el archivo: (PARA EL APT)
+Acquire::http::Proxy "http://127.0.0.1:3128";
+Acquire::https::Proxy "http://127.0.0.1:3128";
+Acquire::ftp::Proxy "http://127.0.0.1:3128";
+(Se utiliza el puerto 3128 del proxy para internet)
+
+
+# (PARA EL NPM
+npm config set proxy http://127.0.0.1:3128
+npm config set https-proxy http://127.0.0.1:3128
+
+
+--> SE AGREGAN LOS EXPORTS en el servidor:
+export ftp_proxy=http://127.0.0.1:3128
+export http_proxy=http://127.0.0.1:3128
+export https_proxy=http://127.0.0.1:3128
+
+--> EN EL DOCKER:
+->ejecutamos el docker, corremos el contenedor squid
+->ingresamos el siguiente comando
+ssh -N -R 3128:192.168.0.19:3128 dbappbrocalugapp
+(-N -R para enviar el puerto 3128 de la maquina al servidor!
+replicamos el puerto!)
+
+--> LOG DEL DOCKER
+tail -f /var/log/squid/access.log
+--> CONFIGURACION DEL DOCKER QUE DEBERIA TENER:
+nano /etc/squid/squid.conf :: DEBERIA DE ESTAR ASI:
+# allow all requests
+acl all src 0.0.0.0/0
+http_access allow all
+
+--->
+
+-> verificamos que el puerto se replique en el servidor
+-> con el comando
+ss -lnt | grep 3128
+
+ahora si instalamos los comandos que se requieren!
+
+############################################################
+COIMOLACHE ACCESS:
+usuario: jcastillo
+password: CS123456.
+
+############################################################
+############################################################
+PLR - extension para postgres - Instalacion
+
+en el servidor: 
+sudo apt install postgresql-10-plr # INSTALL POSTGIS SCRIPT FOR R
+sudo apt install postgresql-10-postgis-scripts # INSTALL POSTGIS SCRIPT FOR R
+
+en psql:
+-- drop extension plr;
+create extension plr;
+
+verificar la funcion (es la que realiza la conversion): 
+r_find_peaks(double precision[], double precision)
+
+ejecutar la funcion, para validar la creacion correcta de un ciclo, 
+el get_shovel_load_data deberia de crear un nuevo ciclo en tp_cargadescarga:
+
+SELECT * FROM get_shovel_load_data(2010780);
+select * from tp_cargadescarga where id = 2010780;
+SELECT * FROM ta_datacarga_sensores where id_cargadescarga = 2010780;
+
+############################################################
+############################################################
+CSMALLASAPP
+
+compilar en JAVA 17
+-> ejecutar run task build 17
+-> compilado en dist
+-> ejecutar: java -jar --module-path /Library/Java/JavaVirtualMachines/javafx-sdk-17.0.2/lib --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.media -server -XX:+UseZGC -Xms1g -Xmx2g -XX:NewRatio=5 -XX:GCTimeRatio=19 -jar MallasApp.jar
+
+java -jar --module-path "C: \Program Files\Java\JavaFX-17\lib" --add-modules javafx.controls, javafx.fxml, javafx.graphics, javafx.media, javafx.swing -server -XX:+UseG1GC -Xms1g -Xmx2g -XX:NewRatio=5 -XX:GCTimeRatio=19 -jar "D: \jar operaciones \marcobre\C4M Desktop.Ofuscado_2023.03a2 (1). jar"
+
+
+#########
+
+Agrega key (cada vez que se reinicia el equipo)
+ssh-add system_key
+
+Para incluir los archivos que se crean dentro de la carpeta configurar
+Include ~/.ssh/config.d/config.*
+
+
+habilitar la ejecucion de comandos desde el ssh :
+PermitLocalCommand yes
+
+
+Para no perder conexion y mantener sesion activa, repitiendo el puerto 80 (indiferente)
+ssh -N -L 80:127.0.0.1:80 mlm
+
+
+
+
+#######################
+verificar los autoupdates de ubuntu
+
+cd /etc/apt/apt.conf.d/
+nano 20auto-upgrades (los valores internos deberian estar en 0)
+nano 10periodic
+
+verificar version de ubuntu
+cat /etc/issue
+
+#########################
+
+DOWNGRADE PGPOOL
+
+cat check_pcp_node.
+
+backup a ubuntu:
+primero instalar:: sudo apt-get install dpkg-repack fakeroot
+luego, reempaquetamos el pgpool:: dpkg -l | grep pgpool
+crear carpeta:: mkdir pgpool.4.3.3
+entrar a la carpeta
+reempaquetar:: fakeroot -u dpkg-repack libpgpool2 pgpool2 (del pgpool instalado genera un backup, este sirve para restaurar)
+cd al home del root
+
+link descarga del pgpool: https://pgpool.net/mediawiki/index.php/Downloads
+escoger el 4.1.5
+
+/configure --sysconfdir=/etc/pgpool2  --bindir=/usr/sbin
+
+make (prepara el escenario)
+
+pgpool -V (version anterior)
+
+make install (instala todo)
+
+pgpool -v (version nueva)
+
+
+cd opt/minesense/sh
+cat check-fix_pgpool.sh (copiar y ejecutar los 4 comandos que se tiene ahi)
+
+
+
+
+El S.S se ah actualizado solo?
+
+
+
+
+#########
+TIEMPO PARA VERIFICAR EL TIEMPO DE REGISTRO DE LA POSICION DE LOS EQUIPOS
+select now() -tiem_update , xcoorint,ycoorint,id_equipo
+from ta_posicionequipos
+order by 1 desc limit 10;
+
+
+
+#######
+Manuales:
+
+NODE ACTION MANUAL: https://msspe.sharepoint.com/:w:/s/MS4M-InvestigacinyDesarrollo/EbWZzaKWm9tHm-Fg9gIcczkBSPCpYHyOW6fd33BbI8hwqw?e=yEinE8
+
+
+
+
+########################################################################################################################
+REINICIAR EL PGPOOL
+########################################################################################################################
+update_tv_tables(1) -> 200 ms
+
+psql -d ControlSenseDB -c "Select update_tv_tables_clean()";  -> limpieza para el clean
+
+
+ABRIR ESTOS DOS EN PARALELO (2terminal):
+Reiniciar el postgres!
+sudo service postgresql stop (primero)
+sudo service postgresql start (segundo)
+
+En el de aplicaciones ejecutar el script que levanta el pgpool! (script del checfix pgpool new)
+-> /opt/minesense/sh 
+sudo su check-fix_pgpool.new.sh (tercero)
+
+########################################################################################################################
+
+Ver el tiempo de demora de las querys
+
+cd /opt/minesense/protobuffer
+sudo ./ServerSocket --profile-functions
+
+aqui se encuentra una funcion con el nombre y fecha de la ejecucion!
+
+
+########################################################################################################################
+##############################GOLDFIELDS################################################################
+########################################################################################################################
+CISCO CONNECT - GF
+user: jjulcamoro
+password: uK#2U(#:Aioa
+Grupo de VPN: RA-G07
+
+
+
+########################################################################################################################
+##############################          IRIS            ################################################################
+########################################################################################################################
+Para levantar el iris en un solo puerto:
+el compilado del back que se llama dist ubicarlo en el proyecto back
+el compilao del front que se llama build ubicarlo dentro del dist 
+la ruta es localhost:3002/iris
+esta ruta se indica en el ecosystem
+luego ejecutar pm2 start ecosystem... 
+
+Para levantar el back: 
+> tsc
+> node dist
+
+archivo .env:
+SERVER_URL=http://127.0.0.1
+EXPRESS_PORT = 3002
+
+USER_DATA_BASE = controlsys
+PASS_DATA_BASE = 4rll1vmssHBminerals
+NAME_DATA_BASE = ControlSenseDB
+PORT_DATA_BASE = 5432
+HOST_DATA_BASE = 10.112.93.211
+
+TIME_FOR_REFRESH_EQUIPMENT_SENSOR = */300 * * * * *
+
+RUTE_KEY = /Users/jhordan/system_key.bin
+PASS_CONTROL_BOX = mssadminkey2018
+USER_CONTROL_BOX = root
+FILES_PATH = /Users/jhordan/Documents/projects/iris/calibracion_gps_back/public/
+
+##Conectarse al equipo
+
+##Conectarse al Sqlite
+sqlite3 data/data/com.mss.pms.csmobile/databases/DBCSMobile
+##Limpieza BD en ControlScreen!
+am force-stop com.mss.pms.csmobile
+pm clear com.mss.pms.csmobile
+am start com.mss.pms.csmobile
+
+##Conectarse cuando hay mas de un dispositivo adb
+adb -s 192.168.118.142:5555 shell  
+
+select * from LastUpdateTime;
+
+Para levantar el front:
+npm run build
+
+el archivo .env:
+REACT_APP_API_URL = http://localhost:3002
+REACT_APP_EQUIPMENT_TYPE_CARGADOR = 1
+REACT_APP_EQUIPMENT_TYPE_EXCAVADORA = 2
+REACT_APP_EQUIPMENT_TYPE_PALA = 3
+REACT_APP_EQUIPMENT_TYPE_TRACTOR = 4
+REACT_APP_EQUIPMENT_TYPE_PERFORADORA = 5
+REACT_APP_LIMIT_PITCH = 5
+REACT_APP_LIMIT_ROLL = 5
+REACT_APP_MARGIN_GPS = 0.1
+REACT_APP_LANGUAGE = 'en'
+REACT_APP_API_OPERATION = GoldFields
+
+
+***************************************************************************
+***************************************************************************
+***************************************************************************
+PRUEBA EN CONTROLSCREEN DE LIMA
+1. Subir archivos de una calibracion exitosa a sdcard (hp.points.csv y hp.snapshot.csv)
+2. Antes de presionar End Calibration: reemplazar hp.snapshot.csv generado
+                  cp /sdcard/hp.snapshot.csv /data/local/tmp/hp.snapshot.csv
+3. Presionar End calibration
+
+Para revisar los puntos generados:
+cat /data/local/tmp/hp.points.csv
+
+
+***************************************************************************
+***************************************************************************
+***************************************************************************
+
+
+APK QUE SE ENVIA:
+CSMobile-ldpiArmeabi-v7a-release.apk
+
+
+
+
+tail -n 1000 SLockMonitory.log A9 B9
+
+
+***************************************************************************
+***************************************************************************
+***************************************************************************
+
+CLIPPER :::
+
+> se encuentra ubicado en 
+opt/ms4m/bin
+--> Clipper (ejecutable - compilado)
+--> MSSClipper
+
+opt/ms4m/init
+--> MSSClipper (a este se le puede dar un cat)
+en este archivo se verifican donde escribe los logs
+
+Para el servicio:
+--> cd /etc/init.d/
+--> ./MSSClipper status
+--> ./MSSClipper start
+--> ./MSSClipper stop
+
+Para kill al servicio:
+--> pidof MSSClipper
+-> kill -9 id
+
+Para el compilado:
+--> en vscode existen task, se probo ejecutar pero salia error!
+
+
+
+
+PARA ABRIR EL VNC DE UN EQUIPO EN OPERACION
+#se comparte el puerto y se pone el ip del equipo, en este caso se pone -p 9922 para Marcobre
+ssh -N -L 5902:192.168.129.3:5901 mcapp01@172.23.131.20 -p 9922
+ssh -N -L 5902:192.168.129.43:5901 mcapp01@172.23.131.20 -p 9922
+
+
+
+
+###########################################################
+COIMOLACHE
+###########################################################
+conexion forticlient!
+user: ct-usrpa10  
+password: Marzo2023
+
+Conexion a servidores:
+usuario: jjulcamoro
+password: jjulcamoro24
+
+
+###########################################################
+TAMANHO ESPACIO DISCO
+###########################################################
+df -h
+
+
+
+/opt/minesense/bin
+
+/etc/init.d
+
+###########################################################
+
+pm uninstall com.mss.pms.csmobile
+pm install /sdcard/C4Mobile.apk
+am start com.mss.pms.csmobile
+
+
+###########################################################
+LOG DE POSTGRES - UBICACION POSTGRES LOG
+
+cd /var/log/postgresql
+tail -f postgresql-10-main.log
+
+###########################################################
+
+MALLAS SERVICIO:
+
+> Log error
+cd /var/log/
+tail -n 500 ProcesoUpMalla.log 
+
+
+
+###########################################################
+GIT USER CHANGE :
+
+git config --global user.name "jhordanjulcamoroms4m"  
+git config --global user.email "jhordanjulcamoro@ms4m.com"   
+ssh-add ~/.ssh/id_rsa  
+ssh-keygen -t rsa -b 4096 -C "jhordanjulcamoro@ms4m.com"             
+pbcopy < ~/.ssh/id_rsa.pub 
+
+
+
+###########################################################
+ZONA HORARIA - CLIPPER CORRECCION
+###########################################################
+error:
+ERROR: invalid value for parameter "TimeZOne":""
+
+SOLUCION::
+se verifica el timezone
+> timedatectl 
+este es el file al que apunta el clipper
+> cat /etc/localtime 
+se verifica si existe el timezone del servidor en la ruta
+> cat /usr/share/zoneinfo/America/Lima 
+se elimina el archivo actual al que apunta el clipper
+> rm -r /etc/localtime
+se linkea el archivo eliminado al que tiene el servidor
+> ln -s /usr/share/zoneinfo/America/Lima /etc/localtime
+se verifica el timezone
+> timedatectl 
+se verifica el clipper
+> cd opt/minesense/bin/
+> ./Clipper
+se verifican los logs del clipper
+> tail -f /opt/minesense/logs/MSSClipper.log
+
+###########################################################
+###########################################################
+###########################################################
+VERIFICA EL CONSUMO EN UN CS
+top -t | grep csmobile
+Verificar cpu - 5 primeros procesos que mas consumen (alrededor del 30%)
+top -m 5 
+
+verificar la ram
+cat /proc/meminfo
+
+tamanho del sdcard
+df /sdcard
+
+threads Activos del csmobile
+top -t | grep csmobile
+
+resolucion de CS
+>para consultar el size
+wm size 
+>para consultar el density
+wm density
+>para setear ambos
+wm size 1024x600 ; wm density 140
+
+
+Para activar el Busybox ::: Dejar en log la cantidad de memoria cache
+busybox watch -n 1 cat /proc/meminfo
+busybox watch -n 1 echo `cat /proc/meminfo`
+cat /proc/meminfo
+
+cd /data/local/
+busybox vi getmeminfo.sh    //crea el archivo que va a leer y dentro de este poner
+#!/system/bin/sh
+cat /proc/meminfo
+
+chmod +x getmeminfo.sh
+
+ahora ejecutar:
+busybox watch -n 1 /data/local/getmeminfo.sh
+
+###########################################################
+###########################################################
+###########################################################
+
+free -h	==> memoria ram				
+nproc ==> cores		
+df -BG ==> memora Disco en GB
+
+
+###########################################################
+###########################################################
+###########################################################
+CREACION MAQUINAS LIMA
+
+->ip:192.168.3.67
+->usuario: app01
+->password: ms4m2023
+
+->ip:192.168.3.68
+->usuario: db01
+->password: ms4m2023
+
+->ip:192.168.3.70
+->usuario: rep01
+->password: ms4m2023
+
+->ip:192.168.3.71
+->C4MDesktop
+
+
+
+
+###########################################################
+###########################################################
+###########################################################
+INSTALAR MONIT:
+apt install monit
+
+modificar archivo
+monittrc
+setear
+set daemon 30
+descomentar
+set httpd port 2812 and
+allow admin:monit
+
+sudo apt monit status
+/etc/init.d/SProtobuffer status
+/etc/init.d/SProtobuffer log
+
+> /etc/monit
+
+
+###########################################################
+###########################################################
+
+INSTALAR PGPOOL:
+scp pgpool-II-4.1.5.tar.gz app01@192.168.3.67:~/  
+
+COMANDOS PARA PGPOOL:
+
+sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+#sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+sudo apt -y install curl ca-certificates
+curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+
+sudo apt -y update
+
+sudo apt install pgpool2
+
+descomprimir la carpeta de la version 4.1.5
+
+pgpool -version
+
+sudo apt install build-essential
+
+./configure --sysconfdir=/etc/pgpool2  --bindir=/usr/sbin
+
+make
+
+make install
+
+pgpool -version
+
+###########################################################
+CONFIGURACION DE PGPOOL LUEGO DE INSTALAR
+archivos de pgppool
+cd /etc/pgpool2/
+
+wget https://www.dropbox.com/s/czmo3fd2gnnuecx/pgpool2.tar.gz
+
+
+wget https://www.dropbox.com/s/czmo3fd2gnnuecx/pgpool2.tar.gz
+editar:
+tar -zxvf pgpool2.tar.gz 
+cd etc/pgpool2
+nano pgpool.conf
+    backend_hostname0 = '10.240.94.72'
+
+service pgpool2 restart
+
+LOG DEL PGPOOL:
+tail -f /var/log/syslog | grep pgpool
+
+
+####UPDATETVTABLES####
+Linkear servicio:
+ln -s /opt/minesense/init/SUpdateTvTables /etc/init.d/SUpdateTvTables
+Verificar estado:
+/etc/init.d/SUpdateTvTables status
+Para verificar los logs, en este caso del 1
+/etc/init.d/SUpdateTvTables log 1
+ /etc/init.d/SUpdateTvTables log 1
+
+
+
+
+
+################################################################################
+################################################################################
+MACRAES - CONTROL NUEVO - 2023.06a2
+################################################################################
+################################################################################
+Primero abrir los puertos:
+
+ssh -N -L 5433:127.0.0.1:5432 macapp 
+ssh -N -L 50556:127.0.0.1:50556 macapp 
+ssh -N -L 50555:127.0.0.1:50555 macapp  
+
+Ubicar el C4M.jar o ofuscado en la ruta de descargas:
+Ubicarse en la ruta printipal: cd
+ejecutar::
+> java --module-path /Library/Java/JavaVirtualMachines/javafx-sdk-17.0.4/lib  \                                                          
+                   --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.media,javafx.swing,javafx.web,javafx.base \
+                   -server -XX:+UseParallelGC  -Xms100m -Xmx3g -Xss100m -XX:NewRatio=5 -XX:GCTimeRatio=19 \
+                   -cp ./lib/hamcrest-core-1.3.jar:./lib/junit-4.12.jar:./lib/javafx-dialogs-0.0.4.jar:./lib/annotations-api-6.0.53.jar:./lib/grpc-api-1.44.0.jar:./lib/grpc-context-1.44.0.jar:./lib/grpc-core-1.44.0.jar:./lib/grpc-netty-shaded-1.44.0.jar:./lib/grpc-protobuf-1.44.0.jar:./lib/grpc-protobuf-lite-1.44.0.jar:./lib/grpc-stub-1.44.0.jar:./lib/guava-20.0.jar:./lib/perfmark-api-0.23.0.jar:./lib/proto-google-common-protos-2.0.1.jar:./lib/protobuf-java-3.19.2.jar:\
+               Downloads/C4M_Desktop.jar controlSenseAuto.Main
+
+
+
+
+
+
+Para compartir por ADB POR wifi
+adb tcpip 5555
+
+Para visualizar la tblet
+> brew install scrcpy  
+>

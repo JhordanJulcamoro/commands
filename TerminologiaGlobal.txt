@@ -1,0 +1,73 @@
+########################################################################################
+INSTALAR POSTGRESQL EN MAC
+#############################################
+INSTALACION
+Abre el terminal y escribe el siguiente comando:
+> brew install postgresql
+
+ACTUALIZAR POSTGRESQL
+Si ya lo tienes instalado de antes y lo quieras actualizar escribe el siguiente comando
+> brew upgrade postgresql
+
+INICIAR POSTGRESQL
+Para iniciar los servicios escribe el siguiente comando:
+> brew services start postgresql
+
+REINICIAR POSTGRESQL
+Para reiniciar los servicios escribe el siguiente comando:
+> brew services restart postgresql
+
+LISTA DE SERVICIOS
+Si ya has inicio PostgreSQL puedes ver la lista de servicios que se están ejecutando con el siguiendo comando:
+> brew services list
+
+INICIAR LINEA COMANDOS POSTGRESQL
+Para empezar a utilizar PotgreSQL desde la linea de comando escribe el siguiente comando en el terminal:
+> psql postgres
+
+#############################################
+######################################################################################
+EJECUTAR POSTGRES EN MAC
+#############################################
+
+INFORMACION DE COMANDOS DE EJECUCION EN POSTGRES
+> https://www.prisma.io/dataguide/postgresql/connecting-to-postgresql-databases
+
+CONECTARSE A UNA BD
+> psql -h 127.0.0.1 -p 5432 -U postgres -d postgres
+#############################################
+######################################################################################
+#############################################
+INSTALACION POSTGRES EN MAC
+
+> https://postgresapp.com/
+> https://www.migueltroyano.com/bbdd/instalar-postgresql-en-mac-os/
+#############################################
+######################################################################################
+#############################################
+INFO CONECC BD - POSTGRESQL
+
+https://www.prisma.io/dataguide/postgresql/connecting-to-postgresql-databases
+#############################################
+######################################################################################
+#############################################
+CONFIGURACION - EQUIPOS SE PONEN EN AZUL
+
+cambiar la configuracion 38 de la tabla ts_configuracion -> Tiempo Alerta por Perdida de Señal (seg)
+dato = 20 (este valor deberia tener)
+#############################################
+######################################################################################
+#############################################
+
+
+#############################################
+######################################################################################
+#############################################
+
+#############################################
+######################################################################################
+#############################################
+
+#############################################
+######################################################################################
+#############################################

@@ -1,0 +1,126 @@
+TERMINOLOGÍA GENERAL
+
+
+######################################################3
+ETA
+######################################################3
+es el %ruta
+toma en cuenta la velocidad del camión!
+se calcula un estimado 
+
+-> cal tiemp real avance camion
+-> % avance de ruta
+
+recordar que el 1er calculo: TOMA EN CUENTA EL ETA DEL SERVIDOR (si los demas camiones se demoran, entonces el ETA aumentaría)!
+
+
+######################################################3
+LAUNCHER APK
+######################################################3
+Info: https://ms4m.atlassian.net/browse/ST01-11792
+
+procedimiento de actualización de launcher:
+
+1. Validar la versión del launcher instalado y la ruta donde esta instalado por ejemplo :
+
+    dumpsys package com.mss.pms.cslauncher
+
+2.  Subir el apk del launcher a la sdcard del equipo(CSLauncher-1.1.3)
+     scp CSLauncher-1.1.3.apk root@<ip_control_screen>:/sdcard/
+
+3. Dentro de la controlscreen ejcutar como root:
+     mount -o rw,remount /system
+
+4. Copiar el apk a la ruta correspondiente, validar que la ruta sea la correcta ya existen versiones del Sistema Operativo que no es la misma del launcher pero en  /system/priv-app/  tendria que estar el launcher actual al que se debe actualizar validar que el nombre del archibo apk tambien sea LauncherMS4M.apk o el que tenga instalado y sobre escribir a ese nombre.
+
+por ejemplo:
+    cp  /sdcard/CSLauncher-1.1.3.apk  /system/priv-app/LauncherMS4M/LauncherMS4M.apk
+
+5. Reiniciar ControlScreen
+    svc power shutdown
+
+6. Validar versión:
+
+    dumpsys package com.mss.pms.cslauncher | grep versionName
+
+
+######################################################
+LOCACION CARGA/DESCARGA A OTRA ZONA
+######################################################
+-> zonas PERTENECE A locaciones carga, descarga, poligonos, bloques
+-> poligono dentro de una zona
+-> ciclo se maneja por locacion de carga y descarga (su zona)
+-> si la locacion de carga o descarga se mueve a otra zona, ahí si la zona cambiaría
+y el ciclo se registra con esta nueva zona a la que pertenece
+locacion -> a una zona
+Es necesario volver a reprocesar los viajes para que estos puedan pertenecer al nuevo id
+de la zona que se ah creado!
+
+
+######################################################
+RESETEO HORA EN CSMOBILE - APK
+######################################################
+ControlEsential:
+logcat -v time | grep "Setting date ProtoReader:"
+
+seteo de date: date -s 20220819.180400
+
+
+
+######################################################
+CSVNC.JAR
+######################################################
+Para poder abrir el VNC del control, se tiene que 
+tener este archivo en la misma ruta!
+
+
+
+######################################################
+
+######################################################
+Camion se comunica con la pala o con otros equipos para
+enviar (tonelaje, peso, etc).
+Para ello necesita comunicación PEER to PEER, para ello
+utiliza los puertos 6788, 6789, 6780, 6779, 6790.
+El digline se envía por uno de estos puertos, para ello
+se debería de activar y así se empieza a generar la data
+
+
+######################################################
+
+######################################################
+Las alertas VINS en el CS solo se reciben y almacenan en bd,
+estas son generadas por el ControlBox (de aqui se envian al apk).
+Si no existen alertas es porque el esquipo esta todo ok.
+
+El controlBox le envía las alertas al apk y este registra.
+
+
+
+
+######################################################
+PUERTOS QUE SE USAN EN EL CONTROL - A HABILITAR:
+######################################################
+
+https://msspe-my.sharepoint.com/:x:/r/personal/oswaldo_mestanza_ms4m_com/_layouts/15/Doc.aspx?sourcedoc=%7B413CEAE3-D587-4DF9-AD76-08E07730C1F5%7D&file=Protocolos-Puertos-MS4M.xlsx&action=default&mobileredirect=true&cid=2410c8dd-51b6-4080-9038-9c43a777ad13
+
+PORT_ALERTS_GEO = 6780
+
+Payload:
+UDP:6790
+TCP:6789
+
+Position en tiempo real entre equipos:
+TCP: 6788
+UDP:6790
+
+
+
+######################################################
+PRECISIÓN GPS EQUIPO BAJA PRECISIÓN
+######################################################
+3m  - 10m
+######################################################
+PRECISIÓN GPS EQUIPO ALTA PRECISIÓN
+######################################################
+10cm
