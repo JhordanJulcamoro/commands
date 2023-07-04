@@ -5077,9 +5077,13 @@ ejecutar::
                Downloads/C4M_Desktop.jar controlSenseAuto.Main
 
 
+> java --module-path /Library/Java/JavaVirtualMachines/javafx-sdk-17.0.4/lib --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.media,javafx.swing,javafx.web,javafx.base -server -XX:+UseParallelGC  -Xms100m -Xmx8g -Xss100m -XX:NewRatio=5 -XX:GCTimeRatio=19 -jar Downloads/C4M_Desktop_CAD.jar
 
+> 
+java --module-path /Library/Java/JavaVirtualMachines/javafx-sdk-17.0.4/lib --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.media,javafx.swing,javafx.web,javafx.base -server -XX:+UseParallelGC  -Xms100m -Xmx3g -Xss100m -XX:NewRatio=5 -XX:GCTimeRatio=19 -cp ./lib/hamcrest-core-1.3.jar:./lib/junit-4.12.jar:./lib/javafx-dialogs-0.0.4.jar:./lib/annotations-api-6.0.53.jar:./lib/grpc-api-1.44.0.jar:./lib/grpc-context-1.44.0.jar:./lib/grpc-core-1.44.0.jar:./lib/grpc-netty-shaded-1.44.0.jar:./lib/grpc-protobuf-1.44.0.jar:./lib/grpc-protobuf-lite-1.44.0.jar:./lib/grpc-stub-1.44.0.jar:./lib/guava-20.0.jar:./lib/perfmark-api-0.23.0.jar:./lib/proto-google-common-protos-2.0.1.jar:./lib/protobuf-java-3.19.2.jar:Downloads/C4M_Desktop_CAD.jar controlSenseAuto.Main
 
-
+> CADIA::
+java --module-path /Library/Java/JavaVirtualMachines/javafx-sdk-17.0.4/lib --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.media,javafx.swing,javafx.web,javafx.base -server -XX:+UseParallelGC  -Xms100m -Xmx3g -Xss100m -XX:NewRatio=5 -XX:GCTimeRatio=19 -cp ./lib/hamcrest-core-1.3.jar:./lib/junit-4.12.jar:./lib/javafx-dialogs-0.0.4.jar:./lib/annotations-api-6.0.53.jar:./lib/grpc-api-1.44.0.jar:./lib/grpc-context-1.44.0.jar:./lib/grpc-core-1.44.0.jar:./lib/grpc-netty-shaded-1.44.0.jar:./lib/grpc-protobuf-1.44.0.jar:./lib/grpc-protobuf-lite-1.44.0.jar:./lib/grpc-stub-1.44.0.jar:./lib/guava-20.0.jar:./lib/perfmark-api-0.23.0.jar:./lib/proto-google-common-protos-2.0.1.jar:./lib/protobuf-java-3.19.2.jar:Downloads/C4M_Desktop_CAD.jar controlSenseAuto.Main
 
 Para compartir por ADB POR wifi
 adb tcpip 5555
@@ -5087,3 +5091,14 @@ adb tcpip 5555
 Para visualizar la tblet
 > brew install scrcpy  
 >
+
+
+################################################################################
+################################################################################
+CADIA - NUEVO CONTROL - 2023.06a3
+################################################################################
+################################################################################
+
+ssh -N -L 5433:127.0.0.1:5432 cdapp01
+ssh -N -L 50556:127.0.0.1:50556 cdapp01
+ssh -N -L 50555:127.0.0.1:50555 cdapp01
