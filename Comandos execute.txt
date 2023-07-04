@@ -4209,7 +4209,7 @@ conectar y el kill en manual!
 
 CONEXION MARCOBRE 2022 - UPDATE - NOVIEMBRE
 -> Por Forticlient -> 
-UTILIZAR USUARIO: ueminesense6 password:MineriaBreca20231!  -> PARA MARCOBRE!
+UTILIZAR USUARIO: ueminesense6 password:MineriaBreca20237!  -> PARA MARCOBRE!
 token llega a cel, numero de wssp
 coneccion successfull!
 
