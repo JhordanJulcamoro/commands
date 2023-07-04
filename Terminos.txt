@@ -135,3 +135,102 @@ Esto cuando el equipo no cuenta con telemetria, deberia de entrar a este log y r
 IS_INTERCEPTION_ON_DUMP_LOCATION en true (1114 - variable en 1)
 para que no detecte un salto de actividades cuando una locacion sea tanto descarga como carga
 
+
+
+######################################################
+C4M - ERROR DE MATERIAL NO EXISTE
+######################################################
+--select fix_materials_deleted_on_dumps();
+
+create or replace function fix_materials_deleted_on_dumps() returns boolean
+     language plpgsql
+as
+$$
+ DECLARE
+        str    record;
+        mat    text;
+        qry    text;
+        mat_id bigint;
+    BEGIN
+        for str in (select *
+                    from ts_descarga
+                    where tiem_elimin isnull
+                      and mater_ids similar to (select array_to_string(array_agg('%,' || id::text), ',%|')
+                                                from ts_material
+                                                where tiem_elimin notnull) || ',%')
+            loop
+                mat := str.mater_ids;
+                for mat_id in (select id from ts_material where tiem_elimin notnull)
+                    loop
+                        mat := replace(mat, ',' || mat_id || ',', ',');
+--                         raise notice 'mat:%  ->%',mat,',' || mat_id || ',';
+                    end loop;
+                raise notice 'id descarga => id:% id_descarga:% mater_ids:% new_mats:%', str.id,str.id_descarga,str.mater_ids, mat;
+                qry := 'update ts_descarga set mater_ids = '''||mat||''' where id =' || str.id || ';';
+                raise notice '%',qry;
+                execute qry;
+            end loop;
+        return true;
+    END
+$$;
+
+alter function fix_materials_deleted_on_dumps() owner to controlsys;
+
+grant execute on function fix_materials_deleted_on_dumps() to cs_app_pad;
+
+grant execute on function fix_materials_deleted_on_dumps() to cs_app_rw;
+
+grant execute on function fix_materials_deleted_on_dumps() to cs_developer;
+
+grant execute on function fix_materials_deleted_on_dumps() to cs_developer_sr;
+
+grant execute on function fix_materials_deleted_on_dumps() to cs_servicedesk_n2;
+
+grant execute on function fix_materials_deleted_on_dumps() to cs_servicedesk_n3;
+
+
+####################################################
+###################BROCAL UG########################
+####################################################
+#Para conectarme al equipo
+> ssh EBUG_CV118_256 
+#Para enviara pk al equipo ya configurado
+> scp -O C4M_Mobile_2023.07a1_03.07.2023-UG.apk EBUG_CV118_256:/sdcard  
+#Para enviar a todos los equipos utilizamos el proyecto .py
+#Subimos el apk al servidor de aplicaciones y luego copiamos a la ruta del proyecto
+cp C4M_Mobile_2023.07a1_03.07.2023-UG.apk /opt/minesense/project/c4m_mobile_exe/apks/
+#Recordar que para enviar se debe modificar el archivo versions.txt que se ubica en:
+/opt/minesense/project/c4m_mobile_exe/apks/
+
+cat ~/.ssh/id_rsa.pub | pbcopy 
+
+
+#El archivo version.txt (/opt/minesense/project/c4m_mobile_exe/apks/versions.txt) 
+##Estaba así: 2023.06a2 26/06/2023
+C4M_Mobile_2023.06a2_26.06.2023.apk
+2023.0 ##debería quedar así:
+2023.07a1 03/07/2023
+C4M_Mobile_2023.07a1_03.07.2023-UG.apk
+2023.0
+
+#Luego de modificar el archivo versions.txt, podemos verificar el servicio
+> cd /etc/init.d/ > ./SSendTrucks status
+> ./SSendTrucks stop
+> ./SSendTrucks start
+> ./SSendTrucks log
+
+#Recordar que cuando se le da stop, el monit lo va a levantar, por ello 
+Lo deshabilitamos temporalmente de monit
+> monit status
+> monit unmonitor SSendTrucks
+> monit monitor SSendTrucks
+
+#Primero deshabilitar en el monitor y luego el stop al servicio y luego habilitar en el monit y el servicio.
+
+#Para verificar los equipos en los cuales se instalo el nuevo apk, aparte de verificar los logs, 
+Se puede consultar la siguiente vista: > select * from current_version_c4m_mobile;
+
+
+######################################################
+
+######################################################
