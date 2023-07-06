@@ -62,6 +62,8 @@ dato = 20 (este valor deberia tener)
 ##################   PDS    #################
  select * from at_pds_alerts;
 
+ Logica camion-camion: https://ms4m.atlassian.net/browse/ST01-20190
+ Manual logica all: https://ms4m.atlassian.net/browse/ST01-5406
 #############################################
 ######################################################################################
 #############################################
