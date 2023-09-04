@@ -1,0 +1,139 @@
+#Al iniciar y querer conectar equipos
+ssh-add -k ~/system_key 
+
+#Copiar DB de equipo
+cp /data/data/com.mss.pms.csmobile/databases/DBCSMobile /sdcard/DBCSMobileTR01_0607 
+
+#Descargad DB de equipo
+scp -O MARC_TR01_83:/sdcard/DBCSMobileTR01_0607 . 
+
+#Abrir Pantalla Tablet 
+scrcpy 
+
+#Limpieza BD en ControlScreen!
+am force-stop com.mss.pms.csmobile
+pm clear com.mss.pms.csmobile
+am start com.mss.pms.csmobile
+
+################################################################
+################################################################
+OPERACIONES - OP
+################################################################
+################################################################
+# Marcobre (Mine2021!)
+ssh mcapp01 
+ssh mcdb01 
+ssh mcrep01 
+ssh mcdb02 
+
+
+################################################################
+################################################################
+Tablas backup
+################################################################
+################################################################
+pg_dump -h 127.0.0.1 -p 5448 -U postgres -a -d ControlSenseDB -t TA_Prisma_H | gzip -1 > TA_Prisma_H.gz
+pg_dump -h 127.0.0.1 -p 5432 -U postgres -a -d ControlSenseDB -t tp_estados | gzip -1 > tp_estados.gz
+pg_dump -h 127.0.0.1 -p 5432 -U postgres -a -d ControlSenseDB -t tp_palas | gzip -1 > tp_palas.gz
+
+gunzip -c tp_cargadescarga.gz  | psql -h 127.0.0.1 -U postgres -p 5440 -w -d ControlSenseDB
+gunzip -c tp_estados.gz  | psql -h 127.0.0.1 -U postgres -p 5440 -w -d ControlSenseDB
+gunzip -c tp_palas.gz  | psql -h 127.0.0.1 -U postgres -p 5440 -w -d ControlSenseDB
+
+
+###############################################################################
+################################################################################
+NUEVO CONTROL - 2023.06a3
+################################################################################
+################################################################################
+# MACRAES
+ssh -N -L 5433:127.0.0.1:5432 macapp 
+ssh -N -L 50556:127.0.0.1:50556 macapp 
+ssh -N -L 50555:127.0.0.1:50555 macapp  
+
+# CADIA
+ssh -N -L 5433:127.0.0.1:5432 cdapp01
+ssh -N -L 50556:127.0.0.1:50556 cdapp01
+ssh -N -L 50555:127.0.0.1:50555 cdapp01
+
+# MARCOBRE
+ssh -N -L 5433:127.0.0.1:5432 mcapp01
+ssh -N -L 50556:127.0.0.1:50556 mcapp01
+ssh -N -L 50555:127.0.0.1:50555 mcapp01
+
+
+
+###############################################################################
+################################################################################
+AGREGAR authorized_keys
+################################################################################
+################################################################################
+cd ~/.ssh/
+touch authorized_keys
+chmod 640 authorized_keys
+
+
+###############################################################################
+################################################################################
+LOGS
+################################################################################
+################################################################################
+POSTGRES - EN BASE DE DATOS
+tail -f /var/log/postgresql/postgresql-10-main.log
+
+
+
+###############################################################################
+################################################################################
+DOCKER
+################################################################################
+################################################################################
+> backup contenedores
+docker export dev18 > dev18.tar    
+docker export squid > squid.tar   
+
+> restaurar backup contenedores
+docker import squid.tar squid  
+docker import dev18.tar dev18  
+
+###############################################################################
+################################################################################
+Terminar conexiones - postgres base de datos
+################################################################################
+################################################################################
+
+SELECT pg_terminate_backend(pid)
+FROM pg_stat_activity
+WHERE datname = 'ControlSenseDB';
+
+
+###############################################################################
+################################################################################
+OPTIMIZADOR
+################################################################################
+################################################################################
+> Binario
+/opt/minesense/bin/MssOptimizador
+
+> LOG
+tail -f /opt/minesense/log/optimizador.log
+
+
+###############################################################################
+################################################################################
+INSTALAR APK - C4MMOBILE
+################################################################################
+################################################################################
+am force-stop com.mss.pms.csmobile
+pm clear com.mss.pms.csmobile
+pm install -r /sdcard/DRILL_logs.apk
+am start com.mss.pms.csmobile
+
+am force-stop com.mss.pms.csmobile
+pm clear com.mss.pms.csmobile
+am start com.mss.pms.csmobile
+
+am force-stop com.mss.pms.csmobile
+pm clear com.mss.pms.csmobile
+pm install -r /sdcard/CSMobile-ldpiArmeabi-v7a-release_2023.07a4.apk
+am start com.mss.pms.csmobile

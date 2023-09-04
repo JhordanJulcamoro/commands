@@ -555,12 +555,16 @@ equipment.
 
         > pm install -r /sdcard/app-release.apk (-d debug pero no tomarlo en cuenta)
 6. Start application:
- am start com.mss.pms.csmobile
+ am start com.mss.pms.CSMobile
 
- pm install -r /sdcard/C4Mobile-release-2023.06a2-truck.apk
+ pm install -r /sdcard/DRILL_logs.apk
  pm install -r /sdcard/C4M_Mobile_2023.07a1_03.07.2023-UG.apk
  am start com.mss.pms.csmobile
 ----------------------------------------------------------------
+am force-stop com.mss.pms.csmobile
+pm install -r /sdcard/DRILL_logs.apk
+am start com.mss.pms.csmobile
+
 am force-stop com.mss.pms.csmobile
 pm clear com.mss.pms.csmobile
 am start com.mss.pms.csmobile
@@ -1155,6 +1159,7 @@ sudo apt install open-vm-tools-desktop
 #########################################
 #descomprimir un archivo tar
 tar -xvzf dist.tar.gz
+tar -Jxvf archivo.tar.xz
 unzip tuarchivo.zip
 gunzip tuarchivo.gz
 #comprimir un archivo tar
@@ -1244,13 +1249,13 @@ $ ssh -L 0.0.0.0:5432:172.29.95.40:5455 -N 127.0.0.1
 ####################################################
 -- Obtener backup, solo esquema
 
-pg_dumpall -s -f DDL_MC.sql
+pg_dumpall -p 5441 -s -f DDL_KG.sql
 
 -- Obtener backup sin datos pesados o sin importancia, (-T ignorar tabla):
 
 pg_dump -d ControlSenseDB -T ta_speed_limits_exceeded -T ta_mensajesopt -T ta_wrongcarguiodesc -T at_data_floor -T ta_logreasignacarguio -T tb_shovel_log -T ta_outroutecamion -T ts_confirmaestado -T ta_datacarga_dig -T ta_mensajes_detalle -T ta_controlbateria -T ta_datacarga_sensores -T ta_onoffhor -T ta_prisma_hp -T ta_tmp_hardware -T ta_androidlogs -T ta_datacamion_historic -T at_collision_alerts -T ta_log -T pt_reg_temp_parameters_cr  -T ta_alertasvims -T ta_datadigline -T tp_systemlogs -T ta_data_auxiliares_historic -T ta_datapala_historic -T ta_datadiglineacumulado -T tp_systemlogs -T ta_datacarga -T ta_registro_horometro   -T ta_datadiglineacumuladodetalle  -T pt_reg_temp_coor_cr   -T ta_balanceoptimizador  > Backupgf240423.sql
 pg_dump -d ControlSenseDB -T ta_speed_limits_exceeded -T ta_mensajesopt -T ta_wrongcarguiodesc -T at_data_floor -T ta_logreasignacarguio -T tb_shovel_log -T ta_outroutecamion -T ts_confirmaestado -T ta_datacarga_dig -T ta_mensajes_detalle -T ta_controlbateria -T ta_datacarga_sensores -T ta_onoffhor -T ta_prisma_hp -T ta_tmp_hardware -T ta_androidlogs -T ta_datacamion_historic -T at_collision_alerts -T ta_log -T pt_reg_temp_parameters_cr  -T ta_alertasvims -T ta_datadigline -T tp_systemlogs -T ta_data_auxiliares_historic -T ta_datapala_historic -T ta_datadiglineacumulado -T tp_systemlogs -T ta_datacarga -T ta_registro_horometro   -T ta_datadiglineacumuladodetalle  -T pt_reg_temp_coor_cr   -T ta_balanceoptimizador  > BackupMC120423.sql
-pg_dump -d ControlSenseDB -T ta_speed_limits_exceeded -T ta_mensajesopt -T ta_wrongcarguiodesc -T at_data_floor -T ta_logreasignacarguio -T tb_shovel_log -T ta_outroutecamion -T ts_confirmaestado -T ta_datacarga_dig -T ta_mensajes_detalle -T ta_controlbateria -T ta_datacarga_sensores -T ta_onoffhor -T ta_prisma_hp -T ta_tmp_hardware -T ta_androidlogs -T at_collision_alerts -T ta_log -T pt_reg_temp_parameters_cr  -T ta_alertasvims -T tp_systemlogs  -T tp_systemlogs -T ta_registro_horometro   -T ta_datadiglineacumuladodetalle  -T pt_reg_temp_coor_cr   -T ta_balanceoptimizador  > BackupEB2207.sql
+pg_dump -p 5441 -d ControlSenseDB > BackupEB.sql
 
 -- Comprimimos backup
 
@@ -1845,6 +1850,8 @@ refresh materialized view "datacamiongps";
 --refresh materialized view "camionesarregloug";
 refresh materialized view "camionesarregloop";
 refresh materialized view "tonnageallpolygons";
+refresh materialized view "cyclessummary2";
+refresh materialized view  "load_time_kpi";
 select update_tv_tables_clean();
 
 
@@ -1988,9 +1995,14 @@ Garbage: HUDBAY:
 ####################################
 https://hudbay.cloud.com/Citrix/StoreWeb/#/login
 
+############# ERIK #######################
 Erick.sanchez@ms4m.com
 Constancia$$2023
 esanchez
+############# MANU #######################
+manuel.gil@ms4m.com
+Hudbay2023$$
+mgil
 --------------------
 CONSTANCIA ACCESOS - CITRIX:
 user : hbsacudapc01      -- ip:  172.23.46.20  -- app01 (Password: HbMarm$2045)
@@ -2162,18 +2174,22 @@ cromtab
 
 
 COMANDO PARA SACAR BACKUP DE UNA TABLA EN ESPECÍFIVO: -- tabla
-pg_dump -h 127.0.0.1 -p 5432 -U postgres -a -d ControlSenseDB -t ta_datacamion_historic | gzip -1 > ta_datacamion_historic.gz
 
-pg_dump -h 127.0.0.1 -p 5432 -U postgres -a -d ControlSenseDB -t tp_cargadescarga | gzip -1 > tp_cargadescarga.gz
 pg_dump -h 127.0.0.1 -p 5432 -U postgres -a -d ControlSenseDB -t tp_estados | gzip -1 > tp_estados.gz
+pg_dump -h 127.0.0.1 -p 5432 -U postgres -a -d ControlSenseDB -t TA_DATA_AUXILIARES | gzip -1 > TA_DATA_AUXILIARES.gz
+
+pg_dump -h 127.0.0.1 -p 5432 -U postgres -a -d ControlSenseDB -t ta_datacamion_historic | gzip -1 > ta_datacamion_historic.gz
+pg_dump -h 127.0.0.1 -p 5432 -U postgres -a -d ControlSenseDB -t tp_cargadescarga | gzip -1 > tp_cargadescarga.gz
 pg_dump -h 127.0.0.1 -p 5432 -U postgres -a -d ControlSenseDB -t tp_palas | gzip -1 > tp_palas.gz
 pg_dump -h 127.0.0.1 -p 5432 -U postgres -a -d ControlSenseDB -t ta_datacarga_sensores | gzip -1 > ta_datacarga_sensores.gz
+pg_dump -h 127.0.0.1 -p 5432 -U postgres -a -d ControlSenseDB -t ta_datadigline | gzip -1 > ta_datadigline.gz
 
 
 pg_dump -h 127.0.0.1 -p 5432 -U postgres -a -d ControlSenseDB -t ta_log | gzip -1 > ta_log.gz
 gunzip -c tp_cargadescarga.gz  | psql -h 127.0.0.1 -U postgres -p 5444 -w -d ControlSenseDB
 gunzip -c tp_estados.gz  | psql -h 127.0.0.1 -U postgres -p 5444 -w -d ControlSenseDB
 gunzip -c tp_palas.gz  | psql -h 127.0.0.1 -U postgres -p 5444 -w -d ControlSenseDB
+gunzip -c TA_DATA_AUXILIARES.gz  | psql -h 127.0.0.1 -U postgres -p 5444 -w -d ControlSenseDB
 
 #######################
 ESPACIO DISPONIBLE:
@@ -2302,10 +2318,22 @@ GRANT INSERT, SELECT, UPDATE, DELETE ON ALL TABLES IN SCHEMA data_quality TO sys
 ###########################################33
 OBTENER ESQUEMAS (PAD)
 
-pg_dump -p 5432 -U postgres -d ControlSenseDB -h 127.0.0.1  --schema=data_quality -v -a | gzip -9 > schema.data_quality.gz
-pg_dump -p 5432 -U postgres -d ControlSenseDB -h 127.0.0.1  --schema=clbrtn -v -a | gzip -9 > schema.clbrtn.gz
-gunzip -c schema.data_quality.gz  | psql -h 127.0.0.1 -U postgres -p 5437 -w -d ControlSenseDB
+pg_dump -p 5432 -U postgres -d ControlSenseDB -h 127.0.0.1  --schema=action -v -a | gzip -9 > schema.action.gz
+gunzip -c schema.action.gz  | psql -h 127.0.0.1 -U postgres -p 5432 -w -d ControlSenseDB
 
+pg_dump -p 5432 -U postgres -d ControlSenseDB -h 127.0.0.1  --schema=data_quality -v -a | gzip -9 > schema.data_quality.gz
+gunzip -c schema.data_quality.gz  | psql -h 127.0.0.1 -U postgres -p 5457 -w -d ControlSenseDB
+
+pg_dump -p 5432 -U postgres -d ControlSenseDB -h 127.0.0.1  --schema=clbrtn -v -a | gzip -9 > schema.clbrtn.gz
+gunzip -c schema.clbrtn.gz  | psql -h 127.0.0.1 -U postgres -p 5436 -w -d ControlSenseDB
+
+pg_dump -p 5432 -U postgres -d ControlSenseDB -h 127.0.0.1  --schema=lineup -v -a | gzip -9 > schema.lineup.gz
+gunzip -c schema.lineup.gz  | psql -h 127.0.0.1 -U postgres -p 5444 -w -d ControlSenseDB
+
+
+
+pg_dump -p 5432 -U postgres -d ControlSenseDB -h 127.0.0.1  --schema=action -v -a | gzip -9 > schema.action.gz
+gunzip -c schema.action.gz  | psql -h 127.0.0.1 -U postgres -p 5437 -w -d ControlSenseDB
 ###########################################33
 COIMOLACHE: LISTA DE BD
 192.168.37.85 (DB02 - REPLICA)
@@ -3516,6 +3544,11 @@ Ingresar usuario y password:
 Escoger vpn:
 # CGM via VPN
 
+###################################
+Oswaldo.Mestanza@newcrest.com.au
+M@ntill@777-+
+###################################
+
 
 PASSWORD
 BlueB3rry
@@ -4209,7 +4242,7 @@ conectar y el kill en manual!
 
 CONEXION MARCOBRE 2022 - UPDATE - NOVIEMBRE
 -> Por Forticlient -> 
-UTILIZAR USUARIO: ueminesense6 password:MineriaBreca20237!  -> PARA MARCOBRE!
+UTILIZAR USUARIO: ueminesense6 password:MineriaBreca20239!  -> PARA MARCOBRE!
 token llega a cel, numero de wssp
 coneccion successfull!
 
@@ -4683,6 +4716,7 @@ aqui se encuentra una funcion con el nombre y fecha de la ejecucion!
 CISCO CONNECT - GF
 user: jjulcamoro
 password: uK#2U(#:Aioa
+password servidores: jjulcamoro24
 Grupo de VPN: RA-G07
 
 
@@ -4727,6 +4761,9 @@ am force-stop com.mss.pms.csmobile
 pm clear com.mss.pms.csmobile
 am start com.mss.pms.csmobile
 
+am force-stop com.mss.pms.csmobile
+am start com.mss.pms.csmobile
+
 ##Conectarse cuando hay mas de un dispositivo adb
 adb -s 192.168.118.142:5555 shell  
 
@@ -4769,8 +4806,7 @@ cat /data/local/tmp/hp.points.csv
 
 APK QUE SE ENVIA:
 CSMobile-ldpiArmeabi-v7a-release.apk
-
-
+C4M_Mobile_2023.08a1_818_arm_ldpi_04.09.23_03.06.apk
 
 
 tail -n 1000 SLockMonitory.log A9 B9
@@ -5102,3 +5138,56 @@ CADIA - NUEVO CONTROL - 2023.06a3
 ssh -N -L 5433:127.0.0.1:5432 cdapp01
 ssh -N -L 50556:127.0.0.1:50556 cdapp01
 ssh -N -L 50555:127.0.0.1:50555 cdapp01
+
+################################################################################
+################################################################################
+optimizador reemplazar
+################################################################################
+################################################################################
+sudo /etc/init.d/SOptimizador stop
+cp MssOptimizador /opt/minesense/bin/MssOptimizador
+sudo /etc/init.d/SOptimizador start
+
+
+################################################################################
+################################################################################
+WEB3D - BROCALUG
+################################################################################
+################################################################################
+https://c4mbrocal.buenaventura.com.pe:8002/login
+
+
+
+################################################################################
+################################################################################
+CONTROLBOX SYSTEM EN CONTROLBOX
+################################################################################
+################################################################################
+ binario:
+
+    cp /system/bin/ControlBox /sdcard/ControlBox
+
+ al subir a una ControlBox:
+
+    setprop persist.sys.controlbox.enable 0
+	mount -o rw,remount /system
+	cp /sdcard/ControlBox_bin_bk /system/bin/ControlBox
+	chown root:root /system/bin/ControlBox
+	chmod 755 /system/bin/ControlBox
+	setprop persist.sys.controlbox.enable 1
+################################################################################
+################################################################################
+VPN LIMA ACCESOS
+################################################################################
+################################################################################
+User: jjulcamoro
+Passwd: 9RBbEsBH7k#r
+################################################################################
+################################################################################
+################################################################################
+################################################################################
+Manuel.Gil
+ny5fFJUOhnYY
+
+Cristhian.Gamboa
+QkHsCSNfP03V
