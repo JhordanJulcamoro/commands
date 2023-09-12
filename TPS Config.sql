@@ -253,3 +253,9 @@ Ubicacion binario:
 
 Ubicacion log del servicio:
 >> tail -f /opt/minesense/tpslog/tps.log
+
+
+################################################################################
+Ubicacion binarios actualizados
+
+https://msspe-my.sharepoint.com/:f:/g/personal/jhordan_julcamoro_ms4m_com/Ei_7ogxYOp1Over4NBa6CYYB9thlylw9YUaKmA2KfZECNQ?e=c5USa7
