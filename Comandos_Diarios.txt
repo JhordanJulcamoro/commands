@@ -1,6 +1,9 @@
 #Al iniciar y querer conectar equipos
 ssh-add -k ~/system_key 
 
+#Visualizar version apk
+cat /data/data/com.mss.pms.csmobile/files/changelog.txt | grep C4M  
+
 #Copiar DB de equipo
 cp /data/data/com.mss.pms.csmobile/databases/DBCSMobile /sdcard/DBCSMobileTR01_0607 
 
