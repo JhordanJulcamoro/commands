@@ -566,6 +566,11 @@ pm install -r /sdcard/DRILL_logs.apk
 am start com.mss.pms.csmobile
 
 am force-stop com.mss.pms.csmobile
+pm install -r /sdcard/C4M_Mobile_2023.09a2_9130_arm_ldpi_18.09.23_12.49.apk
+pm clear com.mss.pms.csmobile
+am start com.mss.pms.csmobile
+
+am force-stop com.mss.pms.csmobile
 pm clear com.mss.pms.csmobile
 am start com.mss.pms.csmobile
 ----------------------------------------------
@@ -1153,7 +1158,9 @@ controlsys
 4rll1vmssHBminerals
 lnsamss (postgres)
 
-
+---------------------------------------
+ssh -p52386 dev20@nedanoc.ddns.net
+ms4m##123!
 ---------------------------------------
 sudo apt install open-vm-tools-desktop
 #########################################
@@ -1319,8 +1326,9 @@ FROM
 WHERE
 	/*TSE.NOMBRE = 'Acarreo en Mina'
     TSE.NOMBRE = 'Carguio en Mina'*/
-    TSE.NOMBRE = 'Perforadoras'
-    AND TS_E.tiem_elimin IS NULL --tener en cuenta que el equipo no este eliminado
+    --TSE.NOMBRE = 'Perforadoras'
+    --AND 
+    TS_E.tiem_elimin IS NULL --tener en cuenta que el equipo no este eliminado
 ORDER BY
 	TSE.ISFLOTA ASC LIMIT 100;
 
@@ -1967,7 +1975,6 @@ npm run build
 
 ##############CONSTANCIA###############
 conexión por citrix!
-https://appspe.hudbayminerals.com/
 (se tiene que llamar para el ingreso :v)
 
 password: HbMarm$2045
@@ -2285,6 +2292,9 @@ export LC_ALL="en.utf-8"
 -> descomentar la línea y cambiar por:
     listen_addresses = '*'
 
+>conexiones maximas: nano /etc/postgresql/10/main/postgresql.conf
+max_connections = 100 
+
 PSQL - POSTGRES EN MAC 
 la configuracion anterior se realiza en los archivo de acuerdo a cada bd
 > /Users/jhordan/Library/Application Support/Postgres/
@@ -2319,7 +2329,7 @@ GRANT INSERT, SELECT, UPDATE, DELETE ON ALL TABLES IN SCHEMA data_quality TO sys
 OBTENER ESQUEMAS (PAD)
 
 pg_dump -p 5432 -U postgres -d ControlSenseDB -h 127.0.0.1  --schema=action -v -a | gzip -9 > schema.action.gz
-gunzip -c schema.action.gz  | psql -h 127.0.0.1 -U postgres -p 5432 -w -d ControlSenseDB
+gunzip -c schema.action.gz  | psql -h 127.0.0.1 -U postgres -p 5448 -w -d ControlSenseDB
 
 pg_dump -p 5432 -U postgres -d ControlSenseDB -h 127.0.0.1  --schema=data_quality -v -a | gzip -9 > schema.data_quality.gz
 gunzip -c schema.data_quality.gz  | psql -h 127.0.0.1 -U postgres -p 5457 -w -d ControlSenseDB
@@ -4394,6 +4404,15 @@ CONFIFURACION CONEXION SSH
 #########################################################
 RESOLUCION CONTROLSCREEN
 #########################################################
+Densidad/Resulucion 1
+wm size 600x1024
+wm density 140
+
+Densidad/Resulucion 2
+wm size 800x1280
+wm density 140
+
+Densidad/Resulucion 3
 wm size 600x1024
 wm density 140
 
@@ -5191,3 +5210,39 @@ ny5fFJUOhnYY
 
 Cristhian.Gamboa
 QkHsCSNfP03V
+
+
+
+################################################################################
+################################################################################
+################################################################################
+################################################################################
+
+CAMBIO DE USUARIO CHOWN::
+
+sudo chown root:root TpsSocket
+
+
+
+################################################################################
+################################################################################
+failure  [INSTALL_FAILED_VERSION_DOWNGRADE]
+################################################################################
+Solucion - Verificar la compilacion, usualemente es porque tiene una compilacion mayor:
+> dumpsys package com.mss.pms.csmobile | grep versionName         
+> dumpsys package com.mss.pms.csmobile | grep versionCode
+
+
+################################################################################
+
+KUMTOR::
+
+OrtizA
+w9c3r4bEcep9
+
+################################################################################
+
+CS_POLYGONGEENERATOR:: PARA EL COMPILADOR EN JAVA 17
+
+build.sh jar //compilar el jar 
+build.sh clean  //limpiar las carpetas del jar
