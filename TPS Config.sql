@@ -259,3 +259,13 @@ Ubicacion log del servicio:
 Ubicacion binarios actualizados
 
 https://msspe-my.sharepoint.com/:f:/g/personal/jhordan_julcamoro_ms4m_com/Ei_7ogxYOp1Over4NBa6CYYB9thlylw9YUaKmA2KfZECNQ?e=c5USa7
+
+################################################################################
+Para registrar la funcion en bd verificar el archivo (ubicado en el mismo link anterior):
+
+> TpsSocket.config (que internamente debe tener:)
+>> store_with_txt=1
+
+Y esto registra data en (de la bd principal asociada):
+
+> select * from tp_systemlogs;
