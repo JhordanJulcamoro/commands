@@ -566,9 +566,18 @@ pm install -r /sdcard/DRILL_logs.apk
 am start com.mss.pms.csmobile
 
 am force-stop com.mss.pms.csmobile
-pm install -r /sdcard/C4M_Mobile_2023.09a2_9130_arm_ldpi_18.09.23_12.49.apk
+pm install -r /sdcard/C4M_Mobile_2023.12a2_1220_arm_ldpi_v2.apk
 pm clear com.mss.pms.csmobile
 am start com.mss.pms.csmobile
+
+am force-stop com.mss.pms.csmobile
+pm install -r /sdcard/C4M_Mobile_2023.12a2_02.01.24.apk
+pm clear com.mss.pms.csmobile
+am start com.mss.pms.csmobile
+
+logcat -v time | grep SensorControl
+logcat -v time | grep TopView
+
 
 am force-stop com.mss.pms.csmobile
 pm clear com.mss.pms.csmobile
@@ -1310,6 +1319,7 @@ IP: 192.168.5.86
 ##############################################
 CONFIGURAR IPS Y ACTUALIZAR EL SERVIDOR DEL EQUIPO: MINIMIZADO - SIMPLIFICADO
 
+--ANTIGUO::
  SELECT
 	TS_E.id,
     TSE.NOMBRE FLOTAPRINCIPAL,
@@ -1331,6 +1341,38 @@ WHERE
     TS_E.tiem_elimin IS NULL --tener en cuenta que el equipo no este eliminado
 ORDER BY
 	TSE.ISFLOTA ASC LIMIT 100;
+
+#################################
+CORRECCION ::
+#################################
+#################################
+SELECT "Equipo"."id",
+       "Equipo"."id_equipo",
+       "Equipo"."id_flota",
+       "Equipo"."nombre",
+       "Equipo"."ipequipo",
+       "Equipo"."tiem_elimin",
+       "Equipo"."grupoconexion",
+       "Equipo"."ishp",
+       "Equipo"."icono",
+       "Equipo"."isespecial",
+       "Equipo"."tipoespecial",
+       "parent"."nombre"                 AS "parent.nombre",
+       "parent"."ipequipo"               AS "parent.ipequipo",
+       "parent"."tiem_elimin"            AS "parent.tiem_elimin",
+       "parent"."grupoconexion"          AS "parent.grupoconexion",
+       "parent->parent"."nombre"         AS "parent.parent.nombre",
+       "parent->parent"."ipequipo"       AS "parent.parent.ipequipo",
+       "parent->parent"."tiem_elimin"    AS "parent.parent.tiem_elimin",
+       "parent->parent"."grupoconexion"  AS "parent.parent.grupoconexion"
+FROM "public"."ts_equipos" AS "Equipo"
+         LEFT OUTER JOIN "public"."ts_equipos" AS "parent" ON "Equipo"."id_flota" = "parent"."id"
+         LEFT OUTER JOIN "public"."ts_equipos" AS "parent->parent" ON "parent"."id_flota" = "parent->parent"."id"
+WHERE "Equipo"."tiem_elimin" IS NULL
+  AND "Equipo"."ishp" = 't'
+  AND "Equipo"."grupoconexion" IS NOT NULL
+  AND "parent->parent"."nombre" = 'Perforadoras'
+ORDER BY "Equipo"."nombre" ASC;
 
 UPDATE TS_EQUIPOS set grupoconexion = Null
 where id > 0;
@@ -1531,7 +1573,8 @@ pass - mss@2021 (646430131)
 ######################################################
 HUDBAY
 
-https://appspe.hudbayminerals.com/vpn/index.html
+ALTER USER username WITH NOSUPERUSER;
+
 --CREDENTIALS--
 user: mcorrea pass: MCC*21$hbp
 
@@ -1546,7 +1589,6 @@ replica-->172.23.46.15
 
 
 ################################################
-https://appspe.hudbayminerals.com/vpn/index.html
 
 
 
@@ -1831,12 +1873,15 @@ localhost:5432:*:systemcsdesktop:systemcsdesktop2019
 >restaura la bd utilizando el .sh! 
 
 
-
+################################
+terminating connection due to administrator command
+################################
 > Para consultar en postgres ingresando a psql si tiene conexiones en uso:
 SELECT  * FROM pg_stat_activity WHERE datname='ControlSenseDB';
 > Para matar el proceso listado anteriormente se ingresa el pid
 SELECT pg_terminate_backend('pid');
-SELECT pg_terminate_backend(1952);
+SELECT pg_terminate_backend(8103);
+SELECT pg_terminate_backend(8320);
 
 
 ########
@@ -1860,6 +1905,7 @@ refresh materialized view "camionesarregloop";
 refresh materialized view "tonnageallpolygons";
 refresh materialized view "cyclessummary2";
 refresh materialized view  "load_time_kpi";
+refresh materialized view kpi_load_array;
 select update_tv_tables_clean();
 
 
@@ -2004,7 +2050,7 @@ https://hudbay.cloud.com/Citrix/StoreWeb/#/login
 
 ############# ERIK #######################
 Erick.sanchez@ms4m.com
-Constancia$$2023
+Constancia$2023
 esanchez
 ############# MANU #######################
 manuel.gil@ms4m.com
@@ -2054,7 +2100,12 @@ FRONT:
 
 
 #########INSTALAR SERVERSOCKER - DOCKER#########
+>>> docker run --name dev18 --cap-add=NET_ADMIN --device=/dev/net/tun --cap-add=NET_ADMIN -p 2221:22 -p 6000:6000  -it --memory=4g --memory-swap=8g -d msfourmmg/devserver:1.0.6
 docker run --name dev18 -p 6000:6000 --cap-add=NET_ADMIN --device=/dev/net/tun -it -d msfourmmg/devserver:1.0.6
+
+>>>docker iris
+docker run --name c4m_iris -p 3000:3000 -p 30002:3002 --cap-add=NET_ADMIN --device=/dev/net/tun -it -d msfourmmg/devserver:1.0.6
+
 
 -> configurar la conexion
 /usr/bin/ConfiguracionDBOptimizadorCLI
@@ -2182,6 +2233,7 @@ cromtab
 
 COMANDO PARA SACAR BACKUP DE UNA TABLA EN ESPECÍFIVO: -- tabla
 
+pg_dump -h 127.0.0.1 -p 5432 -U postgres -a -d ControlSenseDB -t ta_posicionequipos | gzip -1 > ta_posicionequipos.gz
 pg_dump -h 127.0.0.1 -p 5432 -U postgres -a -d ControlSenseDB -t tp_estados | gzip -1 > tp_estados.gz
 pg_dump -h 127.0.0.1 -p 5432 -U postgres -a -d ControlSenseDB -t TA_DATA_AUXILIARES | gzip -1 > TA_DATA_AUXILIARES.gz
 
@@ -2191,9 +2243,15 @@ pg_dump -h 127.0.0.1 -p 5432 -U postgres -a -d ControlSenseDB -t tp_palas | gzip
 pg_dump -h 127.0.0.1 -p 5432 -U postgres -a -d ControlSenseDB -t ta_datacarga_sensores | gzip -1 > ta_datacarga_sensores.gz
 pg_dump -h 127.0.0.1 -p 5432 -U postgres -a -d ControlSenseDB -t ta_datadigline | gzip -1 > ta_datadigline.gz
 
+pg_dump -h 127.0.0.1 -p 5432 -U postgres -a -d ControlSenseDB -t tp_cargadescarga | gzip -1 > tp_cargadescarga.gz
+pg_dump -h 127.0.0.1 -p 5432 -U postgres -a -d ControlSenseDB -t tp_palas | gzip -1 > tp_palas.gz
+gunzip -c tp_cargadescarga.gz  | psql -h 127.0.0.1 -U postgres -p 5457 -w -d ControlSenseDB
+gunzip -c tp_palas.gz  | psql -h 127.0.0.1 -U postgres -p 5457 -w -d ControlSenseDB
+
+tp_palas
 
 pg_dump -h 127.0.0.1 -p 5432 -U postgres -a -d ControlSenseDB -t ta_log | gzip -1 > ta_log.gz
-gunzip -c tp_cargadescarga.gz  | psql -h 127.0.0.1 -U postgres -p 5444 -w -d ControlSenseDB
+gunzip -c ta_posicionequipos.gz  | psql -h 127.0.0.1 -U postgres -p 5432 -w -d ControlSenseDB
 gunzip -c tp_estados.gz  | psql -h 127.0.0.1 -U postgres -p 5444 -w -d ControlSenseDB
 gunzip -c tp_palas.gz  | psql -h 127.0.0.1 -U postgres -p 5444 -w -d ControlSenseDB
 gunzip -c TA_DATA_AUXILIARES.gz  | psql -h 127.0.0.1 -U postgres -p 5444 -w -d ControlSenseDB
@@ -2328,14 +2386,17 @@ GRANT INSERT, SELECT, UPDATE, DELETE ON ALL TABLES IN SCHEMA data_quality TO sys
 ###########################################33
 OBTENER ESQUEMAS (PAD)
 
+pg_dump -p 5432 -U postgres -d ControlSenseDB -h 127.0.0.1  --schema=pad -v -a | gzip -9 > schema.pad.gz
+gunzip -c schema.pad.gz  | psql -h 127.0.0.1 -U postgres -p 5457 -w -d ControlSenseDB
+
 pg_dump -p 5432 -U postgres -d ControlSenseDB -h 127.0.0.1  --schema=action -v -a | gzip -9 > schema.action.gz
 gunzip -c schema.action.gz  | psql -h 127.0.0.1 -U postgres -p 5448 -w -d ControlSenseDB
 
 pg_dump -p 5432 -U postgres -d ControlSenseDB -h 127.0.0.1  --schema=data_quality -v -a | gzip -9 > schema.data_quality.gz
-gunzip -c schema.data_quality.gz  | psql -h 127.0.0.1 -U postgres -p 5457 -w -d ControlSenseDB
+gunzip -c schema.data_quality.gz  | psql -h 127.0.0.1 -U postgres -p 5423 -w -d ControlSenseDB
 
 pg_dump -p 5432 -U postgres -d ControlSenseDB -h 127.0.0.1  --schema=clbrtn -v -a | gzip -9 > schema.clbrtn.gz
-gunzip -c schema.clbrtn.gz  | psql -h 127.0.0.1 -U postgres -p 5436 -w -d ControlSenseDB
+gunzip -c schema.clbrtn.gz  | psql -h 127.0.0.1 -U postgres -p 5440 -w -d ControlSenseDB
 
 pg_dump -p 5432 -U postgres -d ControlSenseDB -h 127.0.0.1  --schema=lineup -v -a | gzip -9 > schema.lineup.gz
 gunzip -c schema.lineup.gz  | psql -h 127.0.0.1 -U postgres -p 5444 -w -d ControlSenseDB
@@ -3906,6 +3967,7 @@ pm clear com.mss.pms.csmobile
 am start com.mss.pms.csmobile
 
 date -s 20220829.192800
+date -s 20231209.194910
 
 SERVIDORES::
 
@@ -4252,7 +4314,8 @@ conectar y el kill en manual!
 
 CONEXION MARCOBRE 2022 - UPDATE - NOVIEMBRE
 -> Por Forticlient -> 
-UTILIZAR USUARIO: ueminesense6 password:MineriaBreca20239!  -> PARA MARCOBRE!
+UTILIZAR USUARIO: ueminesense6   -> PARA MARCOBRE!
+password:Marcobre2024@@
 token llega a cel, numero de wssp
 coneccion successfull!
 
@@ -4551,15 +4614,26 @@ npm config set proxy http://127.0.0.1:3128
 npm config set https-proxy http://127.0.0.1:3128
 
 
+
+
 --> SE AGREGAN LOS EXPORTS en el servidor:
 export ftp_proxy=http://127.0.0.1:3128
 export http_proxy=http://127.0.0.1:3128
 export https_proxy=http://127.0.0.1:3128
 
+--> PARA MACRAES YA SE TIENEN EL ARCHIVO proxy.conf
+export HTTP_PROXY=localhost:8090
+export HTTPS_PROXY=localhost:8090
+npm config set proxy http://127.0.0.1:8090
+npm config set https-proxy http://127.0.0.1:8090
+
 --> EN EL DOCKER:
 ->ejecutamos el docker, corremos el contenedor squid
 ->ingresamos el siguiente comando
+ssh -N -R 3128:192.168.0.17:3128 macapp
 ssh -N -R 3128:192.168.0.19:3128 dbappbrocalugapp
+ssh -N -R 3128:192.168.0.9:3128 dbappbrocalugapp
+192.168.0.9
 (-N -R para enviar el puerto 3128 de la maquina al servidor!
 replicamos el puerto!)
 
@@ -4738,6 +4812,8 @@ password: uK#2U(#:Aioa
 password servidores: jjulcamoro24
 Grupo de VPN: RA-G07
 
+Para conectarse al usuario:
+> sudo su gfpe-cer-app05
 
 
 ########################################################################################################################
@@ -5121,6 +5197,12 @@ Primero abrir los puertos:
 ssh -N -L 5433:127.0.0.1:5432 macapp 
 ssh -N -L 50556:127.0.0.1:50556 macapp 
 ssh -N -L 50555:127.0.0.1:50555 macapp  
+ssh -N -L 3002:127.0.0.1:3002 macapp 
+
+
+ssh -N -L 50556:127.0.0.1:50556 mcapp01@172.23.131.20 -p 9922
+ssh -N -L 50555:127.0.0.1:50555 mcapp01@172.23.131.20 -p 9922
+ssh -N -L 5033:127.0.0.1:5032 mcapp01@172.23.131.20 -p 9922
 
 Ubicar el C4M.jar o ofuscado en la ruta de descargas:
 Ubicarse en la ruta printipal: cd
@@ -5132,9 +5214,12 @@ ejecutar::
                Downloads/C4M_Desktop.jar controlSenseAuto.Main
 
 
+################################################################################
+NO FUNCIONA CON EL GRCP - NUEVAS VERSIONES DESDE 08a2::
 > java --module-path /Library/Java/JavaVirtualMachines/javafx-sdk-17.0.4/lib --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.media,javafx.swing,javafx.web,javafx.base -server -XX:+UseParallelGC  -Xms100m -Xmx8g -Xss100m -XX:NewRatio=5 -XX:GCTimeRatio=19 -jar Downloads/C4M_Desktop_CAD.jar
 
-> 
+################################################################################
+> SI FUNCIONA CON EL GRCP - NUEVAS VERSIONES DESDE 08a2::
 java --module-path /Library/Java/JavaVirtualMachines/javafx-sdk-17.0.4/lib --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.media,javafx.swing,javafx.web,javafx.base -server -XX:+UseParallelGC  -Xms100m -Xmx3g -Xss100m -XX:NewRatio=5 -XX:GCTimeRatio=19 -cp ./lib/hamcrest-core-1.3.jar:./lib/junit-4.12.jar:./lib/javafx-dialogs-0.0.4.jar:./lib/annotations-api-6.0.53.jar:./lib/grpc-api-1.44.0.jar:./lib/grpc-context-1.44.0.jar:./lib/grpc-core-1.44.0.jar:./lib/grpc-netty-shaded-1.44.0.jar:./lib/grpc-protobuf-1.44.0.jar:./lib/grpc-protobuf-lite-1.44.0.jar:./lib/grpc-stub-1.44.0.jar:./lib/guava-20.0.jar:./lib/perfmark-api-0.23.0.jar:./lib/proto-google-common-protos-2.0.1.jar:./lib/protobuf-java-3.19.2.jar:Downloads/C4M_Desktop_CAD.jar controlSenseAuto.Main
 
 > CADIA::
@@ -5201,6 +5286,15 @@ VPN LIMA ACCESOS
 ################################################################################
 User: jjulcamoro
 Passwd: 9RBbEsBH7k#r
+
+
+ip: 192.168.3.141
+user: c4m-op
+pass: ms4m2023
+
+ip : 192.168.3.142
+user: c4m-ug
+pass: c4m2023
 ################################################################################
 ################################################################################
 ################################################################################
@@ -5210,6 +5304,7 @@ ny5fFJUOhnYY
 
 Cristhian.Gamboa
 QkHsCSNfP03V
+Peru2019
 
 
 
@@ -5246,3 +5341,259 @@ CS_POLYGONGEENERATOR:: PARA EL COMPILADOR EN JAVA 17
 
 build.sh jar //compilar el jar 
 build.sh clean  //limpiar las carpetas del jar
+
+
+################################################################################
+CONFIGURACION IRIS EN CONTROLBOX 
+################################################################################
+
+mount -o rw,remount /system
+setprop persist.sys.controlbox.enable 0
+cp /sdcard/ControlBox_AOSP_1.3.0 /system/bin/ControlBox
+cp /sdcard/ControlBox.PERFO.HP.db /sdcard/ControlBox.db
+chmod 755 /system/bin/ControlBox
+setprop persist.sys.controlbox.enable 1
+
+DESPUES DE SUBIR EL CSV EN LOS PASOS DEL IRIS
+cp /sdcard/hp.snapshotperfo.csv /data/local/tmp/hp.snapshot.csv
+
+
+################################################################################
+IRIS DOCKER
+################################################################################
+docker pull jhordanjulcamoro/c4m_iris:1.0
+docker run --name c4m_iris -p 3000:3000 -p 30002:3002 --cap-add=NET_ADMIN --device=/dev/net/tun -it -d jhordanjulcamoro/c4m_iris:1.0
+
+
+
+################################################################################
+IRIS MACRAES
+################################################################################
+ssh -N -L 3002:127.0.0.1:3002 macapp  
+
+
+################################################################################
+IRIS MACRAES
+################################################################################
+
+
+################################################################################
+--PARA PERMISOS
+################################################################################
+GRANT SELECT ON TABLE public.datadiglineglobal TO cs_app_r;
+GRANT USAGE ON SCHEMA prcsn TO cs_app_r;
+GRANT SELECT  ON ALL TABLES IN SCHEMA prcsn TO cs_app_r;
+GRANT SELECT  ON ALL SEQUENCES IN SCHEMA prcsn TO cs_app_r;
+--GRANT SELECT  ON ALL VIEWS IN SCHEMA prcsn TO cs_app_r;
+
+
+################################################################################
+PERCENT_PAYLOAD_TO_START_LOADING
+################################################################################
+ PERCENT_PAYLOAD_TO_START_LOADING(1093, false)
+ Variable que se utiliza para setear el porcentaje de la carga que va a reconocer (1er carga)
+ En marcobre se suscita que la balanza de un equipo en la primera carga se setea a partir del 
+ valor 170tn, lo cual deberia de ser 40tn como en los demas equipos, en este caso esta variable
+ 1093 se deberia setear en 15 o 10, pero el equipo que envia las 170tn deberia ser revisado por HARDWARE
+ ya que como se indica, el primer valor que deberia enviar en la primera pala deberia estar entre 30-50 tn.
+
+
+
+
+################################################################################
+VERIFIAR SI PUERTO SE ENCUENTRA ACTIVO / EN ESCUCHA
+################################################################################
+lsof -i :8060 | grep LISTEN
+
+
+################################################################################
+PERMISOS POR GRUPO - SQL - PSQL
+################################################################################
+ALTER GROUP cs_config_connection ADD USER dbconnection;
+ALTER GROUP cs_config_connection drop USER dbconnection;
+
+
+
+################################################################################
+QUERY JIRA
+################################################################################
+assignee in (6081b68dbc637c006ff8ea0d, 5c1ab73063d3584fe075ae96, 557058:ef925fa8-4715-4fac-adff-35bb29dc18dc, currentUser(), 60be2934b1f93b006949683e) AND project = ST01 AND issuetype = Incident AND status in (ACCEPTED, Assigned, ASSIGNED, "ESCALATED TO THIRD LEVEL", "In Progress", "In progress", NEW, New) ORDER BY created DESC
+
+
+
+
+BROCAL_UG
+usuario: ms4m
+password: ms4m2021
+ip: 192.168.3.45
+
+Marcobre
+usuario: ms4m
+password: ms4m2021
+192.168.3.56
+
+
+################################################################################
+CLONAR BD EN SQL
+################################################################################
+CREATE DATABASE mi_basedatos_clon
+  WITH TEMPLATE mi_basedatos;
+
+CREATE DATABASE "kumtorbd"
+  WITH TEMPLATE "ControlSenseDB";
+
+
+
+
+################################################################################
+ALTER SYSTEM SET track_commit_timestamp = on;
+
+sudo systemctl restart postgresql
+sudo service postgresql restart
+################################################################################
+
+
+################################################################################
+LOG PARA VISUALIZAR QUE EL EQUIPO ESTE EN ALGUNA DE LAS VISTAS Y LLEGUE DATA 
+UNO DE ESTOS DEBERIA SALIR EN TRUE
+EL SIGUIENTE MUESTRA EL ERROR DE CONEXION Y POR ENDE NUNCA LEVANTA EL APK
+REVISAR LAS VISTAS MATERIALIZADAS QUE EXISTA EL EQUIPO 
+################################################################################
+
+D/ProtoReader(18751): DataArrived:camion:false::Auxiliar:false::Carguio:false::Perfo:false isEspecial:false type:com.mss.pms.csmobile.equipment.Cargo@24006b5a
+
+
+
+
+################################################################################
+GRCP - Cuando existe un error en la no actualizacion de alguna data/tabla del front C4M
+################################################################################
+revisar primero si las tablas tienen la ultima fecha de actualizacion con el sql:
+(archivo :: check_last_update.sql)
+
+SELECT
+ (SELECT max(pg_xact_commit_timestamp(xmin)) last_update FROM TA_Emergencia where id in (select id from ta_emergencia order by tiem_update desc limit 10) order by 1 desc limit 1) upd1,
+ (select greatest((SELECT max(pg_xact_commit_timestamp(xmin)) FROM ta_eventoscamporegistro where id in (select id from ta_eventoscamporegistro order by tiempo_update desc limit 10) order by 1 desc limit 1),(SELECT max(pg_xact_commit_timestamp(xmin)) FROM ta_eventoscampo order by 1 desc limit 1),(SELECT max(pg_xact_commit_timestamp(xmin)) FROM tp_usuarios order by 1 desc limit 1),(SELECT max(pg_xact_commit_timestamp(xmin)) FROM ts_equipos order by 1 desc limit 1)) last_update) upd2,
+ (select greatest((SELECT max(pg_xact_commit_timestamp(xmin)) FROM tp_nodos where id in (select id from tp_nodos order by tiem_update desc limit 10) order by 1 desc limit 1), (SELECT max(pg_xact_commit_timestamp(xmin)) FROM ta_formanodoespecial order by 1 desc limit 1)) last_update) upd3,
+ (SELECT max(pg_xact_commit_timestamp(xmin))last_update FROM ts_equipos order by 1 desc limit 1) upd3,
+ (select greatest((SELECT max(pg_xact_commit_timestamp(xmin))FROM ts_detal_estado where id in (select id from ts_detal_estado order by tiem_creac desc limit 10) order by 1 desc limit 1),(SELECT max(pg_xact_commit_timestamp(xmin))FROM ta_multilenguajeestados where id in (select id from ta_multilenguajeestados order by tiem_update desc limit 10) order by 1 desc limit 1)) last_update) upd4,
+ (select GREATEST((SELECT max(pg_xact_commit_timestamp(xmin)) FROM ts_poligono order by 1 desc limit 1),(select max(pg_xact_commit_timestamp(xmin)) from ts_material  where id in (select id from ts_material order by tiem_creac desc limit 50) order by 1 LIMIT 1),(select max(pg_xact_commit_timestamp(xmin)) from ts_stockpiles where id in (select id from ts_stockpiles order by tiem_creac desc limit 50)  order by 1 LIMIT 1)) last_update) upd5,
+ (select greatest((SELECT max(pg_xact_commit_timestamp(xmin))FROM tp_nodos where id in (select id from tp_nodos order by tiem_update desc limit 10) order by 1 desc limit 1),(SELECT max(pg_xact_commit_timestamp(xmin))FROM ta_tramosstat where id in (select id from ta_tramosstat order by tiem_update desc limit 10) order by 1 desc limit 1),(SELECT max(pg_xact_commit_timestamp(xmin))FROM ts_locacion where id in (select id from ts_locacion order by tiem_update desc limit 10) order by 1 desc limit 1),(SELECT max(pg_xact_commit_timestamp(xmin))FROM ts_descarga where id in (select id from ts_descarga order by tiem_update desc limit 10) order by 1 desc limit 1),(SELECT max(pg_xact_commit_timestamp(xmin))FROM ta_coormapa where id in (select id from ta_coormapa order by tiem_update desc limit 10) order by 1 desc limit 1),(SELECT max(pg_xact_commit_timestamp(xmin))FROM at_category_path order by 1 desc limit 1)) last_update) upd6,
+ (select greatest((SELECT max(pg_xact_commit_timestamp(xmin))FROM at_category_path order by 1 desc limit 1),(SELECT max(pg_xact_commit_timestamp(xmin))FROM at_field_equipment_wrong_login where id in (select id from at_field_equipment_wrong_login order by time_creation desc limit 10) order by 1 desc limit 1),(SELECT max(pg_xact_commit_timestamp(xmin))FROM tp_trabajador order by 1 desc limit 1),(SELECT max(pg_xact_commit_timestamp(xmin))FROM at_worker_qualification order by 1 desc limit 1)) last_update) upd7,
+ (SELECT max(pg_xact_commit_timestamp(xmin)) last_update FROM ta_eventoscampoequipos order by 1 desc limit 1) upd8,
+ (SELECT max(pg_xact_commit_timestamp(xmin)) last_update FROM ta_eventoscamposolicitud order by 1 desc limit 1) upd9,
+ (select greatest((SELECT max(pg_xact_commit_timestamp(xmin)) FROM ts_detal_estado order by 1 desc limit 1),(SELECT max(pg_xact_commit_timestamp(xmin)) FROM ST_StatusDetailGroup order by 1 desc limit 1),(SELECT max(pg_xact_commit_timestamp(xmin)) FROM ts_detal_estado order by 1 desc limit 1))last_update) upd10,
+ (select greatest((SELECT max(pg_xact_commit_timestamp(xmin)) FROM ts_locacion where id in (select id from ts_locacion order by tiem_update desc limit 10)  order by 1 desc limit 1)) last_update) upd11,
+ (select greatest((SELECT max(pg_xact_commit_timestamp(xmin))FROM ts_descarga  where id in (select id from ts_descarga order by tiem_update desc limit 20)  order by 1 desc limit 1),(SELECT max(pg_xact_commit_timestamp(xmin))FROM ts_mezcla where id in (select id from ts_mezcla order by id desc limit 20) order by 1 desc limit 1),(SELECT max(pg_xact_commit_timestamp(xmin))FROM tp_nodos where id in (select id from tp_nodos order by tiem_update desc limit 20) order by 1 desc limit 1),(SELECT max(pg_xact_commit_timestamp(xmin))FROM ta_descargalimites where id in (select id from ta_descargalimites order by tiem_creac desc limit 20) order by 1 desc limit 1),(SELECT max(pg_xact_commit_timestamp(xmin))FROM ta_formadescarga where id in (select id from ta_formadescarga order by tiem_creac desc limit 20) order by 1 desc limit 1)) last_update) upd12,
+ (SELECT max(pg_xact_commit_timestamp(xmin)) last_update FROM ts_confirmaestado where id in (select id from ts_confirmaestado order by id desc limit 10) order by 1 desc limit 1) upd13,
+ (SELECT max(pg_xact_commit_timestamp(xmin)) last_update FROM ta_velocidad order by 1 desc limit 1) upd14,
+ (SELECT max(pg_xact_commit_timestamp(xmin))last_update FROM ta_leyes order by 1 desc limit 1) upd15,
+ (SELECT max(pg_xact_commit_timestamp(xmin)) last_update FROM ts_turnos order by 1 desc limit 1) upd16,
+ (SELECT max(pg_xact_commit_timestamp(xmin))last_update FROM at_grade_tooltip_config order by 1 desc limit 1) upd17,
+ (SELECT max(pg_xact_commit_timestamp(xmin))last_update FROM tp_trabajador order by 1 desc limit 1) upd18,
+ (SELECT max(pg_xact_commit_timestamp(xmin)) last_update FROM ta_bench_hp order by 1 desc limit 1) upd19,
+ (select greatest((SELECT max(pg_xact_commit_timestamp(xmin)) FROM ta_proyecto_hp order by 1 desc limit 1),(SELECT max(pg_xact_commit_timestamp(xmin)) FROM TP_ProyectoReg_HP order by 1 desc limit 1)) last_update) upd19,
+ (select greatest((SELECT pg_xact_commit_timestamp(xmin) FROM TA_AlertasVIMS WHERE tiem_creac > now() - interval '1 day' order by xmin::text::bigint desc limit 1),(SELECT pg_xact_commit_timestamp(xmin) last_update FROM TA_EQUIPO_CPU where tiem_creac > now() - interval '1 day' order by xmin::text::bigint desc limit 1)) last_update) upd20,
+ (select greatest((SELECT pg_xact_commit_timestamp(xmin) FROM TA_AlertasVIMS WHERE tiem_creac > now() - interval '1 day' order by xmin::text::bigint desc limit 1),(SELECT pg_xact_commit_timestamp(xmin) last_update FROM TA_EQUIPO_CPU where tiem_creac > now() - interval '1 day' order by xmin::text::bigint desc limit 1)) last_update) upd21,
+ (SELECT max(pg_xact_commit_timestamp(xmin)) last_update FROM ta_wrongcarguiodesc where id in (select id from ta_wrongcarguiodesc order by tiem_update desc limit 10) order by 1 desc limit 1) upd22,
+ (SELECT max(pg_xact_commit_timestamp(xmin)) last_update FROM ta_speed_limits_exceeded where id in (select id from ta_speed_limits_exceeded order by tiem_update desc limit 10)  order by 1 desc limit 1) upd23,
+ (SELECT max(pg_xact_commit_timestamp(xmin)) last_update FROM ta_outroutecamion where id in (select id from ta_outroutecamion  order by 1 desc limit 1) order by 1 desc limit 1) upd24,
+ (SELECT max(pg_xact_commit_timestamp(xmin)) last_update FROM TA_ONOFFHOR where id in (select id from TA_ONOFFHOR order by tiem_update desc limit 10)  order by 1 desc limit 1) upd25,
+ (SELECT max(pg_xact_commit_timestamp(xmin)) last_update FROM TA_MensajesOPT where id in (select id from TA_MensajesOPT order by tiem_update desc limit 100) order by 1 desc limit 1) upd26,
+ (select greatest((SELECT max(pg_xact_commit_timestamp(xmin)) FROM ta_controlalertas order by 1 desc limit 1),(SELECT max(pg_xact_commit_timestamp(xmin)) FROM ts_detallealertas order by 1 desc limit 1)) last_update) upd27,
+ (SELECT max(pg_xact_commit_timestamp(xmin)) last_update FROM action.rule_alerts order by 1 desc limit 1) upd28,
+ (SELECT max(pg_xact_commit_timestamp(xmin)) last_update FROM at_bitacora_operator where id in (select id from at_bitacora_operator  order by 1 desc limit 1) order by 1 desc limit 1) upd29,
+ (select greatest((SELECT max(pg_xact_commit_timestamp(xmin)) FROM at_wrong_route order by 1 desc limit 1),(SELECT max(pg_xact_commit_timestamp(xmin)) FROM ts_equipos order by 1 desc limit 1),(SELECT max(pg_xact_commit_timestamp(xmin)) FROM tp_trabajador order by 1 desc limit 1),(SELECT max(pg_xact_commit_timestamp(xmin)) FROM tp_tramosstat order by 1 desc limit 1)) last_update) upd30,
+ (select greatest((SELECT max(pg_xact_commit_timestamp(xmin)) FROM at_special_cycle_alert order by 1 desc limit 1),(SELECT max(pg_xact_commit_timestamp(xmin)) FROM ts_equipos order by 1 desc limit 1),(SELECT max(pg_xact_commit_timestamp(xmin)) FROM tp_nodos where id in (select id from tp_nodos order by tiem_update desc limit 10) order by 1 desc limit 1)) last_update) upd31,
+ (select greatest((SELECT max(pg_xact_commit_timestamp(xmin)) FROM at_alerts_stocks order by 1 desc limit 1),(SELECT max(pg_xact_commit_timestamp(xmin)) FROM ts_poligono order by 1 desc limit 1),(SELECT max(pg_xact_commit_timestamp(xmin)) FROM ts_descarga order by 1 desc limit 1)) last_update) upd32,
+ (SELECT max(pg_xact_commit_timestamp(xmin)) last_update FROM ta_carguio_alerta where id in (select id from ta_carguio_alerta  order by 1 desc limit 10)  order by 1 desc limit 1) upd33,
+ (SELECT max(pg_xact_commit_timestamp(xmin)) last_update FROM ta_alert_fill_pre_start where id in (select id from ta_alert_fill_pre_start  order by 1 desc limit 10)  order by 1 desc limit 1) upd34,
+ (SELECT max(pg_xact_commit_timestamp(xmin)) last_update FROM ta_zonas where id in (select id from ta_zonas  order by 1 desc limit 10)  order by 1 desc limit 1) upd35; 
+
+
+en caso no tenga data, verificar si la tabla esta vacia con un count, si es asi no es necesario que el 
+el select anterior tenga la fecha, pero si tiene 1 valor por lo menos, si es necesario setear:
+(archivo :: realtime.last_update.sql)
+
+update ta_leyes set id = id where id = (select id from ta_leyes order by 1 desc limit 1);
+update ts_turnos set id = id where id = (select id from ts_turnos order by 1 desc limit 1);
+
+
+
+
+################################################################################
+REINICIA PGPOOL::
+################################################################################
+
+/usr/bin/killall pgpool
+/bin/systemctl stop pgpool2
+rm -f /var/run/postgresql/.*PGSQL*
+/bin/systemctl start pgpool2
+/etc/init.d/pgpool2 start 
+
+################################################################################
+version de launcher
+################################################################################
+dumpsys package com.mss.pms.cslauncher | grep versionName
+
+
+
+
+
+TRACKING:: SHOUGANT
+
+- revisar si tiene posicion en ta_posicionequipos para ese equipo
+- el tracking saca info del healthsense
+- verificar los servicios - logs:: opt/ms4m/log
+    - tracking_generate_cycles.log
+    - tracking_gps_cycles.log
+
+
+
+
+LOG PGPOOL - POSTGRES
+Buscar en:
+var/log/syslog (pgpool)
+var/log/postgresql (postgres)
+
+
+
+##############################################
+NUEVO FILTRO QUERYS JIRA
+##############################################
+assignee in (63322b1c7f85f167779f7cb5, 619a86f23618cd006f5f82b6, 61f14ee1cb7c5f006bf3e987, currentUser()) AND project = ST01 AND issuetype = Incident AND status in (ACCEPTED, "In Progress", "In progress", Assigned, ASSIGNED, "ESCALATED TO THIRD LEVEL", NEW, New) ORDER BY created DESC
+
+
+
+##############################################
+SIMULACIONES
+##############################################
+
+Simular movimien to del equipo:
+> activar en simulatedTruck: processRoute();
+
+
+##############################################
+LINDERO::
+##############################################
+--> DATAQUALITY 
+ssh -N -L 8080:127.0.0.1:8080 ln_app02  
+--> BaseDeDatos
+sh -N -L 5456:127.0.0.1:5432 ln_app01 
+##############################################
+
+
+##############################################
+LUNDINGOLD
+##############################################
+1643693804
+ms4m2023
+
+user: adminserver
+pass: peru2023
+app: 192.168.32.56
+db: 192.168.33.249
+
+
+
+STruckWeighingProcessor -> Servicio para BrocalUG que procesa los pasajes de todos los equipos, tiene su log en /opt/ms4m/log
