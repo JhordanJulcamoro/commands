@@ -5597,3 +5597,17 @@ db: 192.168.33.249
 
 
 STruckWeighingProcessor -> Servicio para BrocalUG que procesa los pasajes de todos los equipos, tiene su log en /opt/ms4m/log
+
+
+
+QUERIE JIRA FILTRADO:
+
+MS4M
+project = "MS4M"
+and status in (ACCEPTED, "In Progress", "In progress", Assigned, ASSIGNED, "ESCALATED TO THIRD LEVEL", NEW, New)
+and assignee in (63322b1c7f85f167779f7cb5, 618309da25f3130070460ecb, 619a86f23618cd006f5f82b6, 61f14ee1cb7c5f006bf3e987)
+
+NEW MS4M
+assignee in (63322b1c7f85f167779f7cb5, 619a86f23618cd006f5f82b6, 61f14ee1cb7c5f006bf3e987, currentUser()) AND project = ST01 AND issuetype = Incident AND status in (ACCEPTED, "In Progress", "In progress", Assigned, ASSIGNED, "ESCALATED TO THIRD LEVEL", NEW, New) ORDER BY created DESC
+
+@Juan Lara @Cristhian Gamboa @Javier Castillo
