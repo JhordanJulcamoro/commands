@@ -3,25 +3,28 @@
 set -e
 set -u
 mkdir -p ~/.ssh/config.d/
-echo "" > ~/.ssh/config.d/config.lindero.equipments
-echo "Holaa"
+echo "" > ~/.ssh/config.d/config.macraes.equipments
+echo "don2"
 PSQL=$(which psql)
+echo "don1"
 
 echo "$PSQL"
-echo "Hola2"
+
 DB_USER=controlsys
-DB_HOST=192.168.193.1
+DB_HOST=127.0.0.1
 DB_NAME=ControlSenseDB
 DB_PORT=5432
 # FOLDER=/opt/minesense/ping
-echo "Hola3"
+
+echo "don"
+
 $PSQL \
     -v \
     -X \
     -p $DB_PORT \
     -h $DB_HOST \
     -U $DB_USER \
-    -c "SELECT e.nombre, '\"' || e.ipmesh || '\"', e.ipequipo, e.id_equipo, e.id_equipo,row_number() over (order by e.id_equipo) orderid
+    -c "SELECT e.nombre, ' \"' || e.ipmesh || '\" ', e.ipequipo, e.id_equipo, e.id_equipo,row_number() over (order by e.id_equipo) orderid
         FROM ts_equipos e
                 INNER JOIN ts_equipos fs ON fs.id_equipo = e.id_flota
                 INNER JOIN ts_equipos fp ON fs.id_flota = fp.id_equipo
@@ -39,16 +42,15 @@ $PSQL \
     --field-separator ' ' \
     --quiet \
     $DB_NAME | while read -a Record; do
-
-    echo "Hola4"
+    
     # echo "${Record[@]}"
     EQ_NAME=${Record[0]}
     ipmesh=${Record[1]}
     ipequipo=${Record[2]}
     id_eq=${Record[3]}
     orderid=${Record[4]}
-    port_vnc=$((12200 + $orderid))
-    FULL_NAME="LN_"$EQ_NAME"_"$id_eq
+    port_vnc=$((11800 + $orderid))
+    FULL_NAME=" MACR_"$EQ_NAME"_"$id_eq
     echo "$EQ_NAME:$port_vnc   ip  ---> $FULL_NAME"
 
     echo "Host $FULL_NAME
@@ -57,10 +59,10 @@ $PSQL \
     Port 22
     IdentityFile ~/.ssh/id_rsa
     StrictHostKeyChecking no
-    ProxyJump ln_app01
+    ProxyJump macapp
     UserKnownHostsFile=/dev/null
     LocalForward    $port_vnc $ipequipo:5901
-    LocalCommand    /Applications/vncviewer.sh  127.0.0.1:$port_vnc
+    LocalCommand    /Applications/vncviewer.sh $port_vnc
     #IP MESH: $ipmesh
-    " >> ~/.ssh/config.d/config.lindero.equipments
+    " >> ~/.ssh/config.d/config.macraes.equipments
 done

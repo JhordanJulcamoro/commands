@@ -3,14 +3,14 @@
 set -e
 set -u
 mkdir -p ~/.ssh/config.d/
-echo "" > ~/.ssh/config.d/config.lindero.equipments
+echo "" > ~/.ssh/config.d/config.bateas.equipments
 echo "Holaa"
 PSQL=$(which psql)
 
 echo "$PSQL"
 echo "Hola2"
 DB_USER=controlsys
-DB_HOST=192.168.193.1
+DB_HOST=10.70.1.3
 DB_NAME=ControlSenseDB
 DB_PORT=5432
 # FOLDER=/opt/minesense/ping
@@ -48,7 +48,7 @@ $PSQL \
     id_eq=${Record[3]}
     orderid=${Record[4]}
     port_vnc=$((12200 + $orderid))
-    FULL_NAME="LN_"$EQ_NAME"_"$id_eq
+    FULL_NAME="BT_"$EQ_NAME"_"$id_eq
     echo "$EQ_NAME:$port_vnc   ip  ---> $FULL_NAME"
 
     echo "Host $FULL_NAME
@@ -57,10 +57,10 @@ $PSQL \
     Port 22
     IdentityFile ~/.ssh/id_rsa
     StrictHostKeyChecking no
-    ProxyJump ln_app01
+    ProxyJump btapp01
     UserKnownHostsFile=/dev/null
     LocalForward    $port_vnc $ipequipo:5901
     LocalCommand    /Applications/vncviewer.sh  127.0.0.1:$port_vnc
     #IP MESH: $ipmesh
-    " >> ~/.ssh/config.d/config.lindero.equipments
+    " >> ~/.ssh/config.d/config.bateas.equipments
 done
