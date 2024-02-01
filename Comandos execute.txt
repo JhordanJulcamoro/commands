@@ -88,8 +88,8 @@ us: omestanza
 pw: allitnam
 
 serial key - apk
-contraseña principal: MSS2015
-cs_mobile: CSMobile2017
+contraseña principal: MSS2015 :: KEY STORE PASSWORD
+cs_mobile: CSMobile2017 :: KEY PASSWORD
 ################################################
 GENERA APK - ANDROID
 -> En android ir a build/generatesinglebundle/
@@ -2101,6 +2101,7 @@ FRONT:
 
 #########INSTALAR SERVERSOCKER - DOCKER#########
 >>> docker run --name dev18 --cap-add=NET_ADMIN --device=/dev/net/tun --cap-add=NET_ADMIN -p 2221:22 -p 6000:6000  -it --memory=4g --memory-swap=8g -d msfourmmg/devserver:1.0.6
+
 docker run --name dev18 -p 6000:6000 --cap-add=NET_ADMIN --device=/dev/net/tun -it -d msfourmmg/devserver:1.0.6
 
 >>>docker iris
@@ -5599,7 +5600,7 @@ db: 192.168.33.249
 STruckWeighingProcessor -> Servicio para BrocalUG que procesa los pasajes de todos los equipos, tiene su log en /opt/ms4m/log
 
 
-
+----------------------------------------------------------------
 QUERIE JIRA FILTRADO:
 
 MS4M
@@ -5611,3 +5612,18 @@ NEW MS4M
 assignee in (63322b1c7f85f167779f7cb5, 619a86f23618cd006f5f82b6, 61f14ee1cb7c5f006bf3e987, currentUser()) AND project = ST01 AND issuetype = Incident AND status in (ACCEPTED, "In Progress", "In progress", Assigned, ASSIGNED, "ESCALATED TO THIRD LEVEL", NEW, New) ORDER BY created DESC
 
 @Juan Lara @Cristhian Gamboa @Javier Castillo
+
+
+----------------------------------------------------------------
+PARA ACTUALIZAR EL TIEMPO DE CIERRE DEL C4M EN CASO DE VENCIMIENTO
+----------------------------------------------------------------
+OPENVPN - SHOUGANG :: 6:30PM
+31 DIC 2024
+
+#actualizar con el nuevo tiempo
+update mx_dt_tm_pp
+set dt_nd = ((extract(epoch from timestamp '2024-12-31 11:59:59') * 2460 + 7 * 31) - 1922300)
+where id = 1;
+
+#intervalos de configuracion de tiempos
+select * from Ts_Configuracion WHERE ID > 10000 LIMIT 100;
