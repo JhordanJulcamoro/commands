@@ -8,7 +8,7 @@ Usuario3: Codigo para leer el dataset
 
 
 
-readme.md: Portada del proyecto como ejecutar el proyecto
+readme.md: Portada del proyecto como ejecutar el proyecto
 Que comandos necesitas
 Persona que creo elm proyecto/empresa
 Usuarios
@@ -71,7 +71,7 @@ Fixes #1: Prueba de resolución (Agregar esto en el commit con ese nombre)
 1:19:21
 
 
-#Crear entorno python -m ipykernel install --user --name entornoDP03 --display-name "Python 3.11 (entornoDP03)"
+#Crear entornopython -m ipykernel install --user --name entornoDP03 --display-name "Python 3.11 (entornoDP03)"
 
 
 

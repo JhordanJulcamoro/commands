@@ -1174,6 +1174,7 @@ ms4m##123!
 sudo apt install open-vm-tools-desktop
 #########################################
 #descomprimir un archivo tar
+tar -xvf nombre_del_archivo.tar
 tar -xvzf dist.tar.gz
 tar -Jxvf archivo.tar.xz
 unzip tuarchivo.zip
@@ -1900,6 +1901,7 @@ refresh materialized view "points_projects";
 refresh materialized view "hang_shovel";
 refresh materialized view "lastloadcargo";
 refresh materialized view "datacamiongps";
+refresh materialized view "drill_activities";
 --refresh materialized view "camionesarregloug";
 refresh materialized view "camionesarregloop";
 refresh materialized view "tonnageallpolygons";
@@ -2360,6 +2362,15 @@ la configuracion anterior se realiza en los archivo de acuerdo a cada bd
 > nano pg_hba.conf 
 > nano postgresql.conf
 ###############################################################################################################
+PGTUNE
+-> htop para ver la memoria ram
+pgtune:: https://pgtune.leopard.in.ua/
+comando para verificar el pgtune en el db01:: /etc/postgresql/12/main/postgresql.conf | grep 'listen_addresses\|max_connections\|shared_buffers\|effective_cache_size\|maintenance_work_mem\|checkpoint_completion_target\|wal_buffers\|wal_buffers\|default_statistics_target\|random_page_cost\|effective_io_concurrency\|work_mem\|max_wal_senders\|shared_buffers'
+
+LOG postgres:
+tail -f /var/log/postgresql/postgresql-12-main.log
+
+
 RESTAURAR BASE DE DATOS
 gunzip -c mydb.pgsql.gz | psql -U postgres (sin crear la bd)
 gunzip -c mydb.pgsql.gz | psql -U postgres -d mydb (cuando existe la bd)
@@ -5627,3 +5638,139 @@ where id = 1;
 
 #intervalos de configuracion de tiempos
 select * from Ts_Configuracion WHERE ID > 10000 LIMIT 100;
+
+##################################################
+TABLA PARA VALIDAR LOS TIEMPOS CORRECTOS EN SQL::
+Select * from LastUpdateTime; //TODOS DEBEN TENER -05 y no +00
+
+##################################################
+MICHILLA ACCESSOS NEW - FORTICLIENT::
+Erick Sanchez Aguilar
+Esanchez
+S89NT4yqGw
+
+
+
+
+
+ssh -N -L 0.0.0.0:5432:127.0.0.1:5440 devserver@192.168.1.65
+
+nohup ssh -N -L 0.0.0.0:5432:127.0.0.1:5440 devserver@192.168.1.65 >/dev/null 2>&1 &
+repite el puerto del db de magino en el local del contenedor del socket app_magino
+para listar: 
+    ss -lnt
+
+PARA CORRER CON GRPC
+    docker exec -it app_magino bash
+    ip del contenedor: 10.147.20.179
+
+
+
+MAC-M1 - CS_MOBILE - Para emulador:
+cambiar::
+//            include 'armeabi-v7a', 'x86'
+por::
+            include 'arm64-v8a','armeabi-v7a', 'x86'
+
+
+CONECTARSE A SERVIDOR::
+>ssh devserver@10.147.20.45    
+>docker exec -it app_magino bash (applicaciones-socket-grpc)
+>docker exec -it db_magino  bash (base de datos de magino)
+
+
+CUANDO SE APAGA UN DOCKER - EN ESTE CASO EL APP_MAGINO::
+a> run: docker run app_magino
+b> contenedor: docker exec -it app_magino bash
+1> prender el zeritier
+    - ingresar a: cd /etc/init.d/
+    - ejecutar: ./zerotier-one start
+2> compartir el puerto con nohup:
+   nohup ssh -N -L 0.0.0.0:5432:127.0.0.1:5440 devserver@192.168.1.65 >/dev/null 2>&1 &
+3> verificar si comparte el puerto con:
+   ss -lnt
+4> en la carpeta: cd /etc/init.d/
+    - ejecutar: ./SC4mGrpcServices start
+    - ejecutar: ./SC4mRealtTimeGrpcServices start
+    - ejecutar: ./SProtobuffer start
+5> verificar logs de conexion:
+    - log protobuffer: tail -f /opt/ms4m/log/protobuffer.log 
+6> Cadena de conexion C4M:
+host ip: 10.147.20.179
+port: 5432
+
+
+
+pasos para crear de cero:
+docker commit app_magino server_app:1.0.0
+en este caso creando para Michilla
+ docker run --name app_michilla  --cap-add=NET_ADMIN --cap-add=SYS_ADMIN --device=/dev/net/tun -it -d server_app:1.0.0
+
+ docker exec -it app_michilla bash
+
+
+ #########################################3
+ CONFIGURACION EN BASE DE DATOS:
+ > LISTA EQUIPOS:
+
+select eq.id         id_eq,
+       --flp.id        id_fltp,
+       --fls.id        id_flts,
+       flp.nombre    flt_pri,
+       fls.nombre    flt_sec,
+       eq.nombre     eq,
+       --eq.companhia  marca,
+       --eq.comentario detalle,
+       eq.alias      alias,
+       eq.ipequipo   ip,
+       eq.ipmesh		antenna,
+       eq.capacidad_pes,
+       eq.capacidad_vol,
+       eq.capacidadtanque
+from ts_equipos eq
+         left join ts_equipos fls
+
+                   on fls.id = eq.id_flota
+         left join ts_equipos flp
+                   on flp.id = fls.id_flota
+where eq.isflota is false
+  and eq.tiem_elimin is null
+  and eq.isunderground is false
+  and eq.ipequipo != ''
+  and eq.ipequipo != '0.0.0.0'
+  and eq.ipequipo != '1.1.1.1'
+order by flp.nombre DESC, fls.nombre;
+
+> ACTUALIZA GRUPO CONEXION
+
+UPDATE TS_EQUIPOS set grupoconexion = Null
+where id > 0;
+
+> ACTUALIZA CON IP DEL EMULADOR - IP DEL ZEROTIER
+
+UPDATE TS_EQUIPOS
+--     set grupoconexion = 1
+set ipequipo = '10.147.20.22'
+WHERE
+      ID = 43;
+
+> CONFIGURA CON IP DEL SERVIDOR DE APP_MAGINO :: ZEROTIER
+
+UPDATE ts_configuracion_equipo_detalle
+SET
+--     valor = '10.147.20.179'
+        valor = '5432'
+--         valor = '1'
+WHERE id_equipo=43
+    and id_configuracion_equipo=
+        108;
+--         103;
+-- 108; --PORT
+--         109;
+-------------------------
+
+> EN BD MAGINO EL IP SE TIENE EN TABLA GLOBAL
+
+update ts_configuracion_equipo
+set valordefecto = '10.147.20.179'
+where id in  (102,103);
