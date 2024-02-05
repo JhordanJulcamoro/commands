@@ -1,0 +1,756 @@
+Include ~/.ssh/config.d/config.*
+PermitLocalCommand yes
+
+
+Host *
+  PubkeyAcceptedKeyTypes=+ssh-rsa
+  HostKeyAlgorithms=+ssh-rsa
+  StrictHostKeyChecking=no
+
+
+Host 10.10.88.147
+  HostName 10.10.88.147
+  User omestanza
+
+Host 10.11.89.7
+  HostName 10.11.89.7
+  User app01
+
+
+  #################################### CADIA ######################################################
+
+#
+
+#BRIDGE
+
+# Host dellmc
+
+# HostName 192.168.0.4
+
+# User dell
+
+# IdentityFile ~/.ssh/id_rsa
+
+# StrictHostKeyChecking no
+
+# UserKnownHostsFile=/dev/null
+
+# Port 22
+
+#BRIDGE
+
+#https://vpn.newcrest.com.au/
+
+# GilM
+
+# Wel2022come!
+
+# CGM via VPN
+
+Host cgm
+
+  HostKeyAlias cgm
+
+  HostName 172.20.6.2
+
+  User mms
+
+  IdentityFile ~/.ssh/id_rsa
+
+  StrictHostKeyChecking no
+
+  UserKnownHostsFile=/dev/null
+
+  Port 22
+
+  # ProxyJump dellmc
+
+  #BlueB3rry
+
+
+
+  Host cdapp01
+
+  HostName 172.22.208.16
+
+  User ms4m
+
+  IdentityFile ~/.ssh/id_rsa
+
+  StrictHostKeyChecking no
+
+  UserKnownHostsFile=/dev/null
+
+  ProxyJump cgm
+
+  #m1cr0Tube#1
+
+  Host cddb01
+
+  HostName 172.22.208.17
+
+  User ms4m
+
+  IdentityFile ~/.ssh/id_rsa
+
+  StrictHostKeyChecking no
+
+  UserKnownHostsFile=/dev/null
+
+  ProxyJump cgm
+
+  #m1cr0Tube#1
+
+  Host cdrep01
+
+  HostName 172.22.208.18
+
+  User ms4m
+
+  IdentityFile ~/.ssh/id_rsa
+
+  StrictHostKeyChecking no
+
+  UserKnownHostsFile=/dev/null
+
+  ProxyJump cgm
+
+  #m1cr0Tube#1
+
+  Host cdr4m01
+
+  HostName 172.22.208.19
+
+  User ms4m
+
+  IdentityFile ~/.ssh/id_rsa
+
+  StrictHostKeyChecking no
+
+  UserKnownHostsFile=/dev/null
+
+  ProxyJump cgm
+
+  #m1cr0Tube#1
+
+  Host cddb01
+
+  HostName 172.22.208.17
+
+  User ms4m
+
+  IdentityFile ~/.ssh/id_rsa
+
+  StrictHostKeyChecking no
+
+  UserKnownHostsFile=/dev/null
+
+  ProxyJump cdapp01
+
+  #m1cr0Tube#1
+
+######################################## MACRAES ##############################################
+
+# MLM via ML
+Host mlm
+  HostKeyAlias    mlm
+  HostName        vpn.minelineresources.com.au
+  User            ms4m
+  LocalForward    4122 localhost:4122 #Macraes C4M App
+  LocalForward    4222 localhost:4222 #Macraes C4M DB
+  LocalForward    4180 localhost:4180 #C4M Data Quality
+  LocalForward    4134 localhost:4134 #C4M Equipment Auditory
+  LocalForward    4132 localhost:4132 #C4M Postgress via pgpool on App
+  LocalForward    4232 localhost:4232 #C4M Postgress direct to DB1
+  Port            3382
+#
+# C4M App via MLM
+  Host macapp
+  HostKeyAlias    macapp
+  HostName        localhost
+  User            ms4m
+  Port            4122
+  ProxyJump       mlm
+# 
+  Host macrapp
+  HostKeyAlias    macrapp
+  HostName        localhost
+  User            ms4m
+  Port            4122
+  ProxyJump       mlm
+  #
+  # C4M DB via MLM
+  Host macdb1
+  HostKeyAlias    macdb1
+  HostName        localhost
+  User            ms4m
+  Port            4222
+  ProxyJump       mlm
+#
+  # C4M DB2 via MLM
+  Host macdb2
+  HostKeyAlias    macdb2
+  HostName        localhost
+  User            ms4m
+  Port            4522
+  ProxyJump       mlm
+# Servidor 192.168.0.22
+  Host winlocal
+  HostKeyAlias    winlocal
+  HostName        192.168.118.129
+  User            jhordanjulcamoro
+  Port            22
+
+# Servidor
+  Host dbappbrocaldb
+  HostKeyAlias    dbappbrocaldb
+  HostName        10.10.92.79
+  User            omestanza
+  Port            22
+  ProxyJump       winlocal
+
+  # Servidor
+  Host dbappbrocalapp
+  HostKeyAlias    dbappbrocalapp
+  HostName        10.10.92.82
+  User            omestanza
+  Port            22
+  # ProxyJump       winlocal
+
+####################################################################################
+####################################################################################
+################################ COIMOLACHE ######################################## 
+####################################################################################
+####################################################################################
+ # Servidor APP1
+ Host cmcapp1
+ HostKeyAlias    cmcapp1
+ HostName        192.168.37.79
+ User            jjulcamoro
+ Port            22
+ # Servidor APP2
+ Host cmcapp2
+ HostKeyAlias    cmcapp2
+ HostName        192.168.37.84
+ User            jjulcamoro
+ Port            22
+# Servidor DB2 - ahora principal
+  Host cmcresp1
+  HostKeyAlias    cmcresp1
+  HostName        192.168.37.82
+  User            rsp01
+  Port            22
+# Servidor DB2 - ahora principal
+  Host cmcdb2
+  HostKeyAlias    cmcdb2
+  HostName        192.168.37.85
+  User            jcastillo
+  Port            22
+
+####################################################################################
+####################################################################################
+################################ SHOUGANT ######################################## 
+####################################################################################
+####################################################################################
+ # Servidor app01
+ Host shapp01
+ HostKeyAlias    shapp01r
+ HostName        172.16.7.20
+ User            app01
+ Port            22
+ # Servidor db01
+ Host shdb01
+ HostKeyAlias    shdb01
+ HostName        172.16.7.13
+ User            db01
+ Port            22
+# Servidor rep01
+  Host shrep01
+  HostKeyAlias    shrep01
+  HostName        172.16.7.15
+  User            rep01
+  Port            22
+# Servidor app02
+  Host shapp02
+  HostKeyAlias    shapp02
+  HostName        172.16.7.12
+  User            app02
+  Port            22
+
+####################################################################################
+####################################################################################
+################################ BROCAL UG ######################################## 
+####################################################################################
+####################################################################################
+# ServidorDB01
+Host dbappbrocalugdb
+  HostKeyAlias    dbappbrocalugdb
+  HostName        10.128.128.3
+  User            user1
+  Port            22
+#ProxyJump       winlocal
+
+# ServidorAPP01
+  Host dbappbrocalugapp
+  HostKeyAlias    dbappbrocalugapp
+  HostName        10.128.128.2
+  User            user1
+  Port            22
+#ProxyJump       winlocal
+
+# ServidorREP01
+Host ebugrep01r
+  HostKeyAlias    ebugrep01r
+  HostName        10.128.128.4
+  User            user1
+  Port            22
+
+####################################################################################
+####################################################################################
+################################ MARCOBRE   ######################################## 
+####################################################################################
+####################################################################################
+# Servidorapp01
+Host mcapp01
+  HostKeyAlias    mcapp01
+  HostName        172.23.131.20
+  User            mcapp01
+  Port            9922
+#ProxyJump       winlocal
+
+# ServidorDB01
+Host mcdb01
+  HostKeyAlias    mcdb01
+  HostName        172.23.131.14
+  User            mcdb01
+  Port            9922
+#ProxyJump       winlocal
+
+# Servidormcrep01
+Host mcrep01
+  HostKeyAlias    mcrep01
+  HostName        172.23.131.16
+  User            mcrep01
+  Port            9922
+#ProxyJump       winlocal
+
+# Servidormcdb02
+Host mcdb02
+  HostKeyAlias    mcdb02
+  HostName        172.23.131.13
+  User            mcdb02
+  Port            9922
+#ProxyJump       winlocal
+
+
+####################################################################################
+####################################################################################
+################################ GOLDFIELDS  ######################################## 
+####################################################################################
+####################################################################################
+# Servidorapp01
+Host gfapp05
+  HostKeyAlias    gfpe-cer-app05
+  HostName        10.112.93.211
+  User            jjulcamoro
+  Port            22
+
+# Servidorapp02
+Host gfapp04
+  HostKeyAlias    gfpe-cer-app04
+  HostName        10.120.93.10
+  User            jjulcamoro
+  Port            22
+
+# Servidorbd01
+Host gfbd05
+  HostKeyAlias    gfpe-cer-bd05
+  HostName        10.112.93.205
+  User            jjulcamoro
+  Port            22
+
+# Servidorbd02
+Host gfbd04
+  HostKeyAlias    gfpe-cer-bd04
+  HostName        10.120.93.11
+  User            jjulcamoro
+  Port            22
+
+# Servidorrep
+Host gfrep05
+  HostKeyAlias    gfpe-cer-rep05
+  HostName        10.112.93.207
+  User            jjulcamoro
+  Port            22
+
+####################################################################################
+####################################################################################
+################################ MICHILLA   ######################################## 
+####################################################################################
+####################################################################################
+# Servidorapp01
+Host micapp01
+  HostKeyAlias    micapp01
+  HostName        10.9.201.5
+  User            app01
+  Port            22
+
+# ServidorDB01
+Host micdb01
+  HostKeyAlias    micdb01
+  HostName        10.9.201.230
+  User            db01
+  Port            22
+
+# Servidorapp02
+Host micapp02
+  HostKeyAlias    micapp02
+  HostName        10.9.201.232
+  User            app02
+  Port            22
+
+# ServidorRep01
+Host mirep01
+  HostKeyAlias    mirep01
+  HostName        10.9.201.236
+  User            rep01
+  Port            22
+
+# ServidorDb02
+Host midb02
+  HostKeyAlias    midb02
+  HostName        10.9.201.233
+  User            db02
+  Port            22
+
+# # Servidormcdb02
+# Host mcdb02
+#   HostKeyAlias    mcdb02
+#   HostName        172.23.131.13
+#   User            mcdb02
+#   Port            9922
+# #ProxyJump       winlocal
+
+####################################################################################
+####################################################################################
+################################ KUMTOR     ######################################## 
+####################################################################################
+####################################################################################
+# Servidorapp01
+Host kgapp01
+  HostKeyAlias    kgapp01
+  HostName        10.240.94.71
+  User            ms4m
+  Port            22
+
+# ServidorDB01
+Host kgdb01
+  HostKeyAlias    kgdb01
+  HostName        10.240.94.71
+  User            ms4m
+  Port            22
+
+# ServidorREP01
+Host kgrep01
+  HostKeyAlias    kgrep01
+  HostName        10.240.94.73
+  User            ms4m
+  Port            22
+
+  
+  
+##################################################
+####################################################################################  
+####################################bitbucket - Github##############################
+####################################################################################
+####################################################################################
+Host bitbucket.org
+Hostname  altssh.bitbucket.org
+Port  443
+
+
+Host github.com
+Hostname ssh.github.com
+Port 443
+
+
+
+
+# # MLM de MACRAES
+
+# #Macraes C4M DB
+# LocalForward    4180 localhost:4180 
+# #C4M Data Quality
+# LocalForward    4134 localhost:4134 
+# #
+
+# Host mlm
+# HostKeyAlias    mlm
+# HostName        vpn.ms4m.com.au
+# User            ms4m
+# #Macraes C4M App
+# LocalForward    4122 localhost:4122
+
+# #Macraes C4M DB1
+# LocalForward    4222 localhost:4222
+
+# #Macraes C4M DB2
+# LocalForward    4522 localhost:4522
+
+# #Macraes R4M App
+# LocalForward    4322 localhost:4322
+
+# #Macraes R4M DB
+# LocalForward   4422 localhost:4422
+# LocalForward   4432 localhost:4432
+
+# #Macraes Iris App
+# LocalForward   3002 localhost:3002
+
+# #C4M Data Quality
+# #C4M Equipment Auditory
+# LocalForward    4132 localhost:4132
+# #C4M Postgress via pgpool on App
+# LocalForward    4232 localhost:4232
+# #C4M Postgress direct to DB1
+# Port            3381
+
+# # C4M App via MLM
+# Host macapp
+# IdentityFile ~/.ssh/mlm/id_rsa
+# HostKeyAlias    macapp
+# HostName        localhost
+# User            ms4m
+# Port            4122
+
+# #puente macraes
+#         Host proxyjumpMACRAES
+#             HostKeyAlias    proxyjumpMACRAES
+#             HostName vpn.ms4m.com.au
+#             User ms4m
+#             port 3381
+#             StrictHostKeyChecking no
+#             UserKnownHostsFile=/dev/null
+
+
+#         Host mac_app01
+#             HostKeyAlias    mac_app01
+#             IdentityFile ~/.ssh/mlm/id_rsa 
+#             HostName        localhost
+#             User            ms4m
+#             Port            4122
+#             ProxyJump       proxyjumpMACRAES
+#             LocalForward    5433 localhost:5432
+#             LocalForward    50555 localhost:50555
+#             LocalForward    50556 localhost:50556
+
+#         Host mac_db01
+#             HostKeyAlias    mac_db01
+#             IdentityFile ~/.ssh/mlm/id_rsa 
+#             HostName        localhost
+#             User            ms4m
+#             Port            4222
+#             ProxyJump       proxyjumpMACRAES
+#             LocalForward    15433 127.0.0.1:5432
+
+
+
+
+####################BATEAS########################
+#SERVIDORES BATEAS
+#puente
+Host proxybateas
+  # HostName 10.144.0.1
+  # User administrator
+  IdentityFile ~/.ssh/id_rsa_org
+  HostName 192.168.10.1
+  User MB-MS4M1
+  port 22
+  #Sistemas10$
+
+Host reprt_app_bateas
+  HostKeyAlias reprt_app_bateas
+  HostName 10.70.1.6
+  User administrator
+  Port 22
+  ProxyJump proxybateas
+  LocalForward 7071 10.70.1.6:7070
+
+Host report_bd_bateas
+  HostKeyAlias report_bd_bateas
+  HostName 10.70.1.7
+  User administrator
+  Port 22
+  ProxyJump proxybateas
+
+Host btapp01
+  HostKeyAlias c4m_app_bateas
+  HostName 10.70.1.3
+  IdentityFile ~/.ssh/id_rsa_org
+  User administrator
+  Port 22
+  ProxyJump proxybateas
+  # LocalForward 8083 localhost:8080
+  # LocalForward 81 localhost:80
+  # LocalForward 5433 10.70.1.3:5432
+  # LocalForward 50555 10.70.1.3:50555
+  # LocalForward 50556 10.70.1.3:50556
+
+Host btapp01r
+  HostKeyAlias c4m_app_bateas
+  HostName 10.70.1.3
+  IdentityFile ~/.ssh/id_rsa_org
+  User root
+  Port 22
+  ProxyJump proxybateas
+  LocalForward 8083 localhost:8080
+  LocalForward 81 localhost:80
+  LocalForward 5433 10.70.1.3:5432
+  LocalForward 50555 10.70.1.3:50555
+  LocalForward 50556 10.70.1.3:50556
+  LocalForward 8002 10.70.1.3:8002
+  LocalForward 2235 10.70.1.3:22
+
+Host btdb01
+  HostKeyAlias c4m_bd_bateas
+  HostName 10.70.1.4
+  User administrator
+  IdentityFile ~/.ssh/id_rsa_org
+  Port 22
+  ProxyJump proxybateas
+  # LocalForward 5432 10.70.1.4:5432
+
+
+Host btdb01r
+  HostKeyAlias c4m_bd_bateas
+  HostName 10.70.1.4
+  User root
+  IdentityFile ~/.ssh/id_rsa_org
+  Port 22
+  ProxyJump proxybateas
+  # LocalForward 5432 10.70.1.4:5432
+
+Host btrep01
+  HostKeyAlias c4m_rep_bateas
+  HostName 10.70.1.5
+  User administrator
+  IdentityFile ~/.ssh/id_rsa_org
+  Port 22
+  ProxyJump proxybateas
+
+Host btrep01r
+  HostKeyAlias c4m_rep_bateas
+  HostName 10.70.1.5
+  User root
+  IdentityFile ~/.ssh/id_rsa_org
+  Port 22
+  ProxyJump proxybateas
+
+
+
+
+################### LINDERO #################
+
+#SERVIDORES LINDERO
+    #puente
+    Host proxyjump   
+    HostName 192.168.193.1
+    User jjulcamoro
+    # IdentityFile /Users/jhordan/system_key
+   
+
+#set TimeZone_ln $TZ
+#set LocalTime_ln $(date +"%Y-%m-%d %H:%M:%S")
+
+Host ln_app01
+HostKeyAlias    ln_app01
+HostName        10.1.64.120
+User            jjulcamoro
+Port            22
+# IdentityFile    /Users/jhordan/system_key
+ProxyJump       proxyjump
+LocalForward    1234 10.1.64.120:1234
+LocalForward    5433 10.1.64.120:5432
+LocalForward    50555 10.1.64.120:50555
+
+
+Host ln_db01
+HostKeyAlias    ln_db01
+HostName        10.1.64.113
+User            jjulcamoro
+Port            22
+# IdentityFile    /Users/jhordan/system_key
+ProxyJump       proxyjump
+LocalForward    5432 10.1.64.113:5432
+
+Host ln_app02
+  HostKeyAlias    ln_app02
+  HostName        10.1.64.112
+  User            jjulcamoro
+  Port            22
+  # IdentityFile    /Users/jhordan/system_key
+  ProxyJump       proxyjump
+
+
+
+
+  ################### CONTENEDOR MS4M - OFICINA #################
+
+
+
+  ################### MAGINO - ANYDESK #################
+#SERVIDORES MAGINO
+    #puente
+    Host proxymagino 
+    HostKeyAlias proxymagino 
+    HostName 172.30.0.1
+    User MS4M
+    port 22
+    
+    Host mg_c4mapp
+    ####password:: MS4M@proxymagino's  :: Magino
+        HostKeyAlias    mg_c4mapp
+        HostName        172.17.32.12
+        User            adminserver
+        Port            22
+        #IdentityFile    ~/.ssh/id_rsa
+        ProxyJump       proxymagino
+        LocalForward    15432 localhost:5432
+        LocalForward    50555 localhost:50555
+        LocalForward    50556 localhost:50556
+        LocalForward    8080 localhost:8080
+        LocalForward    1234 localhost:1234
+
+    Host mg_c4mdb
+        HostKeyAlias    mg_c4mdb
+        HostName        172.17.32.13
+        User            adminserver
+        Port            22
+        #IdentityFile    ~/.ssh/id_rsa
+        ProxyJump       proxymagino
+        LocalForward    5433 localhost:5432
+
+
+  ################### MAGINO - VPN #################
+
+# Servidorapp01
+Host magapp01
+  HostKeyAlias    magapp01
+  HostName        172.17.0.12
+  User            adminserver
+  Port            22
+
+# ServidorDB01 
+Host magdb01
+  HostKeyAlias    magdb01
+  HostName        172.17.0.13
+  User            adminserver
+  Port            22
+
+# ServidorREP01
+Host magrep01
+  HostKeyAlias    magrep01
+  HostName        172.17.0.14
+  User            adminserver
+  Port            22
+        # magapp01
