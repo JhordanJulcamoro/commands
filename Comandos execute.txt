@@ -5774,3 +5774,12 @@ WHERE id_equipo=43
 update ts_configuracion_equipo
 set valordefecto = '10.147.20.179'
 where id in  (102,103);
+
+
+
+----------
+ts_equipos: tipoespecial
+1:camion, 0:carguio, 2:auxiliar
+
+de alta a baja, de baja a alta 
+el gps aparece en rojo!
