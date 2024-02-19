@@ -140,3 +140,26 @@ am force-stop com.mss.pms.csmobile
 pm clear com.mss.pms.csmobile
 pm install -r /sdcard/CSMobile-ldpiArmeabi-v7a-release_2023.07a4.apk
 am start com.mss.pms.csmobile
+
+
+
+
+
+LEER LOGS COMPRIMIDOS::
+
+zcat /opt/ms4m/log/protobuffer.log-20240214.gz | tail -n 10000 | grep "2024-02-14"
+zcat /opt/ms4m/log/protobuffer.log-20240214.gz | tail -n +1 | head -n 1000
+
+
+###############################################################################
+################################################################################
+DIGLINE DE UN EQUIPO - APK
+###############################################################################
+################################################################################
+
+String query = "SELECT * from getDigLineTurn((SELECT inicioturnoactual()):: timestamp, " + assignedNumberLevel + "::bigint);";
+
+
+
+###############################################################################
+################################################################################

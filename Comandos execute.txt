@@ -572,7 +572,16 @@ am start com.mss.pms.csmobile
 
 am force-stop com.mss.pms.csmobile
 pm install -r /sdcard/C4M_Mobile_2023.12a2_02.01.24.apk
+am force-stop com.mss.pms.csmobile
 pm clear com.mss.pms.csmobile
+am start com.mss.pms.csmobile
+
+am force-stop com.mss.pms.csmobile
+pm install -r /sdcard/C4M_Mobile_2024.02a1_20240207_17.02.24_HorometroLogs.apk
+am start com.mss.pms.csmobile
+
+am force-stop com.mss.pms.csmobile
+pm install -r /sdcard/C4M_Mobile_2024.02a1.apk
 am start com.mss.pms.csmobile
 
 logcat -v time | grep SensorControl
@@ -2405,7 +2414,7 @@ pg_dump -p 5432 -U postgres -d ControlSenseDB -h 127.0.0.1  --schema=action -v -
 gunzip -c schema.action.gz  | psql -h 127.0.0.1 -U postgres -p 5448 -w -d ControlSenseDB
 
 pg_dump -p 5432 -U postgres -d ControlSenseDB -h 127.0.0.1  --schema=data_quality -v -a | gzip -9 > schema.data_quality.gz
-gunzip -c schema.data_quality.gz  | psql -h 127.0.0.1 -U postgres -p 5423 -w -d ControlSenseDB
+gunzip -c schema.data_quality.gz  | psql -h 127.0.0.1 -U postgres -p 5432 -w -d ControlSenseDB
 
 pg_dump -p 5432 -U postgres -d ControlSenseDB -h 127.0.0.1  --schema=clbrtn -v -a | gzip -9 > schema.clbrtn.gz
 gunzip -c schema.clbrtn.gz  | psql -h 127.0.0.1 -U postgres -p 5440 -w -d ControlSenseDB
@@ -3008,7 +3017,7 @@ Servers
 ####################################
 
 generar pgdumpall pesado!:
-pg_dumpall | gzip -9 > pg_dumpall.cadia.15.06.gz
+pg_dumpall | gzip -9 > pg_dumpall.magino.14.02.gz
 
 ##########################################################################################
 CADIA ACCESO DQ
@@ -3974,9 +3983,8 @@ setprop persist.sys.timezone America/Lima
 
 setprop persist.sys.timezone UTC
 
-pm clear com.mss.pms.csmobile
-
-am start com.mss.pms.csmobile
+adb shell pm clear com.mss.pms.csmobile
+adb shell am start com.mss.pms.csmobile
 
 date -s 20220829.192800
 date -s 20231209.194910
@@ -4864,6 +4872,8 @@ FILES_PATH = /Users/jhordan/Documents/projects/iris/calibracion_gps_back/public/
 ##Conectarse al Sqlite
 sqlite3 data/data/com.mss.pms.csmobile/databases/DBCSMobile
 ##Limpieza BD en ControlScreen!
+
+
 am force-stop com.mss.pms.csmobile
 pm clear com.mss.pms.csmobile
 am start com.mss.pms.csmobile
@@ -5775,6 +5785,9 @@ update ts_configuracion_equipo
 set valordefecto = '10.147.20.179'
 where id in  (102,103);
 
+> CUANDO SE APAGA EL SERVIDOR DE AAP_MAGINO E OTROS:
+sudo service ssh start
+sudo service zerotier-one start
 
 
 ----------
@@ -5783,3 +5796,106 @@ ts_equipos: tipoespecial
 
 de alta a baja, de baja a alta 
 el gps aparece en rojo!
+
+
+
+
+export PATH=/Library/PostgreSQL/12/bin:$PATH
+
+
+
+LEER LOGS COMPRIMIDOS::
+
+zcat /opt/ms4m/log/protobuffer.log-20240214.gz | tail -n 10000 | grep "2024-02-14"
+zcat /opt/ms4m/log/protobuffer.log-20240214.gz | tail -n +1 | head -n 1000
+
+
+
+#####################################
+#####################################
+COSAPI
+#####################################
+#####################################
+usuario: Terceros.omestanza
+password: tE330m6.
+
+#####################################
+servidores::
+#####################################
+
+C4M-APP-SERVER-01-INT
+	
+10.10.39.11
+	
+10.11.87.11
+	
+adminserver
+	
+d!D9L%AkJE
+
+
+C4M-DB-SERVER-01-INT
+	
+10.10.39.12
+	
+10.11.87.12
+	
+adminserver
+	
+@e&BhC297#
+
+
+C4M-REPLICA-01-INT
+	
+10.10.39.13
+	
+10.11.87.13
+	
+adminserver
+	
+YL3+VxzUgM
+
+
+C4M-APP-SERVER-02-INT
+	
+10.10.39.21
+	
+10.11.87.21
+	
+adminserver
+	
+8kr?zTD#$s
+
+
+C4M-DB-SERVER-02-INT
+	
+10.10.39.22
+	
+10.11.87.22
+	
+adminserver
+	
+J%Nk5&8?dr
+
+
+C4M-REPLICA-02-INT
+	
+10.10.39.23
+	
+10.11.87.23
+	
+adminserver
+	
+@AVyX6$FdP
+
+
+
+
+
+
+
+Kumtor CREDENCIALES
+usuario: Jose.Leyva       
+password: pKDkk_9FVBpL
+cp /data/data/com.mss.pms.csmobile/databases/DBCSMobile /sdcard/DBCSMobile_LD01 
+cp /data/data/com.mss.pms.csmobile/databases/DBCSMobile /sdcard/DBCSMobile_LD02 

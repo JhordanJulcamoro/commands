@@ -754,3 +754,50 @@ Host magrep01
   User            adminserver
   Port            22
         # magapp01
+
+
+  ################### COSAPI - VPN #################
+
+ Host cosapp01
+    HostKeyAlias C4M-APP-SERVER-01-INT
+    #local 10.10.39.11
+    HostName 10.11.87.11
+    User adminserver
+    #d!D9L%AkJE
+
+Host cosdb01
+    HostKeyAlias C4M-DB-SERVER-01-INT
+    #local 10.10.39.12
+    HostName 10.11.87.12
+    User adminserver
+    # @e&BhC297#
+
+Host cosrep01
+    HostKeyAlias C4M-REPLICA-01-INT
+    #local 10.10.39.13
+    HostName 10.11.87.13
+    User adminserver
+    # YL3+VxzUgM
+
+
+Host cosapp02
+    HostKeyAlias C4M-APP-SERVER-02-INT
+    #local 10.10.39.21
+    HostName 10.11.87.21
+    User adminserver
+    # 8kr?zTD#$s
+
+Host cosdb02
+    HostKeyAlias C4M-DB-SERVER-02-INT
+    #local 10.10.39.22
+    HostName 10.11.87.22
+    User adminserver
+    # J%Nk5&8?dr
+
+
+Host cosrep02
+    HostKeyAlias C4M-REPLICA-02-INT
+    #local 10.10.39.23
+    HostName 10.11.87.23
+    User adminserver
+    # 8kr?zTD#$s
