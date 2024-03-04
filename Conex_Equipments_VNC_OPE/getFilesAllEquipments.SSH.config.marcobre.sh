@@ -46,7 +46,7 @@ $PSQL \
     id_eq=${Record[3]}
     orderid=${Record[4]}
     port_vnc=$((11800 + $orderid))
-    FULL_NAME="MARC_"$EQ_NAME"_"$id_eq
+    FULL_NAME="MARCO_"$EQ_NAME"_"$id_eq
     echo "$EQ_NAME:$port_vnc   ip  ---> $FULL_NAME"
 
     echo "Host $FULL_NAME

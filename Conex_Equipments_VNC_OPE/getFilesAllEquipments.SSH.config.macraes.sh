@@ -13,7 +13,7 @@ echo "$PSQL"
 DB_USER=controlsys
 DB_HOST=127.0.0.1
 DB_NAME=ControlSenseDB
-DB_PORT=5432
+DB_PORT=4133
 # FOLDER=/opt/minesense/ping
 
 echo "don"
@@ -50,7 +50,7 @@ $PSQL \
     id_eq=${Record[3]}
     orderid=${Record[4]}
     port_vnc=$((11800 + $orderid))
-    FULL_NAME=" MACR_"$EQ_NAME"_"$id_eq
+    FULL_NAME=" MACRA_"$EQ_NAME"_"$id_eq
     echo "$EQ_NAME:$port_vnc   ip  ---> $FULL_NAME"
 
     echo "Host $FULL_NAME
@@ -61,7 +61,7 @@ $PSQL \
     StrictHostKeyChecking no
     ProxyJump macapp
     UserKnownHostsFile=/dev/null
-    LocalForward    $port_vnc $ipequipo:5901
+    LocalForward    $port_vnc 127.0.0.1:5901
     LocalCommand    /Applications/vncviewer.sh $port_vnc
     #IP MESH: $ipmesh
     " >> ~/.ssh/config.d/config.macraes.equipments

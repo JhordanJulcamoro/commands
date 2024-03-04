@@ -566,7 +566,7 @@ pm install -r /sdcard/DRILL_logs.apk
 am start com.mss.pms.csmobile
 
 am force-stop com.mss.pms.csmobile
-pm install -r /sdcard/C4M_Mobile_2023.12a2_1220_arm_ldpi_v2.apk
+pm install -r /sdcard/C4M_Mobile_2024.01a1_20240126_arm_ldpi_test.apk
 pm clear com.mss.pms.csmobile
 am start com.mss.pms.csmobile
 
@@ -1515,12 +1515,15 @@ connection.js -> this.stream.setNoDelay(true)
 ---------------------------------------------------
 KUMTOR
 
-por fortclient!
+por fortclient - 2024 - FEB!
+Nombre: Jhordan Julcamoro
+usuario: Jhordan.Julcamoro
+password: dTKI(x*jOBFI
 
 Nombre: Erick Alexander Sanchez Aguilar
 user: Erick.Sanchez@kumtor.kg
 user: Erick.Sanchez
-password: TGGDsWG7IiJR
+password: PFPxHHQG?y4e
 ---------------------------------------------------
 USUARIO: MestanzaO  
 pass: Rd4ML09q$uxzbpmj
@@ -1890,10 +1893,12 @@ terminating connection due to administrator command
 SELECT  * FROM pg_stat_activity WHERE datname='ControlSenseDB';
 > Para matar el proceso listado anteriormente se ingresa el pid
 SELECT pg_terminate_backend('pid');
-SELECT pg_terminate_backend(8103);
-SELECT pg_terminate_backend(8320);
-
-
+SELECT pg_terminate_backend(3166999);
+SELECT pg_terminate_backend(3166995);
+SELECT pg_terminate_backend(2941297);
+SELECT pg_terminate_backend(3166998);
+SELECT pg_terminate_backend(932789);
+drop database "ControlSenseDB";
 ########
 REFRESH VIEWS
 
@@ -2061,7 +2066,7 @@ https://hudbay.cloud.com/Citrix/StoreWeb/#/login
 
 ############# ERIK #######################
 Erick.sanchez@ms4m.com
-Constancia$2023
+Constancia$$2023.
 esanchez
 ############# MANU #######################
 manuel.gil@ms4m.com
@@ -2113,7 +2118,8 @@ FRONT:
 #########INSTALAR SERVERSOCKER - DOCKER#########
 >>> docker run --name dev18 --cap-add=NET_ADMIN --device=/dev/net/tun --cap-add=NET_ADMIN -p 2221:22 -p 6000:6000  -it --memory=4g --memory-swap=8g -d msfourmmg/devserver:1.0.6
 
-docker run --name dev18 -p 6000:6000 --cap-add=NET_ADMIN --device=/dev/net/tun -it -d msfourmmg/devserver:1.0.6
+docker run --name dev18 -p 6000:6000 --cap-add=NET_ADMIN --device=/dev/net/tun -it -d msfourmmg/devserver:1.0.6  --no existe
+docker run --name dev18 -p 6000:6000 --cap-add=NET_ADMIN --device=/dev/net/tun -it -d msfourmmg/devserver:1.0.8
 
 >>>docker iris
 docker run --name c4m_iris -p 3000:3000 -p 30002:3002 --cap-add=NET_ADMIN --device=/dev/net/tun -it -d msfourmmg/devserver:1.0.6
@@ -2414,7 +2420,7 @@ pg_dump -p 5432 -U postgres -d ControlSenseDB -h 127.0.0.1  --schema=action -v -
 gunzip -c schema.action.gz  | psql -h 127.0.0.1 -U postgres -p 5448 -w -d ControlSenseDB
 
 pg_dump -p 5432 -U postgres -d ControlSenseDB -h 127.0.0.1  --schema=data_quality -v -a | gzip -9 > schema.data_quality.gz
-gunzip -c schema.data_quality.gz  | psql -h 127.0.0.1 -U postgres -p 5432 -w -d ControlSenseDB
+gunzip -c schema.data_quality.gz  | psql -h 127.0.0.1 -U postgres -p 5436 -w -d ControlSenseDB
 
 pg_dump -p 5432 -U postgres -d ControlSenseDB -h 127.0.0.1  --schema=clbrtn -v -a | gzip -9 > schema.clbrtn.gz
 gunzip -c schema.clbrtn.gz  | psql -h 127.0.0.1 -U postgres -p 5440 -w -d ControlSenseDB
@@ -4992,9 +4998,10 @@ df -h
 /etc/init.d
 
 ###########################################################
-
+am force-stop com.mss.pms.csmobile
 pm uninstall com.mss.pms.csmobile
-pm install /sdcard/C4Mobile.apk
+pm install -r /sdcard/C4M_Mobile_2024.01a1_20240126_test10.apk
+pm clear com.mss.pms.csmobile
 am start com.mss.pms.csmobile
 
 
@@ -5715,9 +5722,10 @@ pasos para crear de cero:
 docker commit app_magino server_app:1.0.0
 en este caso creando para Michilla
  docker run --name app_michilla  --cap-add=NET_ADMIN --cap-add=SYS_ADMIN --device=/dev/net/tun -it -d server_app:1.0.0
-
  docker exec -it app_michilla bash
 
+docker run --name db_cosapi -p 5446:5432 -it -d msfourmmg/dbempty:12
+docker run --name app_cosapi  --net=my-net  --cap-add=NET_ADMIN --cap-add=SYS_ADMIN --device=/dev/net/tun -it -d  msfourmmg/app_empty:18.1
 
  #########################################3
  CONFIGURACION EN BASE DE DATOS:
@@ -5899,3 +5907,32 @@ usuario: Jose.Leyva
 password: pKDkk_9FVBpL
 cp /data/data/com.mss.pms.csmobile/databases/DBCSMobile /sdcard/DBCSMobile_LD01 
 cp /data/data/com.mss.pms.csmobile/databases/DBCSMobile /sdcard/DBCSMobile_LD02 
+
+
+
+###############################################################################
+FORTICLIENT - COSAPI
+###############################################################################
+user: terceros.jjulcamoro@cosapi.com.pe
+password: nPGb$0hJ
+
+###############################################################################
+
+GRPC: 
+-> Verificar el proyecto en cualquier contenedor de app (docker ms4m)
+-> Instalar la extension de c++
+-> luego compilar
+
+->De manera local, descargar el evans:
+-> ejecutar los comandos:
+./evans --host 10.147.20.178 --port 50556 --reflection 
+show service
+call getDumpsBundle
+
+
+
+
+
+CADIA::
+Oswaldo.Mestanza@newcrest.com.au
+M@ntill@777-++
